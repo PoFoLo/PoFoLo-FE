@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
 interface StyledButtonProps {
-  buttonSize: 'large' | 'medium' | 'small';
-  buttonType: 'main' | 'sub' | 'inactive';
+  $buttonSize: 'large' | 'medium' | 'small';
+  $buttonType: 'main' | 'sub' | 'inactive';
 }
 
 const buttonSizeStyles = {
@@ -46,6 +46,6 @@ const buttonTypeStyles = {
 
 export const StyledButton = styled.button<StyledButtonProps>`
   border: none;
-  ${({ buttonSize }) => buttonSizeStyles[buttonSize]};
-  ${({ buttonType }) => buttonTypeStyles[buttonType]};
+  ${({ $buttonSize }) => buttonSizeStyles[$buttonSize]};
+  ${({ $buttonType }) => buttonTypeStyles[$buttonType]};
 `;

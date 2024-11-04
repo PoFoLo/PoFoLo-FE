@@ -13,7 +13,7 @@ interface ButtonProps {
 
 function Button({ size, type, onClick, children }: ButtonProps) {
   return (
-    <S.StyledButton buttonSize={size} buttonType={type} onClick={onClick}>
+    <S.StyledButton $buttonSize={size} $buttonType={type} onClick={onClick}>
       {children}
     </S.StyledButton>
   );
