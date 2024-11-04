@@ -3,11 +3,10 @@ import * as S from '@/components/Common/Input/styles';
 import Invalidate from '@/assets/webps/WriteProject/invalidate.webp';
 import Validate from '@/assets/webps/WriteProject/validate.webp';
 
-// Input 컴포넌트 (한 줄 입력)
 interface InputFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: boolean; // 에러 검사 여부
+  error?: boolean; // 에러 변수
   errorMessage?: string; // 에러 발생 시 메시지
   placeholder?: string;
   showIcon?: boolean; // 오른쪽에 ✅,❌ 아이콘 표시 여부
@@ -22,21 +21,27 @@ const Input = ({
   showIcon = true,
 }: InputFieldProps) => {
   const [showIconState, setShowIconState] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
   };
 
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
+
   useEffect(() => {
-    // input에 값이 있거나 에러 발생 시에만 아이콘 표시
-    setShowIconState(!!value.trim() || error);
-  }, [value, error]);
+    // input에 값이 있거나 에러 발생 시에만 아이콘 표시, 단 포커스 중에는 아이콘 숨김
+    setShowIconState((!!value.trim() || error) && (!isFocused || error));
+  }, [value, error, isFocused]);
 
   return (
     <S.InputContainer>
       <S.StyledInput
         value={value}
         onChange={handleInputChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         $error={error}
         $showIcon={showIcon}
         placeholder={placeholder}

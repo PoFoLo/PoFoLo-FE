@@ -7,7 +7,7 @@ import Validate from '@/assets/webps/WriteProject/validate.webp';
 interface TextAreaFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  error?: boolean; // 에러 검사 여부
+  error?: boolean; // 에러 변수
   errorMessage?: string; // 에러 발생 시 메시지
   rows?: number;
   placeholder?: string;
@@ -25,6 +25,7 @@ const TextArea = ({
 }: TextAreaFieldProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [showIconState, setShowIconState] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   // textarea 높이 조절 함수
   const adjustHeight = useCallback(() => {
@@ -37,9 +38,9 @@ const TextArea = ({
   // 글자 수에 맞춰서 textarea 높이 조절
   useEffect(() => {
     adjustHeight();
-    // textarea에 값이 있거나 에러 발생 시에만 아이콘 표시
-    setShowIconState(!!value.trim() || error);
-  }, [value, error, adjustHeight]);
+    // textarea에 값이 있거나 에러 발생 시에만 아이콘 표시, 단 포커스 중에는 아이콘 숨김
+    setShowIconState((!!value.trim() || error) && (!isFocused || error));
+  }, [value, error, isFocused, adjustHeight]);
 
   // 윈도우 사이즈에 맞춰서 textarea 높이 조절
   useEffect(() => {
@@ -47,12 +48,17 @@ const TextArea = ({
     return () => window.removeEventListener('resize', adjustHeight);
   }, [adjustHeight]);
 
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
+
   return (
     <S.TextAreaContainer>
       <S.StyledTextArea
         ref={textareaRef}
         value={value}
         onChange={onChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         rows={rows}
         $error={error}
         $showIcon={showIcon}
