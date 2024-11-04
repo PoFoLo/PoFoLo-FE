@@ -22,8 +22,10 @@ const TextArea = ({
   placeholder = '',
 }: TextAreaFieldProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [showIconState, setShowIconState] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+
+  // 아이콘 표시 상태 결정
+  const showIconState = error || (!isFocused && !!value.trim());
 
   // textarea 높이 조절 함수
   const adjustHeight = useCallback(() => {
@@ -36,9 +38,7 @@ const TextArea = ({
   // 글자 수에 맞춰서 textarea 높이 조절
   useEffect(() => {
     adjustHeight();
-    // textarea에 값이 있거나 에러 발생 시에만 아이콘 표시, 단 포커스 중에는 아이콘 숨김
-    setShowIconState(error || (!isFocused && !!value.trim()));
-  }, [value, error, isFocused, adjustHeight]);
+  }, [value, adjustHeight]);
 
   // 윈도우 사이즈에 맞춰서 textarea 높이 조절
   useEffect(() => {

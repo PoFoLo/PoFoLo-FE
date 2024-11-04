@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as S from '@/components/Common/Input/styles';
 import Invalidate from '@/assets/webps/WriteProject/invalidate.webp';
 import Validate from '@/assets/webps/WriteProject/validate.webp';
@@ -18,8 +18,10 @@ const Input = ({
   onChange,
   placeholder = '',
 }: InputFieldProps) => {
-  const [showIconState, setShowIconState] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+
+  // 아이콘 표시 상태 결정
+  const showIconState = error || (!isFocused && !!value.trim());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
@@ -27,11 +29,6 @@ const Input = ({
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
-
-  useEffect(() => {
-    // input에 값이 있거나 에러 발생 시에만 아이콘 표시, 단 포커스 중에는 아이콘 숨김
-    setShowIconState(error || (!isFocused && !!value.trim()));
-  }, [value, error, isFocused]);
 
   return (
     <S.InputContainer>
