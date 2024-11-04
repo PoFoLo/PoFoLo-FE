@@ -7,12 +7,12 @@ export const InputContainer = styled.div`
   width: 100%;
 `;
 
-export const StyledInput = styled.input<{ $error: boolean; $showIcon: boolean }>`
+export const StyledInput = styled.input<{ $error: boolean }>`
   ${(props) => props.theme.fonts.body2};
   color: ${(props) => props.theme.colors.gray90};
   background-color: ${(props) => props.theme.colors.gray10};
   padding: 1.4rem 1.6rem;
-  padding-right: ${(props) => (props.$showIcon ? '6.8rem' : '1.6rem')};
+  padding-right: 6.8rem;
   border: 0.15rem solid
     ${(props) => (props.$error ? props.theme.colors.coral50 : props.theme.colors.gray20)};
   border-radius: 1.2rem;

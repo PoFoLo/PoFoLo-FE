@@ -11,7 +11,6 @@ interface TextAreaFieldProps {
   errorMessage?: string; // 에러 발생 시 메시지
   rows?: number;
   placeholder?: string;
-  showIcon?: boolean; // 오른쪽에 ✅,❌ 아이콘 표시 여부
 }
 
 const TextArea = ({
@@ -21,7 +20,6 @@ const TextArea = ({
   onChange,
   rows = 1,
   placeholder = '',
-  showIcon = true,
 }: TextAreaFieldProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [showIconState, setShowIconState] = useState(false);
@@ -39,7 +37,7 @@ const TextArea = ({
   useEffect(() => {
     adjustHeight();
     // textarea에 값이 있거나 에러 발생 시에만 아이콘 표시, 단 포커스 중에는 아이콘 숨김
-    setShowIconState((!!value.trim() || error) && (!isFocused || error));
+    setShowIconState(error || (!isFocused && !!value.trim()));
   }, [value, error, isFocused, adjustHeight]);
 
   // 윈도우 사이즈에 맞춰서 textarea 높이 조절
@@ -61,12 +59,9 @@ const TextArea = ({
         onBlur={handleBlur}
         rows={rows}
         $error={error}
-        $showIcon={showIcon}
         placeholder={placeholder}
       />
-      {showIcon && showIconState && (
-        <S.IconContainer $backgroundImage={error ? Invalidate : Validate} />
-      )}
+      {showIconState && <S.IconContainer $backgroundImage={error ? Invalidate : Validate} />}
       {error && errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
     </S.TextAreaContainer>
   );

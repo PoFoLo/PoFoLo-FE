@@ -9,7 +9,6 @@ interface InputFieldProps {
   error?: boolean; // 에러 변수
   errorMessage?: string; // 에러 발생 시 메시지
   placeholder?: string;
-  showIcon?: boolean; // 오른쪽에 ✅,❌ 아이콘 표시 여부
 }
 
 const Input = ({
@@ -18,7 +17,6 @@ const Input = ({
   value,
   onChange,
   placeholder = '',
-  showIcon = true,
 }: InputFieldProps) => {
   const [showIconState, setShowIconState] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -32,7 +30,7 @@ const Input = ({
 
   useEffect(() => {
     // input에 값이 있거나 에러 발생 시에만 아이콘 표시, 단 포커스 중에는 아이콘 숨김
-    setShowIconState((!!value.trim() || error) && (!isFocused || error));
+    setShowIconState(error || (!isFocused && !!value.trim()));
   }, [value, error, isFocused]);
 
   return (
@@ -43,12 +41,9 @@ const Input = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         $error={error}
-        $showIcon={showIcon}
         placeholder={placeholder}
       />
-      {showIcon && showIconState && (
-        <S.IconContainer $backgroundImage={error ? Invalidate : Validate} />
-      )}
+      {showIconState && <S.IconContainer $backgroundImage={error ? Invalidate : Validate} />}
       {error && errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
     </S.InputContainer>
   );
