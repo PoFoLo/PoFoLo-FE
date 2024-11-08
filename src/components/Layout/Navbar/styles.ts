@@ -3,9 +3,12 @@ import styled from 'styled-components';
 export const NavContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 1312px;
-  height: 42px;
+  width: 100vw;
+  height: 6.4rem;
   justify-content: space-between;
+
+  position: fixed;
+  zindex: 10;
 `;
 
 export const NavLeft = styled.div`
@@ -13,8 +16,8 @@ export const NavLeft = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 134px;
-  height: 32px;
+  width: 13.4rem;
+  height: 3.2rem;
   flex-shrink: 0;
 
   cursor: pointer;
@@ -26,93 +29,113 @@ export const NavRight = styled.div`
 `;
 
 export const NavLink = styled.span<{ width: number }>`
-  color: var(--Gray-80, #57585b);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
-  letter-spacing: 0.05px;
+  color: ${(props) => props.theme.colors.gray80};
+  ${(props) => props.theme.fonts.subhead2};
 
-  width: ${({ width }) => width}px;
-  height: 30px;
+  width: ${({ width }) => width}rem;
+  height: 3rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 32px;
+  margin-left: 3.2rem;
 `;
+/*
+color: var(--Gray-80, #57585b);
+font-family: Pretendard;
+font-size: 2rem;
+font-style: normal;
+font-weight: 600;
+line-height: 150%;
+letter-spacing: 0.005rem;
+*/
 
 export const LoginButton = styled.button`
-  color: var(--Gray-70, #74757a);
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%; /* 24px */
-  letter-spacing: 0.04px;
+  color: ${(props) => props.theme.colors.gray70};
+  ${(props) => props.theme.fonts.subhead3};
   display: flex;
-  height: 32px;
-  padding: 2px 10px;
+  height: 3.2rem;
+  padding: 0.2rem 1rem;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  border-radius: 8px;
-  border: 0.75px solid var(--Gray-20, #e4e4e6);
-  background: #fff;
+  gap: 1rem;
+  border-radius: 0.8rem;
+  border: 0.075rem solid var(--Gray-20, #e4e4e6);
+  background-color: white;
 
   cursor: pointer;
-  width: 62px;
-  margin-left: 32px;
+  width: 6.2rem;
+  margin-left: 3.2rem;
 `;
-// 추후 Pretendard 글꼴 적용 시 원안인 font-size: 16px로 바꾸기
+// 추후 Pretendard 글꼴 적용 시 원안인 font-size: 1.6rem로 바꾸기
+/*
+color: var(--Gray-70, #74757a);
+font-family: Pretendard;
+font-size: 1.5rem;
+font-style: normal;
+font-weight: 600;
+line-height: 150%;
+letter-spacing: 0.004rem;
+display: flex;
+height: 3.2rem;
+padding: 0.2rem 1rem;
+justify-content: center;
+align-items: center;
+gap: 1rem;
+border-radius: 0.8rem;
+border: 0.075rem solid var(--Gray-20, #e4e4e6);
+background: #fff;
+*/
 
-export const MyPageButton = styled.img`
-  width: 36px;
-  height: 36px;
-  border-radius: 48px;
-  border: 1.5px solid var(--Gray-20, #e4e4e6);
-  background: url(<path-to-image>) lightgray -16.206px -7.452px / 190.909% 143.182% no-repeat;
+export const MyPageButton = styled.div`
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  margin-left: 32px;
+  cursor: pointer;
+`;
+
+export const MyPageImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const LogoutButtonContainer = styled.button`
   display: flex;
-  width: 100px;
-  height: 32px;
-  padding: 4px 12px;
+  width: 10rem;
+  height: 3.2rem;
+  padding: 0.4rem 1.2rem;
   justify-content: center;
   align-items: center;
-  gap: 6px;
-  border-radius: 8px;
-  border: 0.75px solid var(--Gray-20, #e4e4e6);
-  background: var(--Gray-05, #f8f8f8);
+  gap: 0.6rem;
+  border-radius: 0.8rem;
+  border: 0.075rem solid ${(props) => props.theme.colors.gray20};
+  background-color: ${(props) => props.theme.colors.gray05};
 
   cursor: pointer;
-  margin-left: 32px;
+  margin-left: 3.2rem;
 `;
 
 export const LogoutText = styled.span`
-  color: var(--Gray-30, #c9cacf);
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140%; /* 22.4px */
-  letter-spacing: 0.04px;
+  color: ${(props) => props.theme.colors.gray30};
+  ${(props) => props.theme.fonts.caption2};
 
-  width: 56px;
-  height: 22px;
+  width: 5.6rem;
+  height: 2.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
-// 추후 Pretendard 글꼴 적용 시 원안인 font-size: 16px로 바꾸기
+// 추후 Pretendard 글꼴 적용 시 원안인 font-size: 1.6rem로 바꾸기
 
-export const IconContainer = styled.svg`
-  width: 15px;
-  height: 14px;
+export const IconContainer = styled.img`
+  width: 1.5rem;
+  height: 1.4rem;
   flex-shrink: 0;
-  fill: var(--Gray-30, #c9cacf);
 `;
