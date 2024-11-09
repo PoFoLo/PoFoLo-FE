@@ -11,9 +11,20 @@ export const ProjectContainer = styled.main`
 `;
 
 export const ImgContainer = styled.section`
+  width: 100%;
   margin-top: 2.4rem;
+  display: flex;
+  white-space: nowrap;
+`;
+
+export const ImageItem = styled.img`
+  width: 64rem;
   height: 36rem;
-  background-color: white;
+  border-radius: 1.2rem;
+  display: inline-block;
+  & + & {
+    margin-left: 2rem;
+  }
 `;
 
 export const TopInfo = styled.section`
