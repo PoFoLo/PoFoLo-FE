@@ -55,6 +55,14 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
       }, 0);
     };
 
+    // 입력 높이 자동 조절
+    const handleInput = () => {
+      if (replyInputRef.current) {
+        replyInputRef.current.style.height = '5.6rem'; // default
+        replyInputRef.current.style.height = `${replyInputRef.current.scrollHeight}px`;
+      }
+    };
+
     return (
       <S.CommentItem ref={ref}>
         <S.CommentItemWrapper>
@@ -90,6 +98,7 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
                   ref={replyInputRef}
                   placeholder="답글"
                   value={replyContent}
+                  onInput={handleInput}
                   onChange={(e) => onReplyChange(e, comment.id)}
                 ></S.CommentTextArea>
                 <S.ButtonWrapper>
