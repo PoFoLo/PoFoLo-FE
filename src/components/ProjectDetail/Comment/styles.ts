@@ -184,3 +184,20 @@ export const AddReply = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const EmptyState = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 11.6rem 0 10.4rem;
+
+  img {
+    width: 16rem;
+    height: 16rem;
+  }
+
+  span {
+    ${(props) => props.theme.fonts.headline3};
+    color: ${(props) => props.theme.colors.gray30};
+  }
+`;

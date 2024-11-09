@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { format, isToday, isYesterday, isThisWeek, getDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import * as S from '@/components/ProjectDetail/Comment/styles';
@@ -7,7 +8,7 @@ import Button from '@/components/Common/Button';
 import replyGray from '@/assets/webps/ProjectDetail/replyGray.webp';
 import replyBlue from '@/assets/webps/ProjectDetail/replyBlue.webp';
 import replyLine from '@/assets/svgs/ProjectDetail/replyLine.svg';
-import { useNavigate } from 'react-router-dom';
+import commentIcon from '@/assets/webps/ProjectDetail/commentIcon.webp';
 
 interface CommentItem {
   id: number;
@@ -163,82 +164,88 @@ export const Comment = () => {
           </S.CommentBox>
         </S.AddComment>
 
-        {/* 댓글 목록 표시 */}
-        <S.CommentList>
-          {comments.map((item) => (
-            <S.CommentItem key={item.id} ref={(el) => (commentRefs.current[item.id] = el)}>
-              <S.CommentItemWrapper>
-                <img
-                  onClick={() => nav('/mypage')}
-                  className="profile-icon"
-                  src={profileIcon}
-                  alt="profile icon"
-                />
-                <S.CommentContentWrapper>
-                  <div className="comment-info-wrapper">
-                    <S.CommentInfo>
-                      <p onClick={() => nav('/mypage')}>{item.nickname}</p>
-                      <span>{formatCommentDate(item.createdAt)}</span>
-                    </S.CommentInfo>
-                    <S.CommentContent>{item.content}</S.CommentContent>
-                  </div>
+        {comments.length === 0 ? (
+          <S.EmptyState>
+            <img src={commentIcon} alt="comment icon" />
+            <span>첫 번째 댓글을 남겨보세요</span>
+          </S.EmptyState>
+        ) : (
+          <S.CommentList>
+            {comments.map((item) => (
+              <S.CommentItem key={item.id} ref={(el) => (commentRefs.current[item.id] = el)}>
+                <S.CommentItemWrapper>
                   <img
-                    src={replyClicked === item.id ? replyBlue : replyGray}
-                    alt="reply"
-                    onClick={() => handleReplyClick(item.id)}
+                    onClick={() => nav('/mypage')}
+                    className="profile-icon"
+                    src={profileIcon}
+                    alt="profile icon"
                   />
-                </S.CommentContentWrapper>
-              </S.CommentItemWrapper>
-
-              {/* 답글 입력 */}
-              {replyClicked === item.id && (
-                <S.ReplySection>
-                  <S.ReplyWrapper>
-                    <img className="reply-line" src={replyLine} alt="reply line" />
-                    <S.AddReply>
-                      <S.CommentTextArea
-                        ref={(el) => (replyInputRef.current[item.id] = el)}
-                        placeholder="답글"
-                        value={replyContent[item.id] || ''}
-                        onChange={(e) => handleReplyChange(e, item.id)}
-                      ></S.CommentTextArea>
-                      <S.ButtonWrapper>
-                        <Button
-                          onClick={() => handlePostReply(item.id)}
-                          size="small"
-                          type={replyContent[item.id]?.trim() ? 'main' : 'inactive'}
-                        >
-                          게시
-                        </Button>
-                      </S.ButtonWrapper>
-                    </S.AddReply>
-                  </S.ReplyWrapper>
-                </S.ReplySection>
-              )}
-
-              {/* 답글 목록 표시 */}
-              {item.replies.map((reply) => (
-                <li key={reply.id} ref={(el) => (replyRefs.current[reply.id] = el)}>
-                  <S.ReplyWrapper>
-                    <img
-                      onClick={() => nav('/mypage')}
-                      className="reply-line"
-                      src={replyLine}
-                      alt="reply line"
-                    />
-                    <div className="reply-info-wrapper">
+                  <S.CommentContentWrapper>
+                    <div className="comment-info-wrapper">
                       <S.CommentInfo>
-                        <p onClick={() => nav('/mypage')}>{reply.nickname}</p>
-                        <span>{formatCommentDate(reply.createdAt)}</span>
+                        <p onClick={() => nav('/mypage')}>{item.nickname}</p>
+                        <span>{formatCommentDate(item.createdAt)}</span>
                       </S.CommentInfo>
-                      <S.CommentContent>{reply.content}</S.CommentContent>
+                      <S.CommentContent>{item.content}</S.CommentContent>
                     </div>
-                  </S.ReplyWrapper>
-                </li>
-              ))}
-            </S.CommentItem>
-          ))}
-        </S.CommentList>
+                    <img
+                      src={replyClicked === item.id ? replyBlue : replyGray}
+                      alt="reply"
+                      onClick={() => handleReplyClick(item.id)}
+                    />
+                  </S.CommentContentWrapper>
+                </S.CommentItemWrapper>
+
+                {/* 답글 입력 */}
+                {replyClicked === item.id && (
+                  <S.ReplySection>
+                    <S.ReplyWrapper>
+                      <img className="reply-line" src={replyLine} alt="reply line" />
+                      <S.AddReply>
+                        <S.CommentTextArea
+                          ref={(el) => (replyInputRef.current[item.id] = el)}
+                          placeholder="답글"
+                          value={replyContent[item.id] || ''}
+                          onChange={(e) => handleReplyChange(e, item.id)}
+                        ></S.CommentTextArea>
+                        <S.ButtonWrapper>
+                          <Button
+                            onClick={() => handlePostReply(item.id)}
+                            size="small"
+                            type={replyContent[item.id]?.trim() ? 'main' : 'inactive'}
+                          >
+                            게시
+                          </Button>
+                        </S.ButtonWrapper>
+                      </S.AddReply>
+                    </S.ReplyWrapper>
+                  </S.ReplySection>
+                )}
+
+                {/* 답글 목록 표시 */}
+                {item.replies.map((reply) => (
+                  <li key={reply.id} ref={(el) => (replyRefs.current[reply.id] = el)}>
+                    <S.ReplyWrapper>
+                      <img
+                        onClick={() => nav('/mypage')}
+                        className="reply-line"
+                        src={replyLine}
+                        alt="reply line"
+                      />
+                      <div className="reply-info-wrapper">
+                        <S.CommentInfo>
+                          <p onClick={() => nav('/mypage')}>{reply.nickname}</p>
+                          <span>{formatCommentDate(reply.createdAt)}</span>
+                        </S.CommentInfo>
+                        <S.CommentContent>{reply.content}</S.CommentContent>
+                      </div>
+                    </S.ReplyWrapper>
+                  </li>
+                ))}
+              </S.CommentItem>
+            ))}
+          </S.CommentList>
+        )}
       </S.CommentContainer>
     </S.CommentLayout>
   );
