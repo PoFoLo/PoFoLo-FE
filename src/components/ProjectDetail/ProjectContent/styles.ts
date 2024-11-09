@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
 export const ProjectContainer = styled.main`
-  width: 131.2rem;
+  width: 100%;
+  max-width: 131.2rem;
   padding-bottom: 11.2rem;
+
+  @media (max-width: 1440px) {
+    padding: 0 6.4rem 11.2rem;
+  }
 `;
 
 export const ImgContainer = styled.section`
