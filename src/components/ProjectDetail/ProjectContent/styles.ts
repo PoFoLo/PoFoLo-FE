@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-export const Layout = styled.div`
-  width: 100%;
-  margin-top: 6.4rem;
-  display: flex;
-  justify-content: center;
-`;
-
 export const ProjectContainer = styled.main`
   width: 131.2rem;
   padding-bottom: 11.2rem;
@@ -33,7 +26,7 @@ export const ProfileInfo = styled.div`
   img {
     width: 4.8rem;
     height: 4.8rem;
-    border: 1.5px solid ${(props) => props.theme.colors.gray20};
+    border: 0.15rem solid ${(props) => props.theme.colors.gray20};
     border-radius: 50%;
     cursor: pointer;
   }
@@ -113,7 +106,7 @@ export const LinkContainer = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: center;
-  border: 1px solid ${(props) => props.theme.colors.gray20};
+  border: 0.1rem solid ${(props) => props.theme.colors.gray20};
   background-color: ${(props) => props.theme.colors.gray5};
   border-radius: 0.8rem;
   cursor: pointer;
