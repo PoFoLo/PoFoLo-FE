@@ -4,8 +4,19 @@ import { ko } from 'date-fns/locale';
 import * as S from '@/components/ProjectDetail/Comment/styles';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
 import Button from '@/components/Common/Button';
+import replyGray from '@/assets/webps/ProjectDetail/replyGray.webp';
+import replyBlue from '@/assets/webps/ProjectDetail/replyBlue.webp';
+import replyLine from '@/assets/svgs/ProjectDetail/replyLine.svg';
 
 interface CommentItem {
+  id: number;
+  nickname: string;
+  content: string;
+  createdAt: Date;
+  replies: ReplyItem[];
+}
+
+interface ReplyItem {
   id: number;
   nickname: string;
   content: string;
@@ -14,12 +25,22 @@ interface CommentItem {
 
 export const Comment = () => {
   const [comment, setComment] = useState('');
-  const [comments, setComments] = useState<CommentItem[]>([]); // 전체 댓글 목록 상태
+  const [comments, setComments] = useState<CommentItem[]>([]); // 댓글 목록
+  const [replyClicked, setReplyClicked] = useState<number | null>(null); // 클릭된 댓글 상태
+  const [replyContent, setReplyContent] = useState<{ [key: number]: string }>({}); // 답글 목록
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   // 댓글 입력 함수
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
+  };
+
+  // 답글 입력 함수
+  const handleReplyChange = (e: React.ChangeEvent<HTMLTextAreaElement>, commentId: number) => {
+    setReplyContent((prev) => ({
+      ...prev,
+      [commentId]: e.target.value,
+    }));
   };
 
   // 댓글 게시 함수
@@ -29,13 +50,34 @@ export const Comment = () => {
     // 새로운 댓글 추가
     const newComment = {
       id: Date.now(), // 고유한 ID 생성
-      nickname: '성춘향',
+      nickname: '심수연',
       content: comment,
+      createdAt: new Date(),
+      replies: [],
+    };
+
+    setComments((prevComments) => [newComment, ...prevComments]);
+    setComment(''); // 댓글 입력란 초기화
+  };
+
+  // 답글 게시 함수
+  const handlePostReply = (commentId: number) => {
+    if (replyContent[commentId]?.trim() === '') return; // 빈 답글은 게시하지 않음
+
+    const newReply = {
+      id: Date.now(),
+      nickname: '심수연',
+      content: replyContent[commentId],
       createdAt: new Date(),
     };
 
-    setComments((prevComments) => [...prevComments, newComment]);
-    setComment(''); // 댓글 입력란 초기화
+    setComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment.id === commentId ? { ...comment, replies: [...comment.replies, newReply] } : comment
+      )
+    );
+    setReplyContent((prev) => ({ ...prev, [commentId]: '' })); // 답글 입력란 초기화
+    setReplyClicked(null);
   };
 
   // 댓글 생성 날짜 포맷팅 함수
@@ -50,6 +92,11 @@ export const Comment = () => {
     } else {
       return format(date, 'yyyy/MM/dd', { locale: ko });
     }
+  };
+
+  // reply 클릭 처리 함수
+  const handleReplyClick = (id: number) => {
+    setReplyClicked((prevState) => (prevState === id ? null : id)); // 클릭 시 상태 토글 및 다른 답글 창 닫기
   };
 
   // textarea 높이 조정 함수
@@ -72,6 +119,7 @@ export const Comment = () => {
           <span>{comments.length}</span>
         </S.CommentTitle>
 
+        {/* 댓글 입력 */}
         <S.AddComment>
           <img src={profileIcon} alt="profile icon" />
           <S.CommentBox>
@@ -97,14 +145,64 @@ export const Comment = () => {
         <S.CommentList>
           {comments.map((item) => (
             <S.CommentItem key={item.id}>
-              <img src={profileIcon} alt="profile icon" />
-              <S.CommentContentWrapper>
-                <S.CommentInfo>
-                  <p>{item.nickname}</p>
-                  <span>{formatCommentDate(item.createdAt)}</span>
-                </S.CommentInfo>
-                <S.CommentContent>{item.content}</S.CommentContent>
-              </S.CommentContentWrapper>
+              <S.CommentItemWrapper>
+                <img className="profile-icon" src={profileIcon} alt="profile icon" />
+                <S.CommentContentWrapper>
+                  <div className="comment-info-wrapper">
+                    <S.CommentInfo>
+                      <p>{item.nickname}</p>
+                      <span>{formatCommentDate(item.createdAt)}</span>
+                    </S.CommentInfo>
+                    <S.CommentContent>{item.content}</S.CommentContent>
+                  </div>
+                  <img
+                    src={replyClicked === item.id ? replyBlue : replyGray}
+                    alt="reply"
+                    onClick={() => handleReplyClick(item.id)}
+                  />
+                </S.CommentContentWrapper>
+              </S.CommentItemWrapper>
+
+              {/* 답글 입력 */}
+              {replyClicked === item.id && (
+                <S.ReplySection>
+                  <S.ReplyWrapper>
+                    <img className="reply-line" src={replyLine} alt="reply line" />
+                    <S.AddReply>
+                      <S.CommentTextArea
+                        placeholder="답글"
+                        value={replyContent[item.id] || ''}
+                        onChange={(e) => handleReplyChange(e, item.id)}
+                      ></S.CommentTextArea>
+                      <S.ButtonWrapper>
+                        <Button
+                          onClick={() => handlePostReply(item.id)}
+                          size="small"
+                          type={replyContent[item.id]?.trim() ? 'main' : 'inactive'}
+                        >
+                          게시
+                        </Button>
+                      </S.ButtonWrapper>
+                    </S.AddReply>
+                  </S.ReplyWrapper>
+                </S.ReplySection>
+              )}
+
+              {/* 답글 목록 표시 */}
+              {item.replies.map((reply) => (
+                <div key={reply.id}>
+                  <S.ReplyWrapper>
+                    <img className="reply-line" src={replyLine} alt="reply line" />
+                    <div className="reply-info-wrapper">
+                      <S.CommentInfo>
+                        <p>{reply.nickname}</p>
+                        <span>{formatCommentDate(reply.createdAt)}</span>
+                      </S.CommentInfo>
+                      <S.CommentContent>{reply.content}</S.CommentContent>
+                    </div>
+                  </S.ReplyWrapper>
+                </div>
+              ))}
             </S.CommentItem>
           ))}
         </S.CommentList>

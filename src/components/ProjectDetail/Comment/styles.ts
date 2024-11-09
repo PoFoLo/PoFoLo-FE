@@ -88,16 +88,19 @@ export const CommentList = styled.ul`
 
 export const CommentItem = styled.li`
   padding: 3.2rem 0;
-  display: flex;
-  gap: 2rem;
+
   border-bottom: 0.1rem solid ${(props) => props.theme.colors.gray20};
 
   &:last-child {
     border-bottom: none;
     padding-bottom: 0;
   }
+`;
 
-  img {
+export const CommentItemWrapper = styled.div`
+  display: flex;
+  gap: 2rem;
+  .profile-icon {
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
@@ -107,8 +110,22 @@ export const CommentItem = styled.li`
 
 export const CommentContentWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  gap: 1.6rem;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  .comment-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  img {
+    width: 2.8rem;
+    height: 2.8rem;
+    cursor: pointer;
+  }
 `;
 
 export const CommentInfo = styled.div`
@@ -131,4 +148,37 @@ export const CommentContent = styled.p`
   ${(props) => props.theme.fonts.body2};
   color: ${(props) => props.theme.colors.gray90};
   white-space: pre-wrap;
+`;
+
+// reply
+
+export const ReplySection = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ReplyWrapper = styled.div`
+  margin: 0.8rem 0 0 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+
+  .reply-line {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .reply-info-wrapper {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+`;
+
+export const AddReply = styled.div`
+  margin-top: 1.2rem;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
 `;
