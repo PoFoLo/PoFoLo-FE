@@ -80,3 +80,55 @@ export const ButtonWrapper = styled.div`
   position: absolute;
   right: 1.2rem;
 `;
+
+export const CommentList = styled.ul`
+  width: 100%;
+  margin-top: 0.4rem;
+`;
+
+export const CommentItem = styled.li`
+  padding: 3.2rem 0;
+  display: flex;
+  gap: 2rem;
+  border-bottom: 0.1rem solid ${(props) => props.theme.colors.gray20};
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 0.15rem solid ${(props) => props.theme.colors.gray20};
+  }
+`;
+
+export const CommentContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+`;
+
+export const CommentInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  p {
+    ${(props) => props.theme.fonts.subhead2};
+    color: ${(props) => props.theme.colors.gray90};
+  }
+
+  span {
+    ${(props) => props.theme.fonts.caption2};
+    color: ${(props) => props.theme.colors.gray60};
+  }
+`;
+
+export const CommentContent = styled.p`
+  ${(props) => props.theme.fonts.body2};
+  color: ${(props) => props.theme.colors.gray90};
+  white-space: pre-wrap;
+`;
