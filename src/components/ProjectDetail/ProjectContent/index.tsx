@@ -11,7 +11,12 @@ import like from '@/assets/svgs/ProjectDetail/like.svg';
 import likeRed from '@/assets/svgs/ProjectDetail/likeRed.svg';
 import comment from '@/assets/svgs/ProjectDetail/comment.svg';
 
-export const ProjectContent = () => {
+interface ProjectContentProps {
+  onCommentClick: () => void;
+  commentCount: number; // 댓글 개수 prop 추가
+}
+
+export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, commentCount }) => {
   const [isFixed, setIsFixed] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(10);
@@ -111,14 +116,17 @@ This design is based on the theme “BEGIN AGAIN,” showcasing a variety of let
             </S.LinkList>
           </S.Article>
         </S.BodyText>
+
+        {/* 플로팅 버튼 */}
         <S.FloatingButtonWrapper ref={floatingButtonRef} className={isFixed ? 'fixed' : 'absolute'}>
-          <S.FloatingButton onClick={handleLikeClick} $isLiked={isLiked} $likeCount={likeCount}>
+          <S.LikeButton onClick={handleLikeClick} $isLiked={isLiked} $likeCount={likeCount}>
             <img src={isLiked ? likeRed : like} alt="like" className={isLiked ? 'liked' : ''} />
             <span>{likeCount}</span>
-          </S.FloatingButton>
-          <S.FloatingButton>
+          </S.LikeButton>
+          <S.CommentButton $commentCount={commentCount} onClick={onCommentClick}>
             <img src={comment} alt="comment" />
-          </S.FloatingButton>
+            <span>{commentCount}</span>
+          </S.CommentButton>
         </S.FloatingButtonWrapper>
       </S.ProjectContainer>
     </>

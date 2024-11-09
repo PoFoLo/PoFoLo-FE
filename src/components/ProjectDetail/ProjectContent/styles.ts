@@ -157,6 +157,8 @@ export const LinkBox = styled.div`
   flex-direction: column;
 `;
 
+// 플로팅 버튼
+
 export const FloatingButtonWrapper = styled.div`
   width: 14.8rem;
   height: 6.4rem;
@@ -180,12 +182,12 @@ export const FloatingButtonWrapper = styled.div`
   }
 `;
 
-interface FloatingButtonProps {
-  $isLiked?: boolean;
-  $likeCount?: number;
+interface BaseButtonProps {
+  $size?: number;
+  $activeSize?: number;
 }
 
-export const FloatingButton = styled.div<FloatingButtonProps>`
+const BaseButton = styled.div<BaseButtonProps>`
   z-index: 10;
   cursor: pointer;
   display: flex;
@@ -199,8 +201,8 @@ export const FloatingButton = styled.div<FloatingButtonProps>`
   border: 0.1rem solid ${(props) => props.theme.colors.gray70};
 
   img {
-    width: ${(props) => (!props.$isLiked && (props.$likeCount ?? 0) === 0 ? '3.24rem' : '3.1rem')};
-    height: ${(props) => (!props.$isLiked && (props.$likeCount ?? 0) === 0 ? '3.24rem' : '3.1rem')};
+    width: ${(props) => props.$size ?? '3.1rem'};
+    height: ${(props) => props.$size ?? '3.1rem'};
     transition:
       width 0.2s,
       height 0.2s;
@@ -215,6 +217,30 @@ export const FloatingButton = styled.div<FloatingButtonProps>`
     line-height: 140%;
     letter-spacing: 0.0025rem;
     color: ${(props) => props.theme.colors.gray20};
-    display: ${(props) => (props.$isLiked || props.$likeCount! > 0 ? 'block' : 'none')};
+  }
+`;
+
+interface LikeButtonProps {
+  $isLiked?: boolean;
+  $likeCount?: number;
+}
+
+export const LikeButton = styled(BaseButton).attrs<LikeButtonProps>((props) => ({
+  $size: !props.$isLiked && (props.$likeCount ?? 0) === 0 ? 3.24 : 3.1,
+}))<LikeButtonProps>`
+  span {
+    display: ${(props) => (props.$isLiked || (props.$likeCount ?? 0) > 0 ? 'block' : 'none')};
+  }
+`;
+
+interface CommentButtonProps {
+  $commentCount: number;
+}
+
+export const CommentButton = styled(BaseButton).attrs<CommentButtonProps>((props) => ({
+  $size: (props.$commentCount ?? 0) === 0 ? 3.24 : 3.1,
+}))<CommentButtonProps>`
+  span {
+    display: ${(props) => ((props.$commentCount ?? 0) > 0 ? 'block' : 'none')};
   }
 `;

@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CommentItemDto } from '@/components/ProjectDetail/Comment/dto';
 import { CommentInput } from '@/components/ProjectDetail/Comment/CommentInput';
 import { CommentList } from '@/components/ProjectDetail/Comment/CommentList';
 import * as S from '@/components/ProjectDetail/Comment/styles';
 import commentIcon from '@/assets/webps/ProjectDetail/commentIcon.webp';
 
-export const Comment = () => {
+interface CommentProps {
+  updateCommentCount: (count: number) => void; // 댓글 개수 업데이트 콜백
+}
+
+export const Comment = ({ updateCommentCount }: CommentProps) => {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<CommentItemDto[]>([]);
   const [replyClicked, setReplyClicked] = useState<number | null>(null);
@@ -60,6 +64,10 @@ export const Comment = () => {
   };
 
   const handleReplyClick = (id: number) => setReplyClicked((prev) => (prev === id ? null : id));
+
+  useEffect(() => {
+    updateCommentCount(comments.length); // 댓글 수 변경 시 업데이트
+  }, [comments, updateCommentCount]);
 
   return (
     <S.CommentLayout>

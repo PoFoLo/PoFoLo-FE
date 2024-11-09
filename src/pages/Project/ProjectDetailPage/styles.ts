@@ -6,4 +6,8 @@ export const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .comment {
+    width: 100%;
+  }
 `;
