@@ -105,6 +105,7 @@ export const CommentItemWrapper = styled.div`
     height: 4rem;
     border-radius: 50%;
     border: 0.15rem solid ${(props) => props.theme.colors.gray20};
+    cursor: pointer;
   }
 `;
 
@@ -136,6 +137,7 @@ export const CommentInfo = styled.div`
   p {
     ${(props) => props.theme.fonts.subhead2};
     color: ${(props) => props.theme.colors.gray90};
+    cursor: pointer;
   }
 
   span {

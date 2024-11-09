@@ -7,6 +7,7 @@ import Button from '@/components/Common/Button';
 import replyGray from '@/assets/webps/ProjectDetail/replyGray.webp';
 import replyBlue from '@/assets/webps/ProjectDetail/replyBlue.webp';
 import replyLine from '@/assets/svgs/ProjectDetail/replyLine.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface CommentItem {
   id: number;
@@ -28,7 +29,11 @@ export const Comment = () => {
   const [comments, setComments] = useState<CommentItem[]>([]); // 댓글 목록
   const [replyClicked, setReplyClicked] = useState<number | null>(null); // 클릭된 댓글 상태
   const [replyContent, setReplyContent] = useState<{ [key: number]: string }>({}); // 답글 목록
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const commentInputRef = useRef<HTMLTextAreaElement>(null);
+  const replyInputRef = useRef<{ [key: number]: HTMLTextAreaElement | null }>({});
+  const commentRefs = useRef<{ [key: number]: HTMLLIElement | null }>({});
+  const replyRefs = useRef<{ [key: number]: HTMLLIElement | null }>({});
+  const nav = useNavigate();
 
   // 댓글 입력 함수
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -58,6 +63,15 @@ export const Comment = () => {
 
     setComments((prevComments) => [newComment, ...prevComments]);
     setComment(''); // 댓글 입력란 초기화
+
+    // 댓글이 추가되면 스크롤 이동
+    setTimeout(() => {
+      const newCommentRef = commentRefs.current[newComment.id];
+      newCommentRef?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 0);
+
+    // 댓글 입력란에 포커스
+    commentInputRef.current?.focus();
   };
 
   // 답글 게시 함수
@@ -78,6 +92,12 @@ export const Comment = () => {
     );
     setReplyContent((prev) => ({ ...prev, [commentId]: '' })); // 답글 입력란 초기화
     setReplyClicked(null);
+
+    // 답글이 추가되면 해당 답글로 스크롤 이동
+    setTimeout(() => {
+      const newReplyRef = replyRefs.current[newReply.id];
+      newReplyRef?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 0);
   };
 
   // 댓글 생성 날짜 포맷팅 함수
@@ -97,16 +117,18 @@ export const Comment = () => {
   // reply 클릭 처리 함수
   const handleReplyClick = (id: number) => {
     setReplyClicked((prevState) => (prevState === id ? null : id)); // 클릭 시 상태 토글 및 다른 답글 창 닫기
+    setTimeout(() => {
+      replyInputRef.current[id]?.focus();
+    }, 0);
   };
 
   // textarea 높이 조정 함수
   const adjustHeight = () => {
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = '5.6rem'; // default
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+    if (commentInputRef.current) {
+      commentInputRef.current.style.height = '5.6rem';
+      commentInputRef.current.style.height = `${commentInputRef.current.scrollHeight}px`;
     }
   };
-
   useEffect(() => {
     adjustHeight();
   }, [comment]);
@@ -124,7 +146,7 @@ export const Comment = () => {
           <img src={profileIcon} alt="profile icon" />
           <S.CommentBox>
             <S.CommentTextArea
-              ref={textAreaRef}
+              ref={commentInputRef}
               placeholder="댓글"
               value={comment}
               onChange={handleCommentChange}
@@ -144,13 +166,18 @@ export const Comment = () => {
         {/* 댓글 목록 표시 */}
         <S.CommentList>
           {comments.map((item) => (
-            <S.CommentItem key={item.id}>
+            <S.CommentItem key={item.id} ref={(el) => (commentRefs.current[item.id] = el)}>
               <S.CommentItemWrapper>
-                <img className="profile-icon" src={profileIcon} alt="profile icon" />
+                <img
+                  onClick={() => nav('/mypage')}
+                  className="profile-icon"
+                  src={profileIcon}
+                  alt="profile icon"
+                />
                 <S.CommentContentWrapper>
                   <div className="comment-info-wrapper">
                     <S.CommentInfo>
-                      <p>{item.nickname}</p>
+                      <p onClick={() => nav('/mypage')}>{item.nickname}</p>
                       <span>{formatCommentDate(item.createdAt)}</span>
                     </S.CommentInfo>
                     <S.CommentContent>{item.content}</S.CommentContent>
@@ -170,6 +197,7 @@ export const Comment = () => {
                     <img className="reply-line" src={replyLine} alt="reply line" />
                     <S.AddReply>
                       <S.CommentTextArea
+                        ref={(el) => (replyInputRef.current[item.id] = el)}
                         placeholder="답글"
                         value={replyContent[item.id] || ''}
                         onChange={(e) => handleReplyChange(e, item.id)}
@@ -190,18 +218,23 @@ export const Comment = () => {
 
               {/* 답글 목록 표시 */}
               {item.replies.map((reply) => (
-                <div key={reply.id}>
+                <li key={reply.id} ref={(el) => (replyRefs.current[reply.id] = el)}>
                   <S.ReplyWrapper>
-                    <img className="reply-line" src={replyLine} alt="reply line" />
+                    <img
+                      onClick={() => nav('/mypage')}
+                      className="reply-line"
+                      src={replyLine}
+                      alt="reply line"
+                    />
                     <div className="reply-info-wrapper">
                       <S.CommentInfo>
-                        <p>{reply.nickname}</p>
+                        <p onClick={() => nav('/mypage')}>{reply.nickname}</p>
                         <span>{formatCommentDate(reply.createdAt)}</span>
                       </S.CommentInfo>
                       <S.CommentContent>{reply.content}</S.CommentContent>
                     </div>
                   </S.ReplyWrapper>
-                </div>
+                </li>
               ))}
             </S.CommentItem>
           ))}
