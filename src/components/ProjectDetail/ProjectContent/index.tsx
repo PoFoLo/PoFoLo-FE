@@ -7,13 +7,23 @@ import link from '@/assets/webps/Common/link.webp';
 import projectImg1 from '@/assets/webps/ProjectDetail/projectImg1.webp';
 import projectImg2 from '@/assets/webps/ProjectDetail/projectImg2.webp';
 import projectImg3 from '@/assets/webps/ProjectDetail/projectImg3.webp';
+import like from '@/assets/svgs/ProjectDetail/like.svg';
+import likeRed from '@/assets/svgs/ProjectDetail/likeRed.svg';
+import comment from '@/assets/svgs/ProjectDetail/comment.svg';
 
 export const ProjectContent = () => {
+  const [isFixed, setIsFixed] = useState(true);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(10);
   const nav = useNavigate();
   const images = [projectImg1, projectImg2, projectImg3];
-  const [isFixed, setIsFixed] = useState(true);
   const projectContainerRef = useRef<HTMLDivElement | null>(null);
   const floatingButtonRef = useRef<HTMLDivElement | null>(null);
+
+  const handleLikeClick = () => {
+    setIsLiked(!isLiked);
+    setLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
+  };
 
   // 플로팅 버튼 고정
   useEffect(() => {
@@ -102,8 +112,13 @@ This design is based on the theme “BEGIN AGAIN,” showcasing a variety of let
           </S.Article>
         </S.BodyText>
         <S.FloatingButtonWrapper ref={floatingButtonRef} className={isFixed ? 'fixed' : 'absolute'}>
-          <S.FloatingButton></S.FloatingButton>
-          <S.FloatingButton></S.FloatingButton>
+          <S.FloatingButton onClick={handleLikeClick} $isLiked={isLiked} $likeCount={likeCount}>
+            <img src={isLiked ? likeRed : like} alt="like" className={isLiked ? 'liked' : ''} />
+            <span>{likeCount}</span>
+          </S.FloatingButton>
+          <S.FloatingButton>
+            <img src={comment} alt="comment" />
+          </S.FloatingButton>
         </S.FloatingButtonWrapper>
       </S.ProjectContainer>
     </>

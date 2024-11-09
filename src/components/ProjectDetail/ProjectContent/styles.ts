@@ -180,11 +180,41 @@ export const FloatingButtonWrapper = styled.div`
   }
 `;
 
-export const FloatingButton = styled.div`
+interface FloatingButtonProps {
+  $isLiked?: boolean;
+  $likeCount?: number;
+}
+
+export const FloatingButton = styled.div<FloatingButtonProps>`
+  z-index: 10;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 6.4rem;
   height: 6.4rem;
   border-radius: 50%;
   background-color: ${(props) => props.theme.colors.gray80};
   border: 0.1rem solid ${(props) => props.theme.colors.gray70};
+
+  img {
+    width: ${(props) => (!props.$isLiked && (props.$likeCount ?? 0) === 0 ? '3.24rem' : '3.1rem')};
+    height: ${(props) => (!props.$isLiked && (props.$likeCount ?? 0) === 0 ? '3.24rem' : '3.1rem')};
+    transition:
+      width 0.2s,
+      height 0.2s;
+  }
+
+  span {
+    margin-top: -0.2rem;
+    text-align: center;
+    font-family: 'Pretendard';
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 0.0025rem;
+    color: ${(props) => props.theme.colors.gray20};
+    display: ${(props) => (props.$isLiked || props.$likeCount! > 0 ? 'block' : 'none')};
+  }
 `;
