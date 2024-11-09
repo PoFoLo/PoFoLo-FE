@@ -4,6 +4,7 @@ export const ProjectContainer = styled.main`
   width: 100%;
   max-width: 131.2rem;
   padding-bottom: 11.2rem;
+  position: relative;
 
   @media (max-width: 1440px) {
     padding: 0 6.4rem 11.2rem;
@@ -154,4 +155,36 @@ export const LinkContainer = styled.div`
 export const LinkBox = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const FloatingButtonWrapper = styled.div`
+  width: 14.8rem;
+  height: 6.4rem;
+  position: fixed;
+  bottom: 4.8rem;
+  right: calc(50% - 65.6rem);
+  display: flex;
+  gap: 2rem;
+
+  @media (max-width: 1440px) {
+    right: calc(50% - 65.6rem + 6.4rem);
+  }
+
+  @media (max-width: 1312px) {
+    right: 6.4rem;
+  }
+
+  &.absolute {
+    position: absolute;
+    bottom: 4.8rem;
+  }
+`;
+
+export const FloatingButton = styled.div`
+  cursor: pointer;
+  width: 6.4rem;
+  height: 6.4rem;
+  border-radius: 50%;
+  background-color: ${(props) => props.theme.colors.gray80};
+  border: 0.1rem solid ${(props) => props.theme.colors.gray70};
 `;

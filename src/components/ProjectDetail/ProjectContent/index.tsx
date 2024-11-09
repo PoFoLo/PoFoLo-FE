@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import * as S from '@/components/ProjectDetail/ProjectContent/styles';
@@ -10,6 +11,31 @@ import projectImg3 from '@/assets/webps/ProjectDetail/projectImg3.webp';
 export const ProjectContent = () => {
   const nav = useNavigate();
   const images = [projectImg1, projectImg2, projectImg3];
+  const [isFixed, setIsFixed] = useState(true);
+  const projectContainerRef = useRef<HTMLDivElement | null>(null);
+  const floatingButtonRef = useRef<HTMLDivElement | null>(null);
+
+  // 플로팅 버튼 고정
+  useEffect(() => {
+    const handleScroll = () => {
+      if (projectContainerRef.current && floatingButtonRef.current) {
+        const projectBottom = projectContainerRef.current.getBoundingClientRect().bottom;
+        const viewportHeight = window.innerHeight;
+        const buttonHeight = floatingButtonRef.current.offsetHeight;
+
+        if (projectBottom > viewportHeight - buttonHeight + 48) {
+          setIsFixed(true);
+        } else {
+          setIsFixed(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // 초기 상태 설정을 위해 호출
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -20,7 +46,7 @@ export const ProjectContent = () => {
           ))}
         </ScrollContainer>
       </S.ImgContainer>
-      <S.ProjectContainer>
+      <S.ProjectContainer ref={projectContainerRef}>
         <S.TopInfo>
           <S.ProfileInfo>
             <img onClick={() => nav('/mypage')} src={profileIcon} alt="profile icon" />
@@ -75,6 +101,10 @@ This design is based on the theme “BEGIN AGAIN,” showcasing a variety of let
             </S.LinkList>
           </S.Article>
         </S.BodyText>
+        <S.FloatingButtonWrapper ref={floatingButtonRef} className={isFixed ? 'fixed' : 'absolute'}>
+          <S.FloatingButton></S.FloatingButton>
+          <S.FloatingButton></S.FloatingButton>
+        </S.FloatingButtonWrapper>
       </S.ProjectContainer>
     </>
   );
