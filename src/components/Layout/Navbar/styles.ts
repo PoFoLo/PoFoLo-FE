@@ -1,10 +1,9 @@
-// styles.ts
 import styled from 'styled-components';
 
 export const NavContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   height: 6.4rem;
   justify-content: center;
   position: fixed;
