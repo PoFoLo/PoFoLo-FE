@@ -15,7 +15,7 @@ export const ProjectContainer = styled.main`
 
 export const ImgContainer = styled.section`
   width: 100%;
-  margin-top: 2.4rem;
+  margin-top: 8.8rem;
   display: flex;
   white-space: nowrap;
 `;
