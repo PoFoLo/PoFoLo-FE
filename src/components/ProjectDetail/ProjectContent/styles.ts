@@ -7,7 +7,9 @@ export const ProjectContainer = styled.main`
   position: relative;
 
   @media (max-width: 1440px) {
-    padding: 0 6.4rem 11.2rem;
+    padding-bottom: 11.2rem;
+    margin: 0 6.4rem;
+    width: calc(100% - 11.2rem);
   }
 `;
 
@@ -28,7 +30,7 @@ export const ImageItem = styled.img`
     margin-left: calc((100vw - 131.2rem) / 2 - 0.7rem);
 
     @media (max-width: 1440px) {
-      margin-left: 6.4rem;
+      margin-left: 5.7rem; // 스크롤 바 이슈로 6.4 - 0.7
     }
   }
 
@@ -182,16 +184,13 @@ export const FloatingButtonWrapper = styled.div`
   gap: 2rem;
 
   @media (max-width: 1440px) {
-    right: calc(50% - 65.6rem + 6.4rem);
-  }
-
-  @media (max-width: 1312px) {
-    right: 6.4rem;
+    right: 5.7rem;
   }
 
   &.absolute {
     position: absolute;
     bottom: 4.8rem;
+    right: 0rem;
   }
 `;
 

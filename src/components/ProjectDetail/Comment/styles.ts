@@ -15,7 +15,8 @@ export const CommentContainer = styled.section`
   padding: 3.2rem 0;
 
   @media (max-width: 1440px) {
-    padding: 3.2rem 6.4rem;
+    margin: 0 6.4rem;
+    width: calc(100% - 11.2rem);
   }
 `;
 
@@ -62,7 +63,7 @@ export const CommentTextArea = styled.textarea`
   border: 0.15rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 1.2rem;
   padding: 1.2rem 8.8rem 1.2rem 2rem;
-  height: 5.6rem;
+  height: 5.3rem;
   overflow: hidden;
   ${(props) => props.theme.fonts.body2};
   color: ${(props) => props.theme.colors.gray90};
