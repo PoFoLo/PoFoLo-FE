@@ -9,7 +9,7 @@ export const NavContainer = styled.div`
   position: fixed;
   z-index: 10;
   background-color: white;
-  padding: 0 4.4rem;
+  padding: 0 6.4rem;
 
   @media (max-width: 1440px) {
     padding: 0 10rem;
@@ -27,10 +27,13 @@ export const NavBody = styled.div`
 export const NavLeftGoBack = styled.div`
   width: 1.45rem;
   height: 2.4rem;
+  cursor: pointer;
 `;
 
 export const NavLeftLogo = styled.div`
-  /* NavLeft는 로고를 왼쪽에 고정 */
+  width: 11.1rem;
+  height: 2.675rem;
+  cursor: pointer;
 `;
 
 export const GoBack = styled.img`
@@ -43,7 +46,6 @@ export const Logo = styled.img`
   width: 13.4rem;
   height: 3.2rem;
   flex-shrink: 0;
-  cursor: pointer;
 `;
 
 export const NavRight = styled.div`

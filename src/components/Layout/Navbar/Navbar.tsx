@@ -5,7 +5,7 @@ import * as S from './styles';
 import navbarLogoSrc from '@/assets/webps/Navbar/navbarLogo.webp';
 import navbarGoBackSrc from '@/assets/webps/Common/navbarGoBack.webp';
 import navbarMyPageSrc from '@/assets/webps/Common/navbarMyPage.webp';
-import navbarLogoutSrc from '@/assets/svgs/Navbar/navbarLogout.svg';
+// import navbarLogoutSrc from '@/assets/svgs/Navbar/navbarLogout.svg';
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
