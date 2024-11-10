@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as S from '@/components/Common/Input/styles';
-import Invalidate from '@/assets/webps/WriteProject/invalidate.webp';
-import Validate from '@/assets/webps/WriteProject/validate.webp';
+import Invalidate from '@/assets/webps/Common/invalidate.webp';
+import Validate from '@/assets/webps/Common/validate.webp';
 
 interface InputFieldProps {
   value: string;

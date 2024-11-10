@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as S from '@/components/Common/TextArea/styles';
-import Invalidate from '@/assets/webps/WriteProject/invalidate.webp';
-import Validate from '@/assets/webps/WriteProject/validate.webp';
+import Invalidate from '@/assets/webps/Common/invalidate.webp';
+import Validate from '@/assets/webps/Common/validate.webp';
 
 // Textarea 컴포넌트 (여러 줄 입력)
 interface TextAreaFieldProps {
