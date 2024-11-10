@@ -4,7 +4,7 @@ export const TextAreaContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  flex: 1;
 `;
 
 export const StyledTextArea = styled.textarea<{ $error: boolean }>`

@@ -4,7 +4,7 @@ export const InputContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  flex: 1;
 `;
 
 export const StyledInput = styled.input<{ $error: boolean }>`
