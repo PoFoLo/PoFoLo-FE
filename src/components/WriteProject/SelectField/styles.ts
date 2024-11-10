@@ -26,7 +26,7 @@ export const DropdownHeader = styled.div`
   align-items: flex-start;
   flex: 1;
   padding: 1.45rem 1.6rem;
-  border: 0.15rem solid ${(props) => props.theme.colors.gray20};
+  border: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 1.2rem;
   background-color: ${(props) => props.theme.colors.gray10};
   box-sizing: border-box;
@@ -58,7 +58,7 @@ export const OptionList = styled.ul`
   width: calc(100% + 0.3rem); /* 좌우 border 두께를 더해 전체 너비 조정 */
   padding: 5rem 1.6rem 1.45rem 1.6rem;
   border-radius: 1.2rem;
-  border: 0.15rem solid ${(props) => props.theme.colors.blue30};
+  border: 0.1rem solid ${(props) => props.theme.colors.blue30};
   background-color: ${(props) => props.theme.colors.gray10};
   box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;

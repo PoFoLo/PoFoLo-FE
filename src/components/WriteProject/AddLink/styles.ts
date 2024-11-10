@@ -5,7 +5,7 @@ export const LinkInputContainer = styled.div`
   align-items: center;
   flex-wrap: wrap;
   padding: 1.4rem;
-  border: 0.15rem solid ${(props) => props.theme.colors.gray20};
+  border: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 1.2rem;
   background-color: ${(props) => props.theme.colors.gray10};
   gap: 1.2rem 1.8rem;
@@ -16,7 +16,7 @@ export const LinkInputContainer = styled.div`
 export const Link = styled.div`
   display: flex;
   background-color: ${(props) => props.theme.colors.gray5};
-  border: 0.075rem solid ${(props) => props.theme.colors.gray20};
+  border: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 0.8rem;
   padding: 0.4rem 1.2rem;
   justify-content: center;
