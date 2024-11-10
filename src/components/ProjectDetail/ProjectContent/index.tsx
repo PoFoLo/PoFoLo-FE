@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import * as S from '@/components/ProjectDetail/ProjectContent/styles';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
-import link from '@/assets/webps/Common/link.webp';
+import linkIcon from '@/assets/webps/Common/link.webp';
 import projectImg1 from '@/assets/webps/ProjectDetail/projectImg1.webp';
 import projectImg2 from '@/assets/webps/ProjectDetail/projectImg2.webp';
 import projectImg3 from '@/assets/webps/ProjectDetail/projectImg3.webp';
@@ -15,6 +15,15 @@ interface ProjectContentProps {
   onCommentClick: () => void;
   commentCount: number; // 댓글 개수 prop 추가
 }
+
+const links = [
+  { title: 'BEGIN AGAIN 82小红书...', url: 'behance.net/' },
+  { title: '홍길동의 외부링크 - Sitename', url: 'linkname.link' },
+  { title: 'BEGIN AGAIN 82小红书...', url: 'behance.net/' },
+  { title: '홍길동의 외부링크 - Sitename', url: 'linkname.link' },
+  { title: 'BEGIN AGAIN 82小红书...', url: 'behance.net/' },
+  { title: '홍길동의 외부링크 - Sitename', url: 'linkname.link' },
+];
 
 export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, commentCount }) => {
   const [isFixed, setIsFixed] = useState(true);
@@ -98,21 +107,19 @@ This design is based on the theme “BEGIN AGAIN,” showcasing a variety of let
 
           <S.Article>
             <h2>링크</h2>
+
             <S.LinkList>
-              <S.LinkContainer>
-                <img src={link} alt="link icon" />
-                <S.LinkBox>
-                  <p className="link-title">BEGIN AGAIN 82小红书...</p>
-                  <p className="web-address">behance.net/</p>
-                </S.LinkBox>
-              </S.LinkContainer>
-              <S.LinkContainer>
-                <img src={link} alt="link icon" />
-                <S.LinkBox>
-                  <p className="link-title">홍길동의 외부링크 - Sitename</p>
-                  <p className="web-address">linkname.link</p>
-                </S.LinkBox>
-              </S.LinkContainer>
+              <ScrollContainer className="scroll-container" horizontal>
+                {links.map((link, index) => (
+                  <S.LinkContainer key={index}>
+                    <img src={linkIcon} alt="link icon" />
+                    <S.LinkBox>
+                      <p className="link-title">{link.title}</p>
+                      <p className="web-address">{link.url}</p>
+                    </S.LinkBox>
+                  </S.LinkContainer>
+                ))}
+              </ScrollContainer>
             </S.LinkList>
           </S.Article>
         </S.BodyText>

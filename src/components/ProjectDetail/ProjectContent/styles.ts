@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const ProjectContainer = styled.main`
   width: 100%;
   max-width: 131.2rem;
-  padding-bottom: 11.2rem;
+  padding-bottom: 13.2rem;
   position: relative;
 
   @media (max-width: 1440px) {
-    padding-bottom: 11.2rem;
+    padding-bottom: 13.2rem;
     margin: 0 6.4rem;
     width: calc(100% - 11.2rem);
   }
@@ -126,12 +126,15 @@ export const Article = styled.article`
 
 export const LinkList = styled.div`
   width: 100%;
+  margin-top: 1.2rem;
   display: flex;
-  gap: 2rem;
+
+  .scroll-container {
+    display: flex;
+  }
 `;
 
 export const LinkContainer = styled.div`
-  margin-top: 1.2rem;
   width: 28rem;
   height: 5.6rem;
   padding: 0.4rem 1.2rem;
@@ -142,6 +145,10 @@ export const LinkContainer = styled.div`
   background-color: ${(props) => props.theme.colors.gray5};
   border-radius: 0.8rem;
   cursor: pointer;
+
+  & + & {
+    margin-left: 2rem;
+  }
 
   img {
     width: 2rem;
