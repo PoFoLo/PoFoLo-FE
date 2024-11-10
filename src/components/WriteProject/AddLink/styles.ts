@@ -10,6 +10,7 @@ export const LinkInputContainer = styled.div`
   border-radius: 1.2rem;
   background-color: ${(props) => props.theme.colors.gray10};
   gap: 1.2rem 1.8rem;
+  min-width: 0;
 `;
 
 export const Link = styled.div`
@@ -21,6 +22,8 @@ export const Link = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.8rem;
+  max-width: 28rem;
+  min-width: 0;
 `;
 
 export const LinkIcon = styled.div<{ $backgroundImage: string }>`
@@ -28,6 +31,7 @@ export const LinkIcon = styled.div<{ $backgroundImage: string }>`
   height: 2rem;
   background-image: url(${(props) => props.$backgroundImage});
   background-size: contain;
+  flex-shrink: 0;
 `;
 
 export const LinkContentContainer = styled.div`
@@ -35,12 +39,13 @@ export const LinkContentContainer = styled.div`
   flex-direction: column;
   padding: 0.4rem;
   justify-content: center;
+  min-width: 0;
 `;
 
 export const LinkTitle = styled.p`
   ${(props) => props.theme.fonts.caption2};
   color: ${(props) => props.theme.colors.gray90};
-  width: 20rem;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -49,7 +54,7 @@ export const LinkTitle = styled.p`
 export const LinkDomain = styled.p`
   ${(props) => props.theme.fonts.caption3};
   color: ${(props) => props.theme.colors.gray70};
-  width: 20rem;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -60,6 +65,7 @@ export const RemoveButton = styled.button<{ $backgroundImage: string }>`
   height: 1.2rem;
   background-image: url(${(props) => props.$backgroundImage});
   background-size: contain;
+  flex-shrink: 0;
 `;
 
 export const Input = styled.input`
@@ -68,6 +74,7 @@ export const Input = styled.input`
   border: none;
   outline: none;
   background: transparent;
+  min-width: 0;
 
   &::placeholder {
     color: ${(props) => props.theme.colors.gray50};
