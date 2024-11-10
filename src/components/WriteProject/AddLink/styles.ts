@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const LinkInputContainer = styled.div`
   display: flex;
-  flex: 1;
   align-items: center;
   flex-wrap: wrap;
   padding: 1.4rem;
@@ -10,6 +9,7 @@ export const LinkInputContainer = styled.div`
   border-radius: 1.2rem;
   background-color: ${(props) => props.theme.colors.gray10};
   gap: 1.2rem 1.8rem;
+  width: 100%;
   min-width: 0;
 `;
 

@@ -11,7 +11,7 @@ interface OptionProps {
 export const SelectFieldContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  width: 100%;
 `;
 
 export const DropdownContainer = styled.div`

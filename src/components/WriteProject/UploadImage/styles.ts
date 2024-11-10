@@ -3,7 +3,7 @@ import ScrollContainer from 'react-indiana-drag-scroll';
 
 export const StyledScrollContainer = styled(ScrollContainer)`
   display: flex;
-  flex: 1;
+  width: 100%;
   gap: 2rem;
   cursor: pointer;
 `;
