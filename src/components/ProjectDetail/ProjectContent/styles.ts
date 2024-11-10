@@ -23,6 +23,19 @@ export const ImageItem = styled.img`
   height: 36rem;
   border-radius: 1.2rem;
   display: inline-block;
+
+  &:first-child {
+    margin-left: calc((100vw - 131.2rem) / 2 - 0.7rem);
+
+    @media (max-width: 1440px) {
+      margin-left: 6.4rem;
+    }
+  }
+
+  &:last-child {
+    margin-right: 2rem;
+  }
+
   & + & {
     margin-left: 2rem;
   }
