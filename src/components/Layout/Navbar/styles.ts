@@ -11,9 +11,8 @@ export const NavContainer = styled.div`
   background-color: white;
   padding: 0 6.4rem;
 
-  @media (max-width: 1440px) {
-    padding: 0 10rem;
-  }
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(60px);
 `;
 
 export const NavBody = styled.div`
@@ -24,28 +23,16 @@ export const NavBody = styled.div`
   align-items: center;
 `;
 
-export const NavLeftGoBack = styled.div`
+export const NavLeftGoBack = styled.img`
   width: 1.45rem;
   height: 2.4rem;
   cursor: pointer;
 `;
 
-export const NavLeftLogo = styled.div`
+export const NavLeftLogo = styled.img`
   width: 11.1rem;
   height: 2.675rem;
   cursor: pointer;
-`;
-
-export const GoBack = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-`;
-
-export const Logo = styled.img`
-  width: 13.4rem;
-  height: 3.2rem;
-  flex-shrink: 0;
 `;
 
 export const NavRight = styled.div`

@@ -1,20 +1,26 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AboutPage } from '@/pages/About/AboutPage';
-import { MainPage } from '@/pages/Main/MainPage';
-import { ProjectPage } from '@/pages/Project/ProjectPage';
-import { WriteProjectPage } from '@/pages/Project/WriteProjectPage';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from '@/components/Layout/Navbar/Navbar';
 
-function App() {
+const Home = () => <div>Home Page</div>;
+const AllProjects = () => <div>All Projects Page</div>;
+const ServiceIntro = () => <div>Service Introduction Page</div>;
+const MyPage = () => <div>My Page</div>;
+const Login = () => <div>Login Page</div>;
+
+const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <Router>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<AboutPage />} />
-        <Route path="/home" element={<MainPage />} />
-        <Route path="/project/:projectId" element={<ProjectPage />} />
-        <Route path="/project/write" element={<WriteProjectPage />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<AllProjects />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/service-intro" element={<ServiceIntro />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
-}
+};
 
 export default App;

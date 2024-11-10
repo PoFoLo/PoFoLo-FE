@@ -22,13 +22,9 @@ const Navbar: React.FC = () => {
     <S.NavContainer>
       <S.NavBody>
         {isProjectPage ? (
-          <S.NavLeftGoBack>
-            <S.GoBack src={navbarGoBackSrc} alt="GoBack" onClick={() => handleNavigate(-1)} />
-          </S.NavLeftGoBack>
+          <S.NavLeftGoBack src={navbarGoBackSrc} alt="GoBack" onClick={() => handleNavigate(-1)} />
         ) : (
-          <S.NavLeftLogo>
-            <S.Logo src={navbarLogoSrc} alt="Logo" onClick={() => handleNavigate('home')} />
-          </S.NavLeftLogo>
+          <S.NavLeftLogo src={navbarLogoSrc} alt="Logo" onClick={() => handleNavigate('home')} />
         )}
 
         <S.NavRight>
