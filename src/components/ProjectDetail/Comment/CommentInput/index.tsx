@@ -21,6 +21,11 @@ export const CommentInput: React.FC<CommentInputProps> = ({
   const handlePost = () => {
     onPost(); // 댓글 게시
     scrollToNewComment(); // 새 댓글로 스크롤
+
+    // 높이 초기화
+    if (commentInputRef.current) {
+      commentInputRef.current.style.height = '5.6rem';
+    }
   };
 
   const handleInput = () => {

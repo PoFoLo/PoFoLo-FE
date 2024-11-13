@@ -207,7 +207,7 @@ interface BaseButtonProps {
 }
 
 const BaseButton = styled.div<BaseButtonProps>`
-  z-index: 10;
+  z-index: 5;
   cursor: pointer;
   display: flex;
   flex-direction: column;
