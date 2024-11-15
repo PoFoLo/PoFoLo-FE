@@ -58,3 +58,5 @@ export const UploadBtn = styled.label<{ $backgroundImage: string }>`
 export const UploadInput = styled.input`
   display: none;
 `;
+
+export * from '@/components/WriteProject/styles';

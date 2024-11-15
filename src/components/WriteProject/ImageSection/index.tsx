@@ -1,14 +1,14 @@
-import * as S from '@/components/WriteProject/UploadImage/styles';
+import * as S from '@/components/WriteProject/ImageSection/styles';
 import ImageUploadBtn from '@/assets/svgs/WriteProject/imageUploadBtn.svg';
 import ChangeBtn from '@/assets/webps/WriteProject/imageChangeBtn.webp';
 import DeleteBtn from '@/assets/webps/WriteProject/imageDeleteBtn.webp';
 import { useState, useRef, useEffect } from 'react';
 
-interface ImageUploadProps {
-  onFormDataChange: (formData: FormData) => void;
+interface ImageSectionProps {
+  setFormData: React.Dispatch<React.SetStateAction<FormData | null>>;
 }
 
-const ImageUpload = ({ onFormDataChange }: ImageUploadProps) => {
+const ImageSection = ({ setFormData }: ImageSectionProps) => {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [replaceIndex, setReplaceIndex] = useState<number | null>(null);
@@ -37,7 +37,7 @@ const ImageUpload = ({ onFormDataChange }: ImageUploadProps) => {
       reader.readAsDataURL(newFile);
 
       setImageFiles(updatedFiles);
-      onFormDataChange(createFormData(updatedFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
+      setFormData(createFormData(updatedFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
       setReplaceIndex(null); // 교체 후 초기화
     } else {
       // 새로 추가된 파일 처리
@@ -53,7 +53,7 @@ const ImageUpload = ({ onFormDataChange }: ImageUploadProps) => {
       });
 
       setImageFiles(newFiles);
-      onFormDataChange(createFormData(newFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
+      setFormData(createFormData(newFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
     }
 
     e.target.value = ''; // 사진 input 초기화
@@ -71,7 +71,7 @@ const ImageUpload = ({ onFormDataChange }: ImageUploadProps) => {
     const updatedFiles = imageFiles.filter((_, i) => i !== index);
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
     setImageFiles(updatedFiles);
-    onFormDataChange(createFormData(updatedFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
+    setFormData(createFormData(updatedFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
   };
 
   // Change 버튼 클릭 시 인덱스 설정 후 input 클릭하여 파일 선택 창 열기
@@ -90,34 +90,37 @@ const ImageUpload = ({ onFormDataChange }: ImageUploadProps) => {
   }, [imagePreviews]);
 
   return (
-    <S.StyledScrollContainer innerRef={containerRef}>
-      {imagePreviews.map((preview, index) => (
-        <S.ImageContainer key={index}>
-          <S.HoverImageContainer>
-            <S.HoverBtn
-              $backgroundImage={ChangeBtn}
-              onClick={() => handleReplaceImageClick(index)}
+    <S.SectionContainer>
+      <S.SectionTitle>사진</S.SectionTitle>
+      <S.StyledScrollContainer innerRef={containerRef}>
+        {imagePreviews.map((preview, index) => (
+          <S.ImageContainer key={index}>
+            <S.HoverImageContainer>
+              <S.HoverBtn
+                $backgroundImage={ChangeBtn}
+                onClick={() => handleReplaceImageClick(index)}
+              />
+              <S.HoverBtn $backgroundImage={DeleteBtn} onClick={() => handleRemoveImage(index)} />
+            </S.HoverImageContainer>
+            <S.StyledImg src={preview} alt={`사진${index}`} />
+          </S.ImageContainer>
+        ))}
+        {imageFiles.length < 10 && (
+          <>
+            <S.UploadBtn $backgroundImage={ImageUploadBtn} htmlFor="file-upload" />
+            <S.UploadInput
+              id="file-upload"
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={handleImageChange}
+              ref={inputRef}
             />
-            <S.HoverBtn $backgroundImage={DeleteBtn} onClick={() => handleRemoveImage(index)} />
-          </S.HoverImageContainer>
-          <S.StyledImg src={preview} alt={`사진${index}`} />
-        </S.ImageContainer>
-      ))}
-      {imageFiles.length < 10 && (
-        <>
-          <S.UploadBtn $backgroundImage={ImageUploadBtn} htmlFor="file-upload" />
-          <S.UploadInput
-            id="file-upload"
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={handleImageChange}
-            ref={inputRef}
-          />
-        </>
-      )}
-    </S.StyledScrollContainer>
+          </>
+        )}
+      </S.StyledScrollContainer>
+    </S.SectionContainer>
   );
 };
 
-export default ImageUpload;
+export default ImageSection;

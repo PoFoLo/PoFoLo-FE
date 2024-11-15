@@ -81,3 +81,5 @@ export const ErrorMessage = styled.p`
   color: ${(props) => props.theme.colors.coral50};
   margin: 0.8rem 0rem 0rem 1.2rem;
 `;
+
+export * from '@/components/WriteProject/styles';

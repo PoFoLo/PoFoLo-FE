@@ -80,3 +80,5 @@ export const Input = styled.input`
     color: ${(props) => props.theme.colors.gray50};
   }
 `;
+
+export * from '@/components/WriteProject/styles';
