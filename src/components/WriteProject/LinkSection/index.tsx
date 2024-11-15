@@ -11,7 +11,7 @@ const LinkSection = ({ links = [], setLink }: LinkSectionProps) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === ',') {
+    if (e.key === ',' && e.nativeEvent.isComposing === false) {
       e.preventDefault();
       const trimmedValue = inputValue.trim();
       if (trimmedValue && !links.includes(trimmedValue)) {

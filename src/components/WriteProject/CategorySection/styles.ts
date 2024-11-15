@@ -56,7 +56,7 @@ export const OptionList = styled.ul`
   top: -0.15rem; /* border 두께만큼 위로 이동 */
   left: -0.15rem; /* border 두께만큼 왼쪽으로 이동 */
   width: calc(100% + 0.3rem); /* 좌우 border 두께를 더해 전체 너비 조정 */
-  padding: 5rem 1.6rem 1.45rem 1.6rem;
+  padding: 5.15rem 1.6rem 1.45rem 1.6rem;
   border-radius: 1.2rem;
   border: 0.1rem solid ${(props) => props.theme.colors.blue30};
   background-color: ${(props) => props.theme.colors.gray10};
@@ -68,11 +68,11 @@ export const OptionList = styled.ul`
 export const Option = styled.li<OptionProps>`
   ${(props) => props.theme.fonts.body2};
   color: ${(props) =>
-    props.$isSelectedValue ? props.theme.colors.blue60 : props.theme.colors.gray90};
+    props.$isSelectedValue ? props.theme.colors.blue60 : props.theme.colors.gray60};
 
   &:hover {
     color: ${(props) =>
-      props.$isSelectedValue ? props.theme.colors.blue60 : props.theme.colors.gray60};
+      props.$isSelectedValue ? props.theme.colors.blue60 : props.theme.colors.gray90};
   }
 `;
 

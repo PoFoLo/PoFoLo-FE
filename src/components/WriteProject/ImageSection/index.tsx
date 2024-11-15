@@ -92,7 +92,7 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
   return (
     <S.SectionContainer>
       <S.SectionTitle>사진</S.SectionTitle>
-      <S.StyledScrollContainer innerRef={containerRef}>
+      <S.StyledScrollContainer innerRef={containerRef} vertical={false}>
         {imagePreviews.map((preview, index) => (
           <S.ImageContainer key={index}>
             <S.HoverImageContainer>
