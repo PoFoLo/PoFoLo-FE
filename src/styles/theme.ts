@@ -30,7 +30,7 @@ const theme = {
   },
   fonts: {
     headline1: `
-      font-family: 'Pretendard', sans-serif;;
+      font-family: 'Pretendard', sans-serif;
       font-size: 4rem;
       font-weight: 700;
       font-style: normal;
@@ -38,15 +38,23 @@ const theme = {
       letter-spacing: 0.02rem;
     `,
     headline2: `
-      font-family: 'Pretendard', sans-serif;;
+      font-family: 'Pretendard', sans-serif;
       font-size: 3.2rem;
       font-weight: 700;
       font-style: normal;
       line-height: 130%;
       letter-spacing: 0.016rem;
     `,
+    headline3: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      font-style: normal;
+      line-height: 130%;
+      letter-spacing: 0.014rem;
+    `,
     subhead1: `
-      font-family: 'Pretendard', sans-serif;;
+      font-family: 'Pretendard', sans-serif;
       font-size: 2.8rem;
       font-weight: 600;
       font-style: normal;
@@ -54,7 +62,7 @@ const theme = {
       letter-spacing: 0.007rem;
     `,
     subhead2: `
-      font-family: 'Pretendard', sans-serif;;
+      font-family: 'Pretendard', sans-serif;
       font-size: 2rem;
       font-weight: 600;
       font-style: normal;
