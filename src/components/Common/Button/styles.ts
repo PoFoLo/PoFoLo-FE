@@ -8,9 +8,10 @@ interface StyledButtonProps {
 const buttonSizeStyles = {
   large: css`
     height: 4.8rem;
-    padding: 0.04rem 4.65rem;
+    padding: 0.4rem 1.2rem;
     ${(props) => props.theme.fonts.subhead2};
     border-radius: 1.2rem;
+    flex: 1 0 0;
   `,
   medium: css`
     height: 3.6rem;
