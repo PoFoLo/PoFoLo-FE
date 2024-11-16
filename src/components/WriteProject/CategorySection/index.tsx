@@ -26,12 +26,11 @@ const CategorySection = ({
   const categories = [
     {
       label: '기획',
-      subcategories: ['전체', '서비스 기획', '상품 기획', '마케팅', '광고', '기타'],
+      subcategories: ['서비스 기획', '상품 기획', '마케팅', '광고', '기타'],
     },
     {
       label: '개발',
       subcategories: [
-        '전체',
         '프론트엔드',
         '백엔드',
         '데이터 분석',
@@ -41,7 +40,7 @@ const CategorySection = ({
         '기타',
       ],
     },
-    { label: '디자인', subcategories: ['전체', 'UX/UI', '제품', '패션', '인테리어', '기타'] },
+    { label: '디자인', subcategories: ['UX/UI', '제품', '패션', '인테리어', '기타'] },
   ];
 
   const [isCategoryOpen, setIsCategoryOpen] = useState<boolean>(false);
