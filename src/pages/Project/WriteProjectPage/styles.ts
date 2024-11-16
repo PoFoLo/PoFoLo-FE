@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Layout = styled.div`
   display: flex;
   justify-content: center;
-  padding: 2.4rem 6.4rem 8.6rem 6.4rem;
+  padding: 8.8rem 6.4rem 8.6rem 6.4rem;
 `;
 
 export const PortFolioLayout = styled.div`

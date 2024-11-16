@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
 
@@ -7,7 +6,13 @@ import navbarGoBackSrc from '@/assets/webps/Common/navbarGoBack.webp';
 import navbarMyPageSrc from '@/assets/webps/Common/navbarMyPage.webp';
 // import navbarLogoutSrc from '@/assets/svgs/Navbar/navbarLogout.svg';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onGoBackClick?: () => void;
+  onAboutClick?: () => void;
+  onHomeClick?: () => void;
+  onMyPageClick?: () => void;
+}
+const Navbar = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,20 +23,53 @@ const Navbar: React.FC = () => {
 
   const isProjectPage = location.pathname.includes('project');
 
+  // props로 전달 받은 함수가 있을 경우 함수 실행, 없을 경우 페이지 이동
+  const handleGoBackClick = () => {
+    if (onGoBackClick) {
+      onGoBackClick();
+    } else {
+      handleNavigate(-1);
+    }
+  };
+
+  const handleAboutClick = () => {
+    if (onAboutClick) {
+      onAboutClick();
+    } else {
+      handleNavigate('');
+    }
+  };
+
+  const handleHomeClick = () => {
+    if (onHomeClick) {
+      onHomeClick();
+    } else {
+      handleNavigate('home');
+    }
+  };
+
+  const handleMyPageClick = () => {
+    if (onMyPageClick) {
+      onMyPageClick();
+    } else {
+      handleNavigate('mypage');
+    }
+  };
+
   return (
     <S.NavContainer>
       <S.NavBody>
         {isProjectPage ? (
-          <S.NavLeftGoBack src={navbarGoBackSrc} alt="GoBack" onClick={() => handleNavigate(-1)} />
+          <S.NavLeftGoBack src={navbarGoBackSrc} alt="GoBack" onClick={handleGoBackClick} />
         ) : (
           <S.NavLeftLogo src={navbarLogoSrc} alt="Logo" onClick={() => handleNavigate('home')} />
         )}
 
         <S.NavRight>
-          <S.NavLink width={9.2} onClick={() => handleNavigate('')}>
+          <S.NavLink width={9.2} onClick={handleAboutClick}>
             서비스 소개
           </S.NavLink>
-          <S.NavLink width={10.9} onClick={() => handleNavigate('home')}>
+          <S.NavLink width={10.9} onClick={handleHomeClick}>
             모든 프로젝트
           </S.NavLink>
 
@@ -45,7 +83,7 @@ const Navbar: React.FC = () => {
             <S.LoginButton onClick={() => handleNavigate('login')}>로그인</S.LoginButton>
           )} */}
 
-          <S.MyPageButton onClick={() => handleNavigate('mypage')}>
+          <S.MyPageButton onClick={handleMyPageClick}>
             <S.MyPageImage src={navbarMyPageSrc} alt="myPageButton" />
           </S.MyPageButton>
         </S.NavRight>

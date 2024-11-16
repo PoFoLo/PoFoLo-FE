@@ -5,10 +5,10 @@ import blueDownArrow from '@/assets/webps/WriteProject/blueDownArrow.webp';
 import { useState, useRef, useEffect, useCallback } from 'react';
 
 interface CategorySectionProps {
-  categoryValue: string;
-  setCategoryValue: React.Dispatch<React.SetStateAction<string>>;
-  subCategoryValue: string;
-  setSubcategoryValue: React.Dispatch<React.SetStateAction<string>>;
+  mainCategory: string;
+  setMainCategory: React.Dispatch<React.SetStateAction<string>>;
+  subCategory: string;
+  setSubcategory: React.Dispatch<React.SetStateAction<string>>;
   error: boolean;
   setErrors: React.Dispatch<
     React.SetStateAction<{ title: boolean; description: boolean; category: boolean }>
@@ -16,10 +16,10 @@ interface CategorySectionProps {
 }
 
 const CategorySection = ({
-  categoryValue = '',
-  setCategoryValue,
-  subCategoryValue = '',
-  setSubcategoryValue,
+  mainCategory = '',
+  setMainCategory,
+  subCategory = '',
+  setSubcategory,
   error = false,
   setErrors,
 }: CategorySectionProps) => {
@@ -66,8 +66,8 @@ const CategorySection = ({
   }, [handleClickOutside]);
 
   const handleCategoryChange = (value: string) => {
-    setCategoryValue(value);
-    setSubcategoryValue(''); // 대분류 바뀌면 소분류 초기화
+    setMainCategory(value);
+    setSubcategory(''); // 대분류 바뀌면 소분류 초기화
   };
 
   const handleSubCategoryChange = (value: string) => {
@@ -75,10 +75,10 @@ const CategorySection = ({
       ...prev,
       category: false,
     }));
-    setSubcategoryValue(value);
+    setSubcategory(value);
   };
 
-  const selectedCategory = categories.find((category) => category.label === categoryValue);
+  const selectedCategory = categories.find((category) => category.label === mainCategory);
 
   return (
     <S.SectionContainer>
@@ -87,20 +87,18 @@ const CategorySection = ({
         <S.DropdownContainer>
           {/* 대분류 드롭다운 */}
           <S.DropdownHeader ref={categoryRef} onClick={() => setIsCategoryOpen(!isCategoryOpen)}>
-            <S.SelectedText $isSelected={!!categoryValue && !isCategoryOpen}>
-              {isCategoryOpen ? '대분류' : categoryValue || '대분류'}
+            <S.SelectedText $isSelected={!!mainCategory && !isCategoryOpen}>
+              {isCategoryOpen ? '대분류' : mainCategory || '대분류'}
             </S.SelectedText>
             <S.IconContainer
-              $backgroundImage={
-                isCategoryOpen ? upArrow : categoryValue ? blueDownArrow : downArrow
-              }
+              $backgroundImage={isCategoryOpen ? upArrow : mainCategory ? blueDownArrow : downArrow}
             />
             {isCategoryOpen && (
               <S.OptionList>
                 {categories.map((category, index) => (
                   <S.Option
                     key={index}
-                    $isSelectedValue={category.label === categoryValue}
+                    $isSelectedValue={category.label === mainCategory}
                     onClick={() => handleCategoryChange(category.label)}
                   >
                     {category.label}
@@ -114,15 +112,15 @@ const CategorySection = ({
           <S.DropdownHeader
             ref={subCategoryRef}
             onClick={() => {
-              if (categoryValue) setIsSubCategoryOpen(!isSubCategoryOpen);
+              if (mainCategory) setIsSubCategoryOpen(!isSubCategoryOpen);
             }}
           >
-            <S.SelectedText $isSelected={!!subCategoryValue && !isSubCategoryOpen}>
-              {isSubCategoryOpen ? '소분류' : subCategoryValue || '소분류'}
+            <S.SelectedText $isSelected={!!subCategory && !isSubCategoryOpen}>
+              {isSubCategoryOpen ? '소분류' : subCategory || '소분류'}
             </S.SelectedText>
             <S.IconContainer
               $backgroundImage={
-                isSubCategoryOpen ? upArrow : subCategoryValue ? blueDownArrow : downArrow
+                isSubCategoryOpen ? upArrow : subCategory ? blueDownArrow : downArrow
               }
             />
             {isSubCategoryOpen && selectedCategory && (
@@ -130,7 +128,7 @@ const CategorySection = ({
                 {selectedCategory.subcategories.map((sub, index) => (
                   <S.Option
                     key={index}
-                    $isSelectedValue={sub === subCategoryValue}
+                    $isSelectedValue={sub === subCategory}
                     onClick={() => handleSubCategoryChange(sub)}
                   >
                     {sub}
