@@ -199,6 +199,7 @@ export const WriteProjectPage = () => {
       </S.Layout>
       <Modal
         isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
         icon="warning"
         mainText="작성 중인 글이 있어요"
         subText={`지금 나가면 작성 중인 내용이 모두 사라져요.\n비공개로 업로드하고 언제든지 수정하세요.`}

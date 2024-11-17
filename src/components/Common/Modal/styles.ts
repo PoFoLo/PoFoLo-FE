@@ -24,7 +24,7 @@ export const ModalContainer = styled.div`
   align-items: center;
   gap: 2.4rem;
   border-radius: 2.4rem;
-  background-color: rgba(248, 248, 248, 0.8);
+  background-color: rgba(248, 248, 248, 0.9);
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
 `;
 
