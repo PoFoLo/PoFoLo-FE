@@ -80,6 +80,22 @@ export const WriteProjectPage = () => {
     );
   };
 
+  // 브라우저에서 뒤로가기, 새로고침, 창 닫기 했을 때 경고
+  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    if (hasUnsavedData()) {
+      event.preventDefault();
+      event.returnValue = '';
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [hasUnsavedData]);
+
   // 모달 열기
   const openModal = (action: () => void) => {
     setPendingAction(() => action);
@@ -109,6 +125,7 @@ export const WriteProjectPage = () => {
 
   // 모달에서 나가기 버튼 클릭
   const handleModalExit = () => {
+    window.removeEventListener('beforeunload', handleBeforeUnload); // 모달에서 나가기 클릭할때는 beforeunload 이벤트 제거
     if (pendingAction) {
       pendingAction(); // 임시 저장 함수 실행
     }
@@ -136,22 +153,6 @@ export const WriteProjectPage = () => {
       // 페이지 이동
     }
   };
-
-  // 브라우저에서 뒤로가기, 새로고침, 창 닫기 했을 때 경고
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (hasUnsavedData()) {
-        event.preventDefault();
-        event.returnValue = '';
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [hasUnsavedData]);
 
   return (
     <>
