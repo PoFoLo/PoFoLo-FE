@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import * as S from '@/components/Common/Button/style';
+import * as S from '@/components/Common/Button/styles';
 
 type ButtonSize = 'large' | 'medium' | 'small';
 type ButtonType = 'main' | 'sub' | 'inactive';

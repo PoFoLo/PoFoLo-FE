@@ -4,6 +4,7 @@ export const TextAreaContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  min-width: 0;
   width: 100%;
 `;
 
@@ -13,7 +14,7 @@ export const StyledTextArea = styled.textarea<{ $error: boolean }>`
   background-color: ${(props) => props.theme.colors.gray10};
   padding: 1.4rem 1.6rem;
   padding-right: 6.8rem;
-  border: 0.15rem solid
+  border: 0.1rem solid
     ${(props) => (props.$error ? props.theme.colors.coral50 : props.theme.colors.gray20)};
   border-radius: 1.2rem;
   resize: none;
