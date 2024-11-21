@@ -1,7 +1,7 @@
 import * as S from '@/components/WriteProject/ImageSection/styles';
-import ImageUploadBtn from '@/assets/svgs/WriteProject/imageUploadBtn.svg';
-import ChangeBtn from '@/assets/webps/WriteProject/imageChangeBtn.webp';
-import DeleteBtn from '@/assets/webps/WriteProject/imageDeleteBtn.webp';
+import imageUploadBtn from '@/assets/svgs/WriteProject/imageUploadBtn.svg';
+import imageChange from '@/assets/webps/Common/imageChange.webp';
+import imageDelete from '@/assets/webps/Common/imageDelete.webp';
 import { useState, useRef, useEffect } from 'react';
 
 interface ImageSectionProps {
@@ -97,17 +97,17 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
           <S.ImageContainer key={index}>
             <S.HoverImageContainer>
               <S.HoverBtn
-                $backgroundImage={ChangeBtn}
+                $backgroundImage={imageChange}
                 onClick={() => handleReplaceImageClick(index)}
               />
-              <S.HoverBtn $backgroundImage={DeleteBtn} onClick={() => handleRemoveImage(index)} />
+              <S.HoverBtn $backgroundImage={imageDelete} onClick={() => handleRemoveImage(index)} />
             </S.HoverImageContainer>
             <S.StyledImg src={preview} alt={`사진${index}`} />
           </S.ImageContainer>
         ))}
         {imageFiles.length < 10 && (
           <>
-            <S.UploadBtn $backgroundImage={ImageUploadBtn} htmlFor="file-upload" />
+            <S.UploadBtn $backgroundImage={imageUploadBtn} htmlFor="file-upload" />
             <S.UploadInput
               id="file-upload"
               type="file"

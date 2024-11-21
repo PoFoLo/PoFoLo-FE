@@ -1,7 +1,7 @@
-import * as S from '@/components/WriteProject/CategorySection/styles';
-import upArrow from '@/assets/webps/WriteProject/upArrow.webp';
-import downArrow from '@/assets/webps/WriteProject/downArrow.webp';
-import blueDownArrow from '@/assets/webps/WriteProject/blueDownArrow.webp';
+import * as S from '@/components/FormField/CategorySection/styles';
+import upArrow from '@/assets/webps/FormField/upArrow.webp';
+import downArrow from '@/assets/webps/FormField/downArrow.webp';
+import blueDownArrow from '@/assets/webps/FormField/blueDownArrow.webp';
 import { useState, useRef, useEffect, useCallback } from 'react';
 
 interface CategorySectionProps {
@@ -10,9 +10,7 @@ interface CategorySectionProps {
   subCategory: string;
   setSubcategory: React.Dispatch<React.SetStateAction<string>>;
   error: boolean;
-  setErrors: React.Dispatch<
-    React.SetStateAction<{ title: boolean; description: boolean; category: boolean }>
-  >;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
 }
 
 const CategorySection = ({

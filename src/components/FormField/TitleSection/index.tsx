@@ -1,12 +1,10 @@
 import Input from '@/components/Common/Input';
-import * as S from '@/components/WriteProject/styles';
+import * as S from '@/components/FormField/styles';
 
 interface TitleSectionProps {
   title: string;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
-  setErrors: React.Dispatch<
-    React.SetStateAction<{ title: boolean; description: boolean; category: boolean }>
-  >;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
   error: boolean;
 }
 

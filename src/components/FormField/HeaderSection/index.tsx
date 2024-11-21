@@ -1,8 +1,9 @@
-import * as S from '@/components/WriteProject/HeaderSection/styles';
+import * as S from '@/components/FormField/HeaderSection/styles';
 import Button from '@/components/Common/Button';
 import CheckBox from '@/components/Common/CheckBox';
 
 interface HeaderSectionProps {
+  headerText: string;
   isPrivate: boolean;
   setIsPrivate: React.Dispatch<React.SetStateAction<boolean>>;
   handleUploadClick: () => void;
@@ -10,6 +11,7 @@ interface HeaderSectionProps {
 }
 
 const HeaderSection = ({
+  headerText,
   isPrivate,
   setIsPrivate,
   handleUploadClick,
@@ -21,7 +23,7 @@ const HeaderSection = ({
 
   return (
     <S.HeaderContainer>
-      <S.HeaderText>새 프로젝트</S.HeaderText>
+      <S.HeaderText>{headerText}</S.HeaderText>
       <S.PrivateCheckBox>
         <CheckBox checked={isPrivate} onChange={handleToggleCheckBox} />
         비공개

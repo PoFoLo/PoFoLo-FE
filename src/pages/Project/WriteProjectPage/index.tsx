@@ -1,8 +1,8 @@
 import * as S from '@/pages/Project/WriteProjectPage/styles';
-import HeaderSection from '@/components/WriteProject/HeaderSection';
-import TitleSection from '@/components/WriteProject/TitleSection';
-import CategorySection from '@/components/WriteProject/CategorySection';
-import DescriptionSection from '@/components/WriteProject/DescriptionSection';
+import HeaderSection from '@/components/FormField/HeaderSection';
+import TitleSection from '@/components/FormField/TitleSection';
+import CategorySection from '@/components/FormField/CategorySection';
+import DescriptionSection from '@/components/FormField/DescriptionSection';
 import SkillSection from '@/components/WriteProject/SkillSection';
 import LinkSection from '@/components/WriteProject/LinkSection';
 import ImageSection from '@/components/WriteProject/ImageSection';
@@ -20,11 +20,12 @@ export const WriteProjectPage = () => {
   const [skill, setSkill] = useState<string>('');
   const [links, setLinks] = useState<string[]>([]);
   const [formData, setFormData] = useState<FormData | null>(null);
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<Record<string, boolean>>({
     title: false,
     description: false,
     category: false,
   });
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [pendingAction, setPendingAction] = useState<null | (() => void)>(null); // 실행할 함수 임시 저장
   const navigate = useNavigate();
@@ -165,6 +166,7 @@ export const WriteProjectPage = () => {
       <S.Layout>
         <S.PortFolioLayout>
           <HeaderSection
+            headerText="새 프로젝트"
             isPrivate={isPrivate}
             setIsPrivate={setIsPrivate}
             handleUploadClick={handleUploadClick}

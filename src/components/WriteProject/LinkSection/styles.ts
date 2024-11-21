@@ -81,4 +81,4 @@ export const Input = styled.input`
   }
 `;
 
-export * from '@/components/WriteProject/styles';
+export * from '@/components/FormField/styles';
