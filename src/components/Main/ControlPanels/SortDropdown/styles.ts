@@ -11,7 +11,6 @@ export const DropdownContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 3.1rem;
 `;
 
 export const SelectedContainer = styled.div`
@@ -36,7 +35,7 @@ export const SelectedCaret = styled.img`
 
 export const MenuContainer = styled.div`
   display: inline-flex;
-  padding: 0.8rem 3.8rem 0.8rem 1.2rem;
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
   align-items: flex-start;
   border-radius: 0.8rem;
   border: 0.1rem solid ${(props) => props.theme.colors.gray10};
@@ -53,7 +52,7 @@ export const MenuLetterContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
 `;
 
@@ -63,6 +62,10 @@ export const Inactive = styled.span`
   width: 4.2rem;
   height: 2.4rem;
   cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.gray10};
+  }
 `;
 
 export const Active = styled.span`

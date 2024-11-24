@@ -41,10 +41,12 @@ export const ActiveContainer = styled.div`
 `;
 
 export const ActiveInput = styled.input`
+  all: unset; /* 기본 스타일 초기화 */
   width: 30.6rem;
   height: 2.7rem;
   color: ${(props) => props.theme.colors.gray90};
   ${(props) => props.theme.fonts.body2};
+  outline: none; /* 기본 outline 제거 */
 `;
 
 export const ActiveIcon = styled.img`

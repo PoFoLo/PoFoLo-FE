@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as S from '@/components/Main/ControlPanel/SortDropdown/styles';
+import * as S from '@/components/Main/ControlPanels/SortDropdown/styles';
 
 import sortCaretSrc from '@/assets/webps/Main/sortCaret.webp';
 
@@ -29,7 +29,6 @@ const SortDropdown: React.FC = () => {
             src={sortCaretSrc}
             style={{
               transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-              transition: 'transform 0.3s ease',
             }}
             alt="caret"
           />

@@ -10,7 +10,7 @@ export const filterLine2BtnContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  height: 2.2rem;
+  height: 5rem;
   cursor: pointer;
 `;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from '@/components/Main/ControlPanel/CategoryFilter/CategoryFilterLine2/styles';
+import * as S from '@/components/Main/ControlPanels/CategoryFilters/CategoryFilterDetail/styles';
 import filterLine2UncheckedSrc from '@/assets/webps/Main/filterLine2Unchecked.webp';
 import filterLine2CheckedSrc from '@/assets/webps/Main/filterLine2Checked.webp';
 
@@ -7,7 +7,7 @@ interface Props {
   options: string[];
 }
 
-const CategoryFilterLine2: React.FC<Props> = ({ options }) => {
+const CategoryFilterDetail: React.FC<Props> = ({ options }) => {
   const [selectedLine2, setSelectedLine2] = React.useState<string | null>(null);
 
   const handleLine2Click = (label: string) => {
@@ -20,7 +20,7 @@ const CategoryFilterLine2: React.FC<Props> = ({ options }) => {
         <S.filterLine2BtnContainer key={label} onClick={() => handleLine2Click(label)}>
           <S.filterLine2BtnIcon
             src={selectedLine2 === label ? filterLine2CheckedSrc : filterLine2UncheckedSrc}
-            alt=""
+            alt={selectedLine2 === label ? 'CheckedImg' : 'UncheckedImg'}
           />
           <S.filterLine2BtnLetter selected={selectedLine2 === label}>
             {label}
@@ -31,4 +31,4 @@ const CategoryFilterLine2: React.FC<Props> = ({ options }) => {
   );
 };
 
-export default CategoryFilterLine2;
+export default CategoryFilterDetail;

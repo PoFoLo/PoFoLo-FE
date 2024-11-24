@@ -18,14 +18,3 @@ export const ControlPanelBody = styled.div`
   justify-content: center;
   gap: 1.6rem;
 `;
-
-// export const FilterWrapper = styled.div`
-//   display: flex;
-//   flex: 1;
-// `;
-
-// export const SearchAndSortWrapper = styled.div`
-//   display: flex;
-//   align-items: center;
-//   gap: 1.5rem;
-// `;

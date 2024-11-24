@@ -1,7 +1,8 @@
 import React from 'react';
 import Navbar from '@/components/Layout/Navbar/Navbar';
-import ControlPanel from '@/components/Main/ControlPanel/ControlPanel';
-import CardList from '@/components/Main/CardList/CardList';
+import ControlPanel from '@/components/Main/ControlPanels';
+import CardList from '@/components/Main/CardList';
+import FloatingBtn from '@/components/Main/FloatingBtn';
 import * as S from './styles';
 
 export const MainPage: React.FC = () => {
@@ -12,6 +13,11 @@ export const MainPage: React.FC = () => {
         <ControlPanel />
       </S.ControlPanelContainer>
       <CardList />
+      <S.FloatingBtnContainer>
+        <S.FloatingBtnBody>
+          <FloatingBtn />
+        </S.FloatingBtnBody>
+      </S.FloatingBtnContainer>
     </S.MainContainer>
   );
 };
