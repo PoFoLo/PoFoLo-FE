@@ -3,6 +3,7 @@ import { AboutPage } from '@/pages/About/AboutPage';
 import { MainPage } from '@/pages/Main/MainPage';
 import { ProjectDetailPage } from '@/pages/Project/ProjectDetailPage';
 import { WriteProjectPage } from '@/pages/Project/WriteProjectPage';
+import { WritePortfolioPage } from '@/pages/Portfolio/WritePortfolioPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/home" element={<MainPage />} />
         <Route path="/project/:projectId" element={<ProjectDetailPage />} />
         <Route path="/project/write" element={<WriteProjectPage />} />
+        <Route path="/portfolio/write" element={<WritePortfolioPage />} />
       </Routes>
     </BrowserRouter>
   );
