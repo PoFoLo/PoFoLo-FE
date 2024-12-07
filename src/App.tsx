@@ -3,8 +3,18 @@ import { AboutPage } from '@/pages/About/AboutPage';
 import { MainPage } from '@/pages/Main/MainPage';
 import { ProjectDetailPage } from '@/pages/Project/ProjectDetailPage';
 import { WriteProjectPage } from '@/pages/Project/WriteProjectPage';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: false,
+    });
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
