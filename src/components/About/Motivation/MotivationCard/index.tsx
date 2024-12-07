@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import * as S from '@/components/About/Motivation/styles';
 
 interface MotivationCardProps {
@@ -15,8 +18,15 @@ export const MotivationCard: React.FC<MotivationCardProps> = ({
   description,
   reverse = false,
 }) => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: false,
+    });
+  }, []);
+
   return (
-    <S.Card>
+    <S.Card data-aos="fade-up">
       {!reverse && (
         <S.ImgWrapper>
           <img src={image} alt="motivation img" />
