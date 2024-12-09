@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface StyledButtonProps {
   $buttonSize: 'large' | 'medium' | 'small';
-  $buttonType: 'main' | 'sub' | 'inactive';
+  $buttonType: 'main' | 'sub' | 'inactive' | 'obscure';
 }
 
 const buttonSizeStyles = {
@@ -42,6 +42,12 @@ const buttonTypeStyles = {
     color: ${(props) => props.theme.colors.blue30};
     background-color: ${(props) => props.theme.colors.blue10};
     cursor: default;
+  `,
+  obscure: css`
+    color: ${(props) => props.theme.colors.gray70};
+    background-color: ${(props) => props.theme.colors.gray10};
+    box-shadow: inset 0 0 0 0.1rem ${(props) => props.theme.colors.gray20};
+    cursor: pointer;
   `,
 };
 
