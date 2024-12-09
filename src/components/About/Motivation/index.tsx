@@ -1,11 +1,19 @@
 import * as S from '@/components/About/Motivation/styles';
 import { MotivationCard } from '@/components/About/Motivation/MotivationCard';
 import { motivationData } from '@/constants/About/motivationData';
+import { useResponsive } from '@/hooks/useResponsive';
 
 export const Motivation = () => {
+  const { isPhone } = useResponsive();
+
+  const adjustedMotivationData = motivationData.map((item) => ({
+    ...item,
+    reverse: isPhone ? false : item.reverse,
+  }));
+
   return (
     <S.MotivationLayout>
-      {motivationData.map((item, index) => (
+      {adjustedMotivationData.map((item, index) => (
         <MotivationCard
           key={index}
           image={item.image}
