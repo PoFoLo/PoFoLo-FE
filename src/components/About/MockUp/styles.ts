@@ -1,6 +1,68 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const MockUpLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 19.4rem;
+
+  p {
+    color: ${(props) => props.theme.colors.blue60};
+
+    ${(props) =>
+      props.theme.media.tab(
+        () => `
+      ${props.theme.fonts.headline3};
+      `
+      )}
+
+    ${(props) =>
+      props.theme.media.ph(css`
+        font-family: 'Pretendard', sans-serif;
+        font-size: 2rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 150%;
+        letter-spacing: 0.005rem;
+      `)}
+  }
+
+  img {
+    margin-top: 1.6rem;
+    ${(props) =>
+      props.theme.media.tab(css`
+        width: 34.8rem;
+        height: 45.4rem;
+      `)}
+    ${(props) =>
+      props.theme.media.ph(css`
+        width: 20rem;
+        height: 26rem;
+      `)}
+  }
+
+  button {
+    width: 32.8rem;
+    height: 4.8rem;
+    border-radius: 1.2rem;
+    background-color: ${(props) => props.theme.colors.blue50};
+    color: ${(props) => props.theme.colors.white};
+    ${(props) => props.theme.fonts.subhead3};
+
+    ${(props) =>
+      props.theme.media.tab(css`
+        margin-top: 3.4rem;
+        margin-bottom: 5.6rem;
+      `)}
+    ${(props) =>
+      props.theme.media.ph(css`
+        margin-top: 2.5rem;
+        margin-bottom: 16.4rem;
+      `)}
+  }
+`;
+
+export const PCMockUpLayout = styled.div`
   margin: 43rem 0 8.2rem;
   position: relative;
   width: 157.5rem;
