@@ -133,7 +133,7 @@ const theme = {
       line-height: 140%;
       letter-spacing: 0.003rem;
       `,
-    headingAbout: `
+    headingAbout1: `
       font-family: 'Pretendard', sans-serif;
       font-size: 5.6rem;
       font-style: normal;
@@ -141,7 +141,23 @@ const theme = {
       line-height: 130%;
       letter-spacing: 0.028rem;
       `,
-    bodyAbout: `
+    headingAbout2: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 3.6rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 130%;
+      letter-spacing: 0.018rem;
+      `,
+    headingAbout3: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 2.8rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 130%;
+      letter-spacing: 0.014rem;
+      `,
+    bodyAbout1: `
       font-family: 'Pretendard', sans-serif;
       font-size: 2.4rem;
       font-style: normal;
@@ -149,6 +165,44 @@ const theme = {
       line-height: 160%;
       letter-spacing: 0.012rem;
       `,
+    bodyAbout2: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 1.8rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0.009rem;
+      `,
+    bodyAbout3: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 1.4rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0.007rem;
+      `,
+  },
+  breakpoints: {
+    ph: 360,
+    tab: 834,
+    pc: 1200,
+  },
+  media: {
+    ph: (styles: string | (() => string)) => `
+      @media (max-width: 833px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      }
+    `,
+    tab: (styles: string | (() => string)) => `
+      @media (min-width: 834px) and (max-width: 1199px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      }
+    `,
+    pc: (styles: string | (() => string)) => `
+      @media (min-width: 1200px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      }
+    `,
   },
 };
 

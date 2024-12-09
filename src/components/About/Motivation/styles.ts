@@ -97,7 +97,7 @@ export const BlurOverlay = styled.div<{ reverse?: boolean }>`
   h6 {
     margin-top: 2.4rem;
     p {
-      ${(props) => props.theme.fonts.bodyAbout};
+      ${(props) => props.theme.fonts.bodyAbout1};
       color: ${(props) => props.theme.colors.gray80};
     }
   }
