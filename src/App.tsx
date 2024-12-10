@@ -6,6 +6,8 @@ import { WriteProjectPage } from '@/pages/Project/WriteProjectPage';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import { OAuthLoading } from '@/pages/Login/OAuthLoading';
+import { JoinPage } from '@/pages/Login/Join';
 
 function App() {
   useEffect(() => {
@@ -19,6 +21,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AboutPage />} />
+        <Route path="/kakao/callback" element={<OAuthLoading />} />
+        <Route path="/join" element={<JoinPage />} />
         <Route path="/home" element={<MainPage />} />
         <Route path="/project/:projectId" element={<ProjectDetailPage />} />
         <Route path="/project/write" element={<WriteProjectPage />} />
