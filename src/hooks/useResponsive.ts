@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 const breakpoints = {
-  phone: '(max-width: 833px)',
-  tab: '(min-width: 834px) and (max-width: 1199px)',
+  phone: '(max-width: 767px)',
+  tab: '(min-width: 768px) and (max-width: 1199px)',
   pc: '(min-width: 1200px)',
 };
 

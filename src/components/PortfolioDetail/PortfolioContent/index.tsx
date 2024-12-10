@@ -9,9 +9,11 @@ import projectImg2 from '@/assets/webps/ProjectDetail/projectImg2.webp';
 import projectImg3 from '@/assets/webps/ProjectDetail/projectImg3.webp';
 import Button from '@/components/Common/Button';
 import { useState } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 
 export const PortfolioContent = () => {
   const [isCopied, setIsCopied] = useState(false);
+  const { isPC, isTab, isPhone } = useResponsive();
   const nav = useNavigate();
   const images = [
     { src: projectImg1, writer: '홍길동', title: '첫 번째 프로젝트' },
@@ -55,25 +57,58 @@ export const PortfolioContent = () => {
           </S.ProfileInfo>
           <S.RightWrapper>
             <S.Date>2024년 12월 30일</S.Date>
-            <div className="button">
-              <Button size="small" type="obscure">
-                삭제
-              </Button>
-              <Button size="small" type="sub">
-                편집
-              </Button>
-            </div>
+            {isPC && (
+              <div className="button">
+                <Button size="small" type="obscure">
+                  삭제
+                </Button>
+                <Button size="small" type="sub">
+                  편집
+                </Button>
+              </div>
+            )}
           </S.RightWrapper>
         </S.TopInfo>
 
         <S.BodyText>
           <S.LeftWrapper>
-            <S.Title>홍길동의 포트폴리오</S.Title>
-            <S.Link onClick={handleLinkCopy} isCopied={isCopied}>
-              <img src={isCopied ? linkBlue : linkGray} alt="link" />
-              <span>{isCopied ? '복사됨' : '링크 복사'}</span>
-            </S.Link>
+            <div className="left-contents">
+              <S.Title>홍길동의 포트폴리오</S.Title>
+              {!isPhone && (
+                <S.Link onClick={handleLinkCopy} $isCopied={isCopied}>
+                  <img src={isCopied ? linkBlue : linkGray} alt="link" />
+                  <span>{isCopied ? '복사됨' : '링크 복사'}</span>
+                </S.Link>
+              )}
+            </div>
+            {isTab && (
+              <div className="button">
+                <Button size="small2" type="obscure">
+                  삭제
+                </Button>
+                <Button size="small2" type="sub">
+                  편집
+                </Button>
+              </div>
+            )}
           </S.LeftWrapper>
+          {isPhone && (
+            <S.PhoneButtons>
+              <S.Link onClick={handleLinkCopy} $isCopied={isCopied}>
+                <img src={isCopied ? linkBlue : linkGray} alt="link" />
+                <span>{isCopied ? '복사됨' : '링크 복사'}</span>
+              </S.Link>
+              <div className="button">
+                <Button size="small2" type="obscure">
+                  삭제
+                </Button>
+                <Button size="small2" type="sub">
+                  편집
+                </Button>
+              </div>
+            </S.PhoneButtons>
+          )}
+
           <S.Article>
             <h2>소개</h2>
             <span>
