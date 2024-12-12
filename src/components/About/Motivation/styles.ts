@@ -2,30 +2,17 @@ import styled, { css } from 'styled-components';
 
 // 공통 border-radius 함수
 const borderRadiusStyles = ($reverse?: boolean) => css`
-  ${$reverse
-    ? css`
-        border-top-right-radius: 2.3rem;
-        border-bottom-right-radius: 2.3rem;
+  ${(props) =>
+    props.theme.media.pc(css`
+      border-top-${$reverse ? 'right' : 'left'}-radius: 2.3rem;
+      border-bottom-${$reverse ? 'right' : 'left'}-radius: 2.3rem;
+    `)}
 
-        ${(props) =>
-          props.theme.media.tab(css`
-            border-top-right-radius: 1.1rem;
-            border-bottom-right-radius: 1.1rem;
-          `)}
-      `
-    : css`
-        ${(props) =>
-          props.theme.media.pc(css`
-            border-top-left-radius: 2.3rem;
-            border-bottom-left-radius: 2.3rem;
-          `)}
-
-        ${(props) =>
-          props.theme.media.tab(css`
-            border-top-left-radius: 1.1rem;
-            border-bottom-left-radius: 1.1rem;
-          `)}
-      `}
+  ${(props) =>
+    props.theme.media.tab(css`
+      border-top-${$reverse ? 'right' : 'left'}-radius: 1.1rem;
+      border-bottom-${$reverse ? 'right' : 'left'}-radius: 1.1rem;
+    `)}
 `;
 
 export const MotivationLayout = styled.div`
@@ -60,7 +47,7 @@ export const Card = styled.div<{ $isPhone?: boolean }>`
 
   ${(props) =>
     props.theme.media.tab(css`
-      width: 76.2rem;
+      width: 70.9rem;
       height: 24.7rem;
       border-radius: 1.2rem;
     `)}
@@ -79,14 +66,14 @@ export const ImgWrapper = styled.div<{ $reverse?: boolean }>`
 
   ${(props) =>
     props.theme.media.tab(css`
-      width: 32.9rem;
-      height: 24.7rem;
+      width: 32.8rem;
+      height: 24.5rem;
     `)}
 
   ${(props) =>
     props.theme.media.ph(css`
-      width: 32.8rem;
-      height: 20.2rem;
+      width: 32.6rem;
+      height: 20.1rem;
     `)}
 
   img {
@@ -106,17 +93,17 @@ export const TextContainer = styled.div<{ $reverse?: boolean }>`
 
   ${(props) =>
     props.theme.media.tab(css`
-      width: 43.3rem;
-      height: 24.7rem;
+      width: 37.9rem;
+      height: 24.5rem;
     `)}
 
   ${(props) =>
     props.theme.media.ph(css`
-      width: 32.8rem;
-      height: 16.8rem;
+      width: 32.7rem;
+      height: 16.7rem;
     `)}
 
-    ${(props) => borderRadiusStyles(props.$reverse)}
+  ${(props) => borderRadiusStyles(props.$reverse)}
 
   img {
     width: 100%;
@@ -168,11 +155,14 @@ export const BlurOverlay = styled.div<{ $reverse?: boolean }>`
       color: ${(props) => props.theme.colors.blue60};
 
       ${(props) =>
-        props.theme.media.tab(
-          () => `
-        ${props.theme.fonts.headline3};
-        `
-        )}
+        props.theme.media.tab(css`
+          font-family: 'Pretendard', sans-serif;
+          font-size: 2.4rem;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 140%;
+          letter-spacing: 0.012rem;
+        `)}
 
       ${(props) =>
         props.theme.media.ph(css`

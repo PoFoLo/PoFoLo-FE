@@ -102,7 +102,7 @@ export const PCMockUpLayout = styled.div`
     }
 
     &:hover::before {
-      background-color: rgba(248, 248, 248, 0.5);
+      background-color: rgba(255, 255, 255, 0.6);
     }
 
     &:hover img {
