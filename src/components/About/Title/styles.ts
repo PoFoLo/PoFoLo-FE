@@ -8,13 +8,13 @@ export const TitleSection = styled.div`
   align-items: center;
 
   ${(props) =>
-    props.theme.media.tab(css`
-      margin-top: 13.6rem;
+    props.theme.media.ph(css`
+      margin-top: 10.6rem;
     `)}
 
   ${(props) =>
-    props.theme.media.ph(css`
-      margin-top: 10.6rem;
+    props.theme.media.tab(css`
+      margin-top: 13.6rem;
     `)}
 `;
 
@@ -23,9 +23,9 @@ export const PofoloLogo = styled.video`
   border-radius: 50%;
 
   ${(props) =>
-    props.theme.media.pc(css`
-      width: 36rem;
-      height: 35.9rem;
+    props.theme.media.ph(css`
+      width: 18rem;
+      height: 17.9rem;
     `)}
 
   ${(props) =>
@@ -35,9 +35,9 @@ export const PofoloLogo = styled.video`
     `)}
 
   ${(props) =>
-    props.theme.media.ph(css`
-      width: 18rem;
-      height: 17.9rem;
+    props.theme.media.pc(css`
+      width: 36rem;
+      height: 35.9rem;
     `)}
 `;
 
@@ -52,17 +52,17 @@ export const Title = styled.h2`
     ${(props) => props.theme.fonts.headingAbout1};
 
     ${(props) =>
-      props.theme.media.tab(
+      props.theme.media.ph(
         () => `
-    ${props.theme.fonts.headingAbout2};
-    `
+        ${props.theme.fonts.headingAbout3};
+      `
       )}
 
     ${(props) =>
-      props.theme.media.ph(
+      props.theme.media.tab(
         () => `
-    ${props.theme.fonts.headingAbout3};
-    `
+        ${props.theme.fonts.headingAbout2};
+      `
       )}
   }
 `;
@@ -70,30 +70,32 @@ export const Title = styled.h2`
 export const Description = styled.div`
   margin-top: 1.6rem;
   text-align: center;
-  ${(props) =>
-    props.theme.media.tab(css`
-      margin-top: 0.8rem;
-    `)}
 
   ${(props) =>
     props.theme.media.ph(css`
       margin-top: 0.8rem;
     `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      margin-top: 0.8rem;
+    `)}
+
   p {
     ${(props) => props.theme.fonts.bodyAbout1};
     color: ${(props) => props.theme.colors.gray90};
 
     ${(props) =>
-      props.theme.media.tab(
-        () => `
-      ${props.theme.fonts.bodyAbout2};
+      props.theme.media.ph(
+        () => `   
+        ${props.theme.fonts.bodyAbout3};
       `
       )}
 
     ${(props) =>
-      props.theme.media.ph(
-        () => `   
-      ${props.theme.fonts.bodyAbout3};
+      props.theme.media.tab(
+        () => `
+        ${props.theme.fonts.bodyAbout2};
       `
       )}
   }

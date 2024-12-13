@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const CommentLayout = styled.div`
   width: 100%;
@@ -18,6 +18,20 @@ export const CommentContainer = styled.section`
     margin: 0 6.4rem;
     width: calc(100% - 11.2rem);
   }
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      padding: 1.6rem 0;
+      margin: 0 2rem;
+      width: calc(100% - 4rem);
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      padding: 1.6rem 0;
+      margin: 0 2rem;
+      width: calc(100% - 4rem);
+    `)}
 `;
 
 export const CommentTitle = styled.div`
@@ -28,23 +42,45 @@ export const CommentTitle = styled.div`
 
   h2 {
     color: ${(props) => props.theme.colors.gray90};
-    ${(props) => props.theme.fonts.headline3};
+    ${(props) => props.theme.fonts.subhead2};
+
+    ${(props) =>
+      props.theme.media.pc(
+        () => `
+        ${props.theme.fonts.headline3};
+      `
+      )}
   }
   span {
     color: ${(props) => props.theme.colors.gray60};
-    ${(props) => props.theme.fonts.subhead1};
+    ${(props) => props.theme.fonts.subhead2};
+
+    ${(props) =>
+      props.theme.media.pc(
+        () => `
+        ${props.theme.fonts.subhead1};
+      `
+      )}
   }
 `;
 
 export const AddComment = styled.div`
   display: flex;
-  gap: 2rem;
-
+  gap: 1.2rem;
+  ${(props) =>
+    props.theme.media.pc(css`
+      gap: 2rem;
+    `)}
   img {
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
     border: 0.15rem solid ${(props) => props.theme.colors.gray20};
     border-radius: 50%;
+    ${(props) =>
+      props.theme.media.pc(css`
+        width: 4rem;
+        height: 4rem;
+      `)}
   }
 `;
 
@@ -62,11 +98,24 @@ export const CommentTextArea = styled.textarea`
   resize: none;
   border: 0.15rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 1.2rem;
-  padding: 1.2rem 8.8rem 1.2rem 2rem;
-  height: 5.3rem;
+  padding: 0.8rem 8.8rem 0.8rem 1.2rem;
+  height: 4.1rem;
   overflow: hidden;
-  ${(props) => props.theme.fonts.body2};
+  ${(props) => props.theme.fonts.body4};
   color: ${(props) => props.theme.colors.gray90};
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      padding: 1.2rem 8.8rem 1.2rem 2rem;
+      height: 5.3rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.pc(
+      () => `
+      ${props.theme.fonts.body2};
+    `
+    )}
 
   &::placeholder {
     color: ${(props) => props.theme.colors.gray50};
@@ -89,7 +138,6 @@ export const CommentList = styled.ul`
 
 export const CommentItem = styled.li`
   padding: 3.2rem 0;
-
   border-bottom: 0.1rem solid ${(props) => props.theme.colors.gray20};
 
   &:last-child {
@@ -100,13 +148,25 @@ export const CommentItem = styled.li`
 
 export const CommentItemWrapper = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1.2rem;
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      gap: 2rem;
+    `)}
+
   .profile-icon {
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
     border: 0.15rem solid ${(props) => props.theme.colors.gray20};
     cursor: pointer;
+
+    ${(props) =>
+      props.theme.media.pc(css`
+        width: 4rem;
+        height: 4rem;
+      `)}
   }
 `;
 
@@ -124,33 +184,64 @@ export const CommentContentWrapper = styled.div`
   }
 
   img {
-    width: 2.8rem;
-    height: 2.8rem;
+    width: 2rem;
+    height: 2rem;
     cursor: pointer;
+
+    ${(props) =>
+      props.theme.media.pc(css`
+        width: 2.8rem;
+        height: 2.8rem;
+      `)}
   }
 `;
 
 export const CommentInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 0.6rem;
+  ${(props) =>
+    props.theme.media.pc(css`
+      gap: 1.2rem;
+    `)}
 
   p {
-    ${(props) => props.theme.fonts.subhead2};
+    ${(props) => props.theme.fonts.subhead3};
     color: ${(props) => props.theme.colors.gray90};
     cursor: pointer;
+
+    ${(props) =>
+      props.theme.media.pc(
+        () => `
+        ${props.theme.fonts.subhead2};
+      `
+      )}
   }
 
   span {
-    ${(props) => props.theme.fonts.caption2};
+    ${(props) => props.theme.fonts.caption3};
     color: ${(props) => props.theme.colors.gray60};
+
+    ${(props) =>
+      props.theme.media.pc(
+        () => `
+        ${props.theme.fonts.caption2};
+      `
+      )}
   }
 `;
 
 export const CommentContent = styled.p`
-  ${(props) => props.theme.fonts.body2};
+  ${(props) => props.theme.fonts.body4};
   color: ${(props) => props.theme.colors.gray90};
   white-space: pre-wrap;
+
+  ${(props) =>
+    props.theme.media.pc(
+      () => `
+      ${props.theme.fonts.body2};
+    `
+    )}
 `;
 
 // reply
@@ -166,8 +257,14 @@ export const ReplyWrapper = styled.div`
   gap: 0.4rem;
 
   .reply-line {
-    width: 5rem;
-    height: 5rem;
+    width: 3.2rem;
+    height: 3.2rem;
+
+    ${(props) =>
+      props.theme.media.pc(css`
+        width: 5rem;
+        height: 5rem;
+      `)}
   }
 
   .reply-info-wrapper {
@@ -193,12 +290,23 @@ export const EmptyState = styled.div`
   margin: 11.6rem 0 10.4rem;
 
   img {
-    width: 16rem;
-    height: 16rem;
+    width: 10rem;
+    height: 10rem;
+    ${(props) =>
+      props.theme.media.pc(css`
+        width: 16rem;
+        height: 16rem;
+      `)}
   }
 
   span {
-    ${(props) => props.theme.fonts.headline3};
+    ${(props) => props.theme.fonts.headline4};
     color: ${(props) => props.theme.colors.gray30};
+    ${(props) =>
+      props.theme.media.pc(
+        () => `
+        ${props.theme.fonts.headline3};
+      `
+      )}
   }
 `;

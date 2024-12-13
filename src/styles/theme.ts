@@ -53,6 +53,14 @@ const theme = {
       line-height: 130%;
       letter-spacing: 0.014rem;
     `,
+    headline4: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      font-style: normal;
+      line-height: 130%;
+      letter-spacing: 0.012rem;
+    `,
     subhead1: `
       font-family: 'Pretendard', sans-serif;
       font-size: 2.8rem;
@@ -100,6 +108,14 @@ const theme = {
       font-style: normal;
       line-height: 150%;
       letter-spacing: 0.008rem;
+      `,
+    body4: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      font-style: normal;
+      line-height: 150%;
+      letter-spacing: 0.007rem;
       `,
     caption1: `
       font-family: 'Pretendard', sans-serif;
@@ -167,11 +183,11 @@ const theme = {
       `,
     bodyAbout2: `
       font-family: 'Pretendard', sans-serif;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 500;
       line-height: 160%;
-      letter-spacing: 0.009rem;
+      letter-spacing: 0.008rem;
       `,
     bodyAbout3: `
       font-family: 'Pretendard', sans-serif;
@@ -184,17 +200,18 @@ const theme = {
   },
   breakpoints: {
     ph: 360,
-    tab: 834,
+    tab: 768,
     pc: 1200,
+    base: 1200,
   },
   media: {
     ph: (styles: string | (() => string)) => `
-      @media (max-width: 833px) {
+      @media (max-width: 767px) {
         ${typeof styles === 'function' ? styles() : styles}
       }
     `,
     tab: (styles: string | (() => string)) => `
-      @media (min-width: 834px) and (max-width: 1199px) {
+      @media (min-width: 768px) and (max-width: 1199px) {
         ${typeof styles === 'function' ? styles() : styles}
       }
     `,
@@ -202,6 +219,11 @@ const theme = {
       @media (min-width: 1200px) {
         ${typeof styles === 'function' ? styles() : styles}
       }
+    `,
+    base: (styles: string | (() => string)) => `
+      @media (min-width: 1200px) and (max-width: 1439px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      },
     `,
   },
 };
