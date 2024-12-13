@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 export const Layout = styled.div`
   width: 100%;
@@ -12,6 +12,22 @@ export const Layout = styled.div`
     margin-top: 3.4rem;
     ${(props) => props.theme.fonts.headline1};
     color: ${(props) => props.theme.colors.blue30};
+
+    ${(props) =>
+      props.theme.media.tab(
+        () => `
+        margin-top: 3.6rem;
+        ${props.theme.fonts.headline3};
+        `
+      )}
+
+    ${(props) =>
+      props.theme.media.ph(
+        () => `
+        margin-top: 2.4rem;
+        ${props.theme.fonts.headline4};
+        `
+      )}
   }
 `;
 
@@ -28,7 +44,12 @@ export const LogoWrapper = styled.div`
   position: relative;
   width: 12.5rem;
   height: 13.6rem;
-  margin-right: 3rem;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      width: 9.4rem;
+      height: 10.2rem;
+    `)}
 `;
 
 export const Logo = styled.img<{ $isVisible: boolean }>`
