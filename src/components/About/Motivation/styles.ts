@@ -2,30 +2,17 @@ import styled, { css } from 'styled-components';
 
 // 공통 border-radius 함수
 const borderRadiusStyles = ($reverse?: boolean) => css`
-  ${$reverse
-    ? css`
-        border-top-right-radius: 2.3rem;
-        border-bottom-right-radius: 2.3rem;
+  ${(props) =>
+    props.theme.media.pc(css`
+      border-top-${$reverse ? 'right' : 'left'}-radius: 2.3rem;
+      border-bottom-${$reverse ? 'right' : 'left'}-radius: 2.3rem;
+    `)}
 
-        ${(props) =>
-          props.theme.media.tab(css`
-            border-top-right-radius: 1.1rem;
-            border-bottom-right-radius: 1.1rem;
-          `)}
-      `
-    : css`
-        ${(props) =>
-          props.theme.media.pc(css`
-            border-top-left-radius: 2.3rem;
-            border-bottom-left-radius: 2.3rem;
-          `)}
-
-        ${(props) =>
-          props.theme.media.tab(css`
-            border-top-left-radius: 1.1rem;
-            border-bottom-left-radius: 1.1rem;
-          `)}
-      `}
+  ${(props) =>
+    props.theme.media.tab(css`
+      border-top-${$reverse ? 'right' : 'left'}-radius: 1.1rem;
+      border-bottom-${$reverse ? 'right' : 'left'}-radius: 1.1rem;
+    `)}
 `;
 
 export const MotivationLayout = styled.div`
@@ -35,15 +22,20 @@ export const MotivationLayout = styled.div`
   gap: 12.8rem;
 
   ${(props) =>
+    props.theme.media.ph(css`
+      margin-top: 12rem;
+      gap: 7.2rem;
+    `)}
+
+  ${(props) =>
     props.theme.media.tab(css`
       margin-top: 12.8rem;
       gap: 7.2rem;
     `)}
 
   ${(props) =>
-    props.theme.media.ph(css`
-      margin-top: 12rem;
-      gap: 7.2rem;
+    props.theme.media.base(css`
+      gap: 9.6rem;
     `)}
 `;
 
@@ -59,17 +51,23 @@ export const Card = styled.div<{ $isPhone?: boolean }>`
   flex-direction: ${(props) => (props.$isPhone ? 'column' : 'row')};
 
   ${(props) =>
-    props.theme.media.tab(css`
-      width: 76.2rem;
-      height: 24.7rem;
-      border-radius: 1.2rem;
-    `)}
-
-  ${(props) =>
     props.theme.media.ph(css`
       width: 32.8rem;
       height: 37rem;
       border-radius: 1.2rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 70.9rem;
+      height: 24.7rem;
+      border-radius: 1.2rem;
+    `)}
+
+    ${(props) =>
+    props.theme.media.base(css`
+      width: 113.6rem;
+      height: 43rem;
     `)}
 `;
 
@@ -78,15 +76,21 @@ export const ImgWrapper = styled.div<{ $reverse?: boolean }>`
   height: 49.2rem;
 
   ${(props) =>
-    props.theme.media.tab(css`
-      width: 32.9rem;
-      height: 24.7rem;
+    props.theme.media.ph(css`
+      width: 32.6rem;
+      height: 20.1rem;
     `)}
 
   ${(props) =>
-    props.theme.media.ph(css`
+    props.theme.media.tab(css`
       width: 32.8rem;
-      height: 20.2rem;
+      height: 24.5rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.base(css`
+      width: 53.5rem;
+      height: 42.8rem;
     `)}
 
   img {
@@ -105,18 +109,24 @@ export const TextContainer = styled.div<{ $reverse?: boolean }>`
   flex-direction: column;
 
   ${(props) =>
-    props.theme.media.tab(css`
-      width: 43.3rem;
-      height: 24.7rem;
+    props.theme.media.ph(css`
+      width: 32.7rem;
+      height: 16.7rem;
     `)}
 
   ${(props) =>
-    props.theme.media.ph(css`
-      width: 32.8rem;
-      height: 16.8rem;
+    props.theme.media.tab(css`
+      width: 37.9rem;
+      height: 24.5rem;
     `)}
 
-    ${(props) => borderRadiusStyles(props.$reverse)}
+  ${(props) =>
+    props.theme.media.base(css`
+      width: 59.9rem;
+      height: 42.8rem;
+    `)}
+
+  ${(props) => borderRadiusStyles(props.$reverse)}
 
   img {
     width: 100%;
@@ -140,39 +150,32 @@ export const BlurOverlay = styled.div<{ $reverse?: boolean }>`
   padding-left: 5rem;
 
   ${(props) =>
-    props.theme.media.tab(css`
-      padding-left: 2.5rem;
-    `)}
-
-  ${(props) =>
     props.theme.media.ph(css`
       padding-left: 2rem;
     `)}
 
+  ${(props) =>
+    props.theme.media.tab(css`
+      padding-left: 2.5rem;
+    `)}
 
   h2 {
     margin-top: 4.2rem;
-
-    ${(props) =>
-      props.theme.media.tab(css`
-        margin-top: 2.1rem;
-      `)}
 
     ${(props) =>
       props.theme.media.ph(css`
         margin-top: 1.6rem;
       `)}
 
+    ${(props) =>
+      props.theme.media.tab(css`
+        margin-top: 2.1rem;
+      `)}
+
+
     p {
       ${(props) => props.theme.fonts.headline1};
       color: ${(props) => props.theme.colors.blue60};
-
-      ${(props) =>
-        props.theme.media.tab(
-          () => `
-        ${props.theme.fonts.headline3};
-        `
-        )}
 
       ${(props) =>
         props.theme.media.ph(css`
@@ -183,6 +186,23 @@ export const BlurOverlay = styled.div<{ $reverse?: boolean }>`
           line-height: 150%;
           letter-spacing: 0.005rem;
         `)}
+
+      ${(props) =>
+        props.theme.media.tab(css`
+          font-family: 'Pretendard', sans-serif;
+          font-size: 2.4rem;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 140%;
+          letter-spacing: 0.012rem;
+        `)}
+
+      ${(props) =>
+        props.theme.media.base(
+          () => `
+          ${props.theme.fonts.headline2};
+        `
+        )}
     }
   }
 
@@ -190,13 +210,18 @@ export const BlurOverlay = styled.div<{ $reverse?: boolean }>`
     margin-top: 2.4rem;
 
     ${(props) =>
+      props.theme.media.ph(css`
+        margin-top: 0.5rem;
+      `)}
+
+    ${(props) =>
       props.theme.media.tab(css`
         margin-top: 1.2rem;
       `)}
 
     ${(props) =>
-      props.theme.media.ph(css`
-        margin-top: 0.5rem;
+      props.theme.media.base(css`
+        margin-top: 0.8rem;
       `)}
 
     p {
@@ -204,16 +229,23 @@ export const BlurOverlay = styled.div<{ $reverse?: boolean }>`
       color: ${(props) => props.theme.colors.gray80};
 
       ${(props) =>
-        props.theme.media.tab(
+        props.theme.media.ph(
           () => `
-        ${props.theme.fonts.bodyAbout2};
+          ${props.theme.fonts.bodyAbout3};
         `
         )}
 
       ${(props) =>
-        props.theme.media.ph(
+        props.theme.media.tab(
           () => `
-        ${props.theme.fonts.bodyAbout3};
+          ${props.theme.fonts.bodyAbout2};
+        `
+        )}
+
+      ${(props) =>
+        props.theme.media.base(
+          () => `
+          ${props.theme.fonts.bodyAbout1};
         `
         )}
     }

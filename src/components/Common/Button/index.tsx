@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import * as S from '@/components/Common/Button/styles';
 
-type ButtonSize = 'large' | 'medium' | 'small';
-type ButtonType = 'main' | 'sub' | 'inactive';
+type ButtonSize = 'large' | 'medium' | 'small' | 'small2';
+type ButtonType = 'main' | 'sub' | 'inactive' | 'obscure';
 
 interface ButtonProps {
   size: ButtonSize;

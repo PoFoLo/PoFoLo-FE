@@ -1,13 +1,14 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { OAuthLoading } from '@/pages/Login/OAuthLoading';
+import { JoinPage } from '@/pages/Login/Join';
 import { AboutPage } from '@/pages/About/AboutPage';
 import { MainPage } from '@/pages/Main/MainPage';
 import { ProjectDetailPage } from '@/pages/Project/ProjectDetailPage';
 import { WriteProjectPage } from '@/pages/Project/WriteProjectPage';
+import { PortfolioDetailPage } from '@/pages/Portfolio/PortfolioDetailPage';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
-import { OAuthLoading } from '@/pages/Login/OAuthLoading';
-import { JoinPage } from '@/pages/Login/Join';
 
 function App() {
   useEffect(() => {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/home" element={<MainPage />} />
         <Route path="/project/:projectId" element={<ProjectDetailPage />} />
         <Route path="/project/write" element={<WriteProjectPage />} />
+        <Route path="/portfolio/:portfolioId" element={<PortfolioDetailPage />} />
       </Routes>
     </BrowserRouter>
   );
