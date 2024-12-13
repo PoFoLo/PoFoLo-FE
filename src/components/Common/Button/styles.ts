@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
 interface StyledButtonProps {
-  $buttonSize: 'large' | 'medium' | 'small';
-  $buttonType: 'main' | 'sub' | 'inactive';
+  $buttonSize: 'large' | 'medium' | 'small' | 'small2';
+  $buttonType: 'main' | 'sub' | 'inactive' | 'obscure';
 }
 
 const buttonSizeStyles = {
@@ -25,6 +25,12 @@ const buttonSizeStyles = {
     ${(props) => props.theme.fonts.caption2};
     border-radius: 0.8rem;
   `,
+  small2: css`
+    height: 2.1rem;
+    padding: 0.2rem 0.8rem;
+    ${(props) => props.theme.fonts.caption4};
+    border-radius: 0.8rem;
+  `,
 };
 
 const buttonTypeStyles = {
@@ -42,6 +48,12 @@ const buttonTypeStyles = {
     color: ${(props) => props.theme.colors.blue30};
     background-color: ${(props) => props.theme.colors.blue10};
     cursor: default;
+  `,
+  obscure: css`
+    color: ${(props) => props.theme.colors.gray70};
+    background-color: ${(props) => props.theme.colors.gray10};
+    box-shadow: inset 0 0 0 0.1rem ${(props) => props.theme.colors.gray20};
+    cursor: pointer;
   `,
 };
 

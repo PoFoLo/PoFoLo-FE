@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import Button from '@/components/Common/Button';
 import * as S from '@/components/ProjectDetail/Comment/styles';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
+import { useResponsive } from '@/hooks/useResponsive';
 
 interface CommentInputProps {
   comment: string;
@@ -17,6 +18,7 @@ export const CommentInput: React.FC<CommentInputProps> = ({
   scrollToNewComment,
 }) => {
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
+  const { isPC } = useResponsive();
 
   const handlePost = () => {
     onPost(); // 댓글 게시
@@ -24,13 +26,13 @@ export const CommentInput: React.FC<CommentInputProps> = ({
 
     // 높이 초기화
     if (commentInputRef.current) {
-      commentInputRef.current.style.height = '5.6rem';
+      commentInputRef.current.style.height = isPC ? '5.6rem' : '4.4rem';
     }
   };
 
   const handleInput = () => {
     if (commentInputRef.current) {
-      commentInputRef.current.style.height = '5.6rem'; // default
+      commentInputRef.current.style.height = isPC ? '5.6rem' : '4.4rem';
       commentInputRef.current.style.height = `${commentInputRef.current.scrollHeight}px`; // 내용에 맞게 높이 설정
     }
   };

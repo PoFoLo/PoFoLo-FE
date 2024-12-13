@@ -9,6 +9,7 @@ import replyGray from '@/assets/webps/ProjectDetail/replyGray.webp';
 import replyBlue from '@/assets/webps/ProjectDetail/replyBlue.webp';
 import replyLine from '@/assets/svgs/ProjectDetail/replyLine.svg';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
+import { useResponsive } from '@/hooks/useResponsive';
 
 interface CommentItemProps {
   comment: CommentItemDto;
@@ -21,6 +22,7 @@ interface CommentItemProps {
 
 export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
   ({ comment, replyClicked, onReplyClick, onReplyPost, onReplyChange, replyContent }, ref) => {
+    const { isPC } = useResponsive();
     const nav = useNavigate();
     const replyRefs = useRef<(HTMLLIElement | null)[]>([]);
     const replyInputRef = useRef<HTMLTextAreaElement>(null);
@@ -58,7 +60,7 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
     // 입력 높이 자동 조절
     const handleInput = () => {
       if (replyInputRef.current) {
-        replyInputRef.current.style.height = '5.6rem'; // default
+        replyInputRef.current.style.height = isPC ? '5.6rem' : '4.4rem';
         replyInputRef.current.style.height = `${replyInputRef.current.scrollHeight}px`;
       }
     };
