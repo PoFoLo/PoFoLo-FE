@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { OAuthLoading } from '@/pages/Login/OAuthLoading';
+import { JoinPage } from '@/pages/Login/Join';
 import { AboutPage } from '@/pages/About/AboutPage';
 import { MainPage } from '@/pages/Main/MainPage';
 import { ProjectDetailPage } from '@/pages/Project/ProjectDetailPage';
@@ -20,6 +22,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AboutPage />} />
+        <Route path="/kakao/callback" element={<OAuthLoading />} />
+        <Route path="/join" element={<JoinPage />} />
         <Route path="/home" element={<MainPage />} />
         <Route path="/project/:projectId" element={<ProjectDetailPage />} />
         <Route path="/project/write" element={<WriteProjectPage />} />

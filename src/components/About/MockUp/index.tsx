@@ -8,6 +8,14 @@ import { useResponsive } from '@/hooks/useResponsive';
 
 export const MockUp = () => {
   const { isPC } = useResponsive();
+
+  const handleKakaoLogin = () => {
+    const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
+    const redirectUri = encodeURIComponent(import.meta.env.VITE_KAKAO_REDIRECT_URI);
+    const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+    window.location.href = kakaoLoginUrl;
+  };
+
   useEffect(() => {
     AOS.init({
       duration: 700,
@@ -24,7 +32,7 @@ export const MockUp = () => {
             <div className="induce-login">
               <p>PoFoLo만의 포트폴리오 관리,</p>
               <p>지금 바로 시작해보세요</p>
-              <button>시작하기</button>
+              <button onClick={handleKakaoLogin}>시작하기</button>
             </div>
           </div>
         </S.PCMockUpLayout>
@@ -33,7 +41,7 @@ export const MockUp = () => {
           <p>PoFoLo만의 포트폴리오 관리,</p>
           <p>지금 바로 시작해보세요</p>
           <img src={ipad} alt="ipad" />
-          <button>시작하기</button>
+          <button onClick={handleKakaoLogin}>시작하기</button>
         </S.MockUpLayout>
       )}
     </>
