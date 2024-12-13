@@ -20,14 +20,14 @@ export const CommentContainer = styled.section`
   }
 
   ${(props) =>
-    props.theme.media.tab(css`
+    props.theme.media.ph(css`
       padding: 1.6rem 0;
       margin: 0 2rem;
       width: calc(100% - 4rem);
     `)}
 
   ${(props) =>
-    props.theme.media.ph(css`
+    props.theme.media.tab(css`
       padding: 1.6rem 0;
       margin: 0 2rem;
       width: calc(100% - 4rem);
@@ -47,7 +47,7 @@ export const CommentTitle = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.headline3};
+        ${props.theme.fonts.headline3};
       `
       )}
   }
@@ -58,7 +58,7 @@ export const CommentTitle = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.subhead1};
+        ${props.theme.fonts.subhead1};
       `
       )}
   }
@@ -113,7 +113,7 @@ export const CommentTextArea = styled.textarea`
   ${(props) =>
     props.theme.media.pc(
       () => `
-    ${props.theme.fonts.body2};
+      ${props.theme.fonts.body2};
     `
     )}
 
@@ -149,10 +149,12 @@ export const CommentItem = styled.li`
 export const CommentItemWrapper = styled.div`
   display: flex;
   gap: 1.2rem;
+
   ${(props) =>
     props.theme.media.pc(css`
       gap: 2rem;
     `)}
+
   .profile-icon {
     width: 3rem;
     height: 3rem;
@@ -211,7 +213,7 @@ export const CommentInfo = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.subhead2};
+        ${props.theme.fonts.subhead2};
       `
       )}
   }
@@ -223,7 +225,7 @@ export const CommentInfo = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.caption2};
+        ${props.theme.fonts.caption2};
       `
       )}
   }
@@ -238,7 +240,7 @@ export const CommentContent = styled.p`
     props.theme.media.pc(
       () => `
       ${props.theme.fonts.body2};
-      `
+    `
     )}
 `;
 
@@ -257,6 +259,7 @@ export const ReplyWrapper = styled.div`
   .reply-line {
     width: 3.2rem;
     height: 3.2rem;
+
     ${(props) =>
       props.theme.media.pc(css`
         width: 5rem;
@@ -302,8 +305,8 @@ export const EmptyState = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-  ${props.theme.fonts.headline3};
-  `
+        ${props.theme.fonts.headline3};
+      `
       )}
   }
 `;

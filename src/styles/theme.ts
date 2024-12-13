@@ -183,11 +183,11 @@ const theme = {
       `,
     bodyAbout2: `
       font-family: 'Pretendard', sans-serif;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 500;
       line-height: 160%;
-      letter-spacing: 0.009rem;
+      letter-spacing: 0.008rem;
       `,
     bodyAbout3: `
       font-family: 'Pretendard', sans-serif;
@@ -202,6 +202,7 @@ const theme = {
     ph: 360,
     tab: 768,
     pc: 1200,
+    base: 1200,
   },
   media: {
     ph: (styles: string | (() => string)) => `
@@ -218,6 +219,11 @@ const theme = {
       @media (min-width: 1200px) {
         ${typeof styles === 'function' ? styles() : styles}
       }
+    `,
+    base: (styles: string | (() => string)) => `
+      @media (min-width: 1200px) and (max-width: 1439px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      },
     `,
   },
 };

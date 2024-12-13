@@ -8,7 +8,7 @@ export const Title = styled.h2`
   ${(props) =>
     props.theme.media.pc(
       () => `
-      ${props.theme.fonts.headline2};
+        ${props.theme.fonts.headline2};
       `
     )}
 `;
@@ -38,7 +38,7 @@ export const FieldButton = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.caption2};
+        ${props.theme.fonts.caption2};
       `
       )}
   }
@@ -101,7 +101,7 @@ export const LinkContainer = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.caption2};
+        ${props.theme.fonts.caption2};
       `
       )}
   }
@@ -117,7 +117,7 @@ export const LinkContainer = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.caption3};
+        ${props.theme.fonts.caption3};
       `
       )}
   }
@@ -144,7 +144,7 @@ export const FloatingButtonWrapper = styled.div`
   }
 
   ${(props) =>
-    props.theme.media.tab(css`
+    props.theme.media.ph(css`
       width: 10.8rem;
       height: 4.8rem;
       gap: 1.2rem;
@@ -152,7 +152,7 @@ export const FloatingButtonWrapper = styled.div`
     `)}
 
   ${(props) =>
-    props.theme.media.ph(css`
+    props.theme.media.tab(css`
       width: 10.8rem;
       height: 4.8rem;
       gap: 1.2rem;

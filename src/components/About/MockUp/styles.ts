@@ -63,10 +63,17 @@ export const MockUpLayout = styled.div`
 `;
 
 export const PCMockUpLayout = styled.div`
-  margin: 43rem 0 8.2rem;
+  margin: 33rem 0 23.8rem;
   position: relative;
-  width: 157.5rem;
-  height: 86.46rem;
+  width: 124.5rem;
+  height: 70rem;
+
+  ${(props) =>
+    props.theme.media.base(css`
+      margin: 36.3rem 0 21.4rem;
+      width: 112rem;
+      height: 63.6rem;
+    `)}
 
   .macbook {
     width: 100%;
@@ -77,11 +84,19 @@ export const PCMockUpLayout = styled.div`
   .contents {
     overflow: hidden;
     position: absolute;
-    top: 5.5rem;
-    left: 21.5rem;
-    width: 114.9rem;
-    height: 71.8rem;
+    top: 4.4rem;
+    left: 15.4rem;
+    width: 93.1rem;
+    height: 58.2rem;
     z-index: 1;
+
+    ${(props) =>
+      props.theme.media.base(css`
+        top: 4rem;
+        left: 13.9rem;
+        width: 83.8rem;
+        height: 52.3rem;
+      `)}
 
     img {
       width: 100%;
@@ -111,7 +126,7 @@ export const PCMockUpLayout = styled.div`
 
     .induce-login {
       position: absolute;
-      top: 26.7rem;
+      top: 19.7rem;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -121,6 +136,11 @@ export const PCMockUpLayout = styled.div`
       transition:
         opacity 0.3s ease,
         visibility 0.3s ease;
+
+      ${(props) =>
+        props.theme.media.base(css`
+          top: 17.7rem;
+        `)}
 
       &:hover {
         opacity: 1;
@@ -135,6 +155,13 @@ export const PCMockUpLayout = styled.div`
         font-weight: 700;
         line-height: 130%;
         letter-spacing: 0.021rem;
+
+        ${(props) =>
+          props.theme.media.base(
+            () => `
+            ${props.theme.fonts.headingAbout2};
+          `
+          )}
       }
 
       button {
@@ -148,6 +175,15 @@ export const PCMockUpLayout = styled.div`
         background-color: ${(props) => props.theme.colors.blue50};
         color: ${(props) => props.theme.colors.white};
         ${(props) => props.theme.fonts.subhead2};
+
+        ${(props) =>
+          props.theme.media.base(
+            () => `
+            width: 36rem;
+            height: 4.8rem;
+            top: 15rem;
+          `
+          )}
       }
     }
 

@@ -31,7 +31,7 @@ export const OverlayText = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.caption3};
+        ${props.theme.fonts.caption3};
       `
       )}
   }
@@ -43,7 +43,7 @@ export const OverlayText = styled.div`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.subhead2};
+        ${props.theme.fonts.subhead2};
       `
       )}
   }
@@ -85,7 +85,7 @@ export const Title = styled.h2`
   ${(props) =>
     props.theme.media.pc(
       () => `
-    ${props.theme.fonts.headline1};
+      ${props.theme.fonts.headline1};
     `
     )}
 `;
@@ -143,8 +143,8 @@ export const Link = styled.div<{ $isCopied: boolean }>`
     ${(props) =>
       props.theme.media.pc(
         () => `
-      ${props.theme.fonts.caption1};
-      margin-left: ${props.$isCopied ? '2rem' : '1rem'};
+        ${props.theme.fonts.caption1};
+        margin-left: ${props.$isCopied ? '2rem' : '1rem'};
       `
       )}
   }
