@@ -47,8 +47,10 @@ const ProjectModal = ({
 
   // 프로젝트 선택 완료 버튼 누르면 선택된 프로젝트 상위 컴포넌트로 전달
   const handleConfirmSelection = () => {
-    setSelectedIds(modalSelectedIds);
-    setIsOpen(false);
+    if (modalSelectedIds.length !== 0) {
+      setSelectedIds(modalSelectedIds);
+      setIsOpen(false);
+    }
   };
 
   // 모달 열렸을 때 외부 스크롤 막기
@@ -71,7 +73,11 @@ const ProjectModal = ({
                 <S.GoBackBtn $backgroundImage={modalGoBack} onClick={() => setIsOpen(false)} />
                 <S.ModalTitleText>프로젝트 선택</S.ModalTitleText>
               </S.ModalTitleContainer>
-              <Button size="medium" type="main" onClick={handleConfirmSelection}>
+              <Button
+                size="medium"
+                type={modalSelectedIds.length === 0 ? 'inactive' : 'main'}
+                onClick={handleConfirmSelection}
+              >
                 {modalSelectedIds.length}개 선택
               </Button>
             </S.ModalHeaderContainer>
