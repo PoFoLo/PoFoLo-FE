@@ -13,7 +13,7 @@ export const ProjectImage = styled.img`
 
 export const HoverImageContainer = styled.div`
   position: absolute;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   top: 0;
@@ -23,6 +23,8 @@ export const HoverImageContainer = styled.div`
   background: rgba(0, 0, 0, 0.5);
   border-radius: 1.2rem 1.2rem 0rem 0rem;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 `;
 
 export const HoverBtn = styled.button<{ $backgroundImage: string }>`
@@ -48,6 +50,10 @@ export const ProjectInfoContainer = styled.div`
 
 export const ProjectTitle = styled.p`
   ${(props) => props.theme.fonts.caption2};
+  margin-left: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const LikeCommentContainer = styled.div`
@@ -78,10 +84,11 @@ export const ProjectCard = styled.div`
   cursor: pointer;
 
   &:hover ${HoverImageContainer} {
-    display: flex;
+    opacity: 1;
   }
 
   &:hover ${ProjectInfoContainer} {
     opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
   }
 `;
