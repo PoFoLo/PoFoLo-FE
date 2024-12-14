@@ -1,12 +1,10 @@
-import * as S from '@/components/WriteProject/styles';
+import * as S from '@/components/FormField/styles';
 import TextArea from '@/components/Common/TextArea';
 
 interface DescriptionSectionProps {
   description: string;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
-  setErrors: React.Dispatch<
-    React.SetStateAction<{ title: boolean; description: boolean; category: boolean }>
-  >;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
   error: boolean;
 }
 

@@ -8,20 +8,20 @@ interface StyledButtonProps {
 const buttonSizeStyles = {
   large: css`
     height: 4.8rem;
-    padding: 0.4rem 1.2rem;
+    padding: 0rem 1.2rem;
     ${(props) => props.theme.fonts.subhead2};
     border-radius: 1.2rem;
     flex: 1 0 0;
   `,
   medium: css`
     height: 3.6rem;
-    padding: 0.6rem 1.6rem;
+    padding: 0rem 1.6rem;
     ${(props) => props.theme.fonts.caption1};
     border-radius: 4rem;
   `,
   small: css`
     height: 3.2rem;
-    padding: 0.4rem 1.2rem;
+    padding: 0rem 1.2rem;
     ${(props) => props.theme.fonts.caption2};
     border-radius: 0.8rem;
   `,
@@ -59,6 +59,9 @@ const buttonTypeStyles = {
 
 export const StyledButton = styled.button<StyledButtonProps>`
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   ${({ $buttonSize }) => buttonSizeStyles[$buttonSize]};
   ${({ $buttonType }) => buttonTypeStyles[$buttonType]};
 `;

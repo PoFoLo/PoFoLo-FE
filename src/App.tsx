@@ -6,6 +6,7 @@ import { AboutPage } from '@/pages/About/AboutPage';
 import { MainPage } from '@/pages/Main/MainPage';
 import { ProjectDetailPage } from '@/pages/Project/ProjectDetailPage';
 import { WriteProjectPage } from '@/pages/Project/WriteProjectPage';
+import { WritePortfolioPage } from '@/pages/Portfolio/WritePortfolioPage';
 import { PortfolioDetailPage } from '@/pages/Portfolio/PortfolioDetailPage';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/project/:projectId" element={<ProjectDetailPage />} />
         <Route path="/project/write" element={<WriteProjectPage />} />
         <Route path="/portfolio/:portfolioId" element={<PortfolioDetailPage />} />
+        <Route path="/portfolio/write" element={<WritePortfolioPage />} />
       </Routes>
     </BrowserRouter>
   );

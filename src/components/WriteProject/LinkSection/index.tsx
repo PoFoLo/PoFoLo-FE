@@ -1,7 +1,7 @@
 import * as S from '@/components/WriteProject/LinkSection/styles';
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
-import LinkIcon from '@/assets/webps/WriteProject/linkIcon.webp';
-import LinkDeleteIcon from '@/assets/webps/WriteProject/linkDeleteIcon.webp';
+import linkIcon from '@/assets/webps/Common/link.webp';
+import linkDeleteIcon from '@/assets/webps/Common/linkDelete.webp';
 
 interface LinkSectionProps {
   links: string[];
@@ -45,13 +45,13 @@ const LinkSection = ({ links = [], setLink }: LinkSectionProps) => {
       <S.LinkInputContainer>
         {links.map((link, index) => (
           <S.Link key={index}>
-            <S.LinkIcon $backgroundImage={LinkIcon} />
+            <S.LinkIcon $backgroundImage={linkIcon} />
             <S.LinkContentContainer>
               <S.LinkTitle>{link}</S.LinkTitle>
               <S.LinkDomain>{getDomainFromUrl(link)}</S.LinkDomain>
             </S.LinkContentContainer>
             <S.RemoveButton
-              $backgroundImage={LinkDeleteIcon}
+              $backgroundImage={linkDeleteIcon}
               onClick={() => handleRemoveLink(index)}
             />
           </S.Link>

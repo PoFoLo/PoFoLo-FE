@@ -82,4 +82,4 @@ export const ErrorMessage = styled.p`
   margin: 0.8rem 0rem 0rem 1.2rem;
 `;
 
-export * from '@/components/WriteProject/styles';
+export * from '@/components/FormField/styles';

@@ -1,29 +1,32 @@
-import * as S from '@/pages/Project/WriteProjectPage/styles';
+import * as S from '@/pages/Portfolio/WritePortfolioPage/styles';
 import HeaderSection from '@/components/FormField/HeaderSection';
 import TitleSection from '@/components/FormField/TitleSection';
 import CategorySection from '@/components/FormField/CategorySection';
 import DescriptionSection from '@/components/FormField/DescriptionSection';
-import SkillSection from '@/components/WriteProject/SkillSection';
-import LinkSection from '@/components/WriteProject/LinkSection';
-import ImageSection from '@/components/WriteProject/ImageSection';
+import SkillSection from '@/components/WritePortfolio/SkillSection';
+import CareerSection from '@/components/WritePortfolio/CareerSection';
+import ProjectSection from '@/components/WritePortfolio/ProjectSection';
 import Navbar from '@/components/Layout/Navbar/Navbar';
 import Modal from '@/components/Common/Modal';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const WriteProjectPage = () => {
+export const WritePortfolioPage = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [mainCategory, setMainCategory] = useState<string>('');
   const [subCategory, setSubCategory] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [skill, setSkill] = useState<string>('');
-  const [links, setLinks] = useState<string[]>([]);
-  const [formData, setFormData] = useState<FormData | null>(null);
+  const [career, setCareer] = useState<string>('');
+  const [projects, setProjects] = useState<number[]>([]);
   const [errors, setErrors] = useState<Record<string, boolean>>({
     title: false,
     description: false,
     category: false,
+    skill: false,
+    career: false,
+    projects: false,
   });
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -36,6 +39,9 @@ export const WriteProjectPage = () => {
       title: !title.trim() || title.length > 50,
       description: !description.trim(),
       category: !mainCategory || !subCategory,
+      skill: !skill.trim(),
+      career: !career.trim(),
+      projects: projects.length == 0,
     });
   };
 
@@ -45,7 +51,10 @@ export const WriteProjectPage = () => {
     title.length <= 50 &&
     description.trim().length > 0 &&
     !!mainCategory &&
-    !!subCategory;
+    !!subCategory &&
+    skill.trim().length > 0 &&
+    career.trim().length > 0 &&
+    projects.length > 0;
 
   // 업로드 버튼을 누르면 유효성 검사 실시 -> 에러 설정, 버튼이 활성화 되어있는 경우 업로드 처리 로직
   const handleUploadClick = () => {
@@ -59,8 +68,8 @@ export const WriteProjectPage = () => {
         mainCategory,
         subCategory,
         description,
-        skill,
-        links,
+        career,
+        projects,
         // 사진 url
       };
       console.log('업로드 처리', data);
@@ -73,11 +82,11 @@ export const WriteProjectPage = () => {
     return (
       title.trim() ||
       description.trim() ||
-      skill.trim() ||
-      links.length > 0 ||
-      (formData && Array.from(formData.entries()).length > 0) ||
       mainCategory ||
-      subCategory
+      subCategory ||
+      skill.trim() ||
+      career.trim() ||
+      projects.length > 0
     );
   };
 
@@ -147,7 +156,7 @@ export const WriteProjectPage = () => {
         subCategory,
         description,
         skill,
-        links,
+        career,
         // 사진 url
       };
       console.log('업로드 처리', data);
@@ -166,7 +175,7 @@ export const WriteProjectPage = () => {
       <S.Layout>
         <S.PortFolioLayout>
           <HeaderSection
-            headerText="새 프로젝트"
+            headerText="새 포트폴리오"
             isPrivate={isPrivate}
             setIsPrivate={setIsPrivate}
             handleUploadClick={handleUploadClick}
@@ -193,9 +202,24 @@ export const WriteProjectPage = () => {
               error={errors.description}
               setErrors={setErrors}
             />
-            <SkillSection skill={skill} setSkill={setSkill} />
-            <LinkSection links={links} setLink={setLinks} />
-            <ImageSection setFormData={setFormData} />
+            <SkillSection
+              skill={skill}
+              setSkill={setSkill}
+              error={errors.skill}
+              setErrors={setErrors}
+            />
+            <CareerSection
+              career={career}
+              setCareer={setCareer}
+              error={errors.career}
+              setErrors={setErrors}
+            />
+            <ProjectSection
+              projects={projects}
+              setProjects={setProjects}
+              error={errors.projects}
+              setErrors={setErrors}
+            />
           </S.FormContainer>
         </S.PortFolioLayout>
       </S.Layout>
