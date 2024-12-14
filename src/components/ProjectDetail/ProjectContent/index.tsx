@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ScrollContainer from 'react-indiana-drag-scroll';
+import { useResponsive } from '@/hooks/useResponsive';
 import * as S from '@/components/ProjectDetail/ProjectContent/styles';
+import * as C from '@/components/Common/Detail/styles';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
 import linkIcon from '@/assets/webps/Common/link.webp';
 import projectImg1 from '@/assets/webps/ProjectDetail/projectImg1.webp';
@@ -29,6 +31,7 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
   const [isFixed, setIsFixed] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(10);
+  const { isPC } = useResponsive();
   const nav = useNavigate();
   const images = [projectImg1, projectImg2, projectImg3];
   const projectContainerRef = useRef<HTMLDivElement | null>(null);
@@ -63,34 +66,36 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
 
   return (
     <>
-      <S.ImgContainer>
+      <C.ImgContainer>
         <ScrollContainer className="scroll-container" horizontal>
           {images.map((imgSrc, index) => (
-            <S.ImageItem key={index} src={imgSrc} alt={`image-${index}`} />
+            <C.ImageWrapper key={index}>
+              <img src={imgSrc} alt={`image-${index}`} />
+            </C.ImageWrapper>
           ))}
         </ScrollContainer>
-      </S.ImgContainer>
-      <S.ProjectContainer ref={projectContainerRef}>
-        <S.TopInfo>
-          <S.ProfileInfo>
+      </C.ImgContainer>
+      <C.Container ref={projectContainerRef}>
+        <C.TopInfo>
+          <C.ProfileInfo>
             <img onClick={() => nav('/mypage')} src={profileIcon} alt="profile icon" />
-            <S.ProfileContent>
+            <C.ProfileContent>
               <p onClick={() => nav('/mypage')} className="nickname">
                 홍길동
               </p>
               <p className="school">홍익대학교 컴퓨터공학과</p>
-            </S.ProfileContent>
-          </S.ProfileInfo>
-          <S.Date>2024년 12월 30일</S.Date>
-        </S.TopInfo>
+            </C.ProfileContent>
+          </C.ProfileInfo>
+          <C.Date>2024년 12월 30일</C.Date>
+        </C.TopInfo>
 
-        <S.BodyText>
+        <C.BodyText>
           <S.Title>BEGIN AGAIN 82小红书日</S.Title>
           <S.FieldButton>
             <span>프론트엔드</span>
           </S.FieldButton>
 
-          <S.Article>
+          <C.Article>
             <h2>소개</h2>
             <span>
               {`In 2024, Xiaohongshu celebrated its 11th anniversary. Over the past decade, the platform has brought together many life-loving, sincere, and friendly REDers.
@@ -98,14 +103,14 @@ Thanks to these vibrant individuals, we can find like-minded people, gradually f
 For this 11th anniversary, our theme is “BEGIN AGAIN.” We hope everyone can start anew, discovering and exploring more life inspirations, and together, embrace a brighter future.
 This design is based on the theme “BEGIN AGAIN,” showcasing a variety of letter styles and vibrant colors. Additionally, the summer elements of ‘82’ are personified, symbolizing constant forward movement. The blend of fun and symbolism signifies the continuous evolution and progress of Xiaohongshu.`}
             </span>
-          </S.Article>
+          </C.Article>
 
-          <S.Article>
+          <C.Article>
             <h2>주요 스킬</h2>
             <span>Photoshop, Illustrator, Figma</span>
-          </S.Article>
+          </C.Article>
 
-          <S.Article>
+          <C.Article>
             <h2>링크</h2>
 
             <S.LinkList>
@@ -121,21 +126,26 @@ This design is based on the theme “BEGIN AGAIN,” showcasing a variety of let
                 ))}
               </ScrollContainer>
             </S.LinkList>
-          </S.Article>
-        </S.BodyText>
+          </C.Article>
+        </C.BodyText>
 
         {/* 플로팅 버튼 */}
         <S.FloatingButtonWrapper ref={floatingButtonRef} className={isFixed ? 'fixed' : 'absolute'}>
-          <S.LikeButton onClick={handleLikeClick} $isLiked={isLiked} $likeCount={likeCount}>
+          <S.LikeButton
+            onClick={handleLikeClick}
+            $isPC={isPC}
+            $isLiked={isLiked}
+            $likeCount={likeCount}
+          >
             <img src={isLiked ? likeRed : like} alt="like" className={isLiked ? 'liked' : ''} />
             <span>{likeCount}</span>
           </S.LikeButton>
-          <S.CommentButton $commentCount={commentCount} onClick={onCommentClick}>
+          <S.CommentButton onClick={onCommentClick} $isPC={isPC} $commentCount={commentCount}>
             <img src={comment} alt="comment" />
             <span>{commentCount}</span>
           </S.CommentButton>
         </S.FloatingButtonWrapper>
-      </S.ProjectContainer>
+      </C.Container>
     </>
   );
 };

@@ -21,7 +21,8 @@ const Navbar = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: Nav
     else navigate(`/${page}`);
   };
 
-  const isProjectPage = location.pathname.includes('project');
+  const isGoBackVisible =
+    location.pathname.includes('project') || location.pathname.includes('portfolio');
 
   // props로 전달 받은 함수가 있을 경우 함수 실행, 없을 경우 페이지 이동
   const handleGoBackClick = () => {
@@ -59,7 +60,7 @@ const Navbar = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: Nav
   return (
     <S.NavContainer>
       <S.NavBody>
-        {isProjectPage ? (
+        {isGoBackVisible ? (
           <S.NavLeftGoBack src={navbarGoBackSrc} alt="GoBack" onClick={handleGoBackClick} />
         ) : (
           <S.NavLeftLogo src={navbarLogoSrc} alt="Logo" onClick={() => handleNavigate('home')} />

@@ -1,4 +1,4 @@
-import * as S from '@/components/WriteProject/styles';
+import * as S from '@/components/FormField/styles';
 import TextArea from '@/components/Common/TextArea';
 
 interface SkillSectionProps {

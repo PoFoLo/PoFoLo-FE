@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as S from '@/components/Common/Input/styles';
-import Invalidate from '@/assets/webps/Common/invalidate.webp';
-import Validate from '@/assets/webps/Common/validate.webp';
+import invalidate from '@/assets/webps/Common/invalidate.webp';
+import validate from '@/assets/webps/Common/validate.webp';
 
 interface InputFieldProps {
   value: string;
@@ -40,7 +40,7 @@ const Input = ({
         $error={error}
         placeholder={placeholder}
       />
-      {showIconState && <S.IconContainer $backgroundImage={error ? Invalidate : Validate} />}
+      {showIconState && <S.IconContainer $backgroundImage={error ? invalidate : validate} />}
       {error && errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
     </S.InputContainer>
   );

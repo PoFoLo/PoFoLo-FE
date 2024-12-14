@@ -59,4 +59,4 @@ export const UploadInput = styled.input`
   display: none;
 `;
 
-export * from '@/components/WriteProject/styles';
+export * from '@/components/FormField/styles';
