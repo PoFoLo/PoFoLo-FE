@@ -83,8 +83,10 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
   // 스크롤을 오른쪽으로 이동 (새 이미지가 추가된 경우에만)
   useEffect(() => {
     if (containerRef.current && imagePreviews.length > previousImageCount.current) {
-      containerRef.current.scrollLeft =
-        containerRef.current.scrollWidth - containerRef.current.clientWidth;
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollWidth - containerRef.current.clientWidth,
+        behavior: 'smooth',
+      });
     }
     previousImageCount.current = imagePreviews.length;
   }, [imagePreviews]);

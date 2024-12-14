@@ -5,12 +5,11 @@ export const StyledScrollContainer = styled(ScrollContainer)`
   display: flex;
   width: 100%;
   gap: 2rem;
-  cursor: pointer;
 `;
 
 export const HoverImageContainer = styled.div`
   position: absolute;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 2.4rem;
@@ -21,6 +20,8 @@ export const HoverImageContainer = styled.div`
   background: rgba(0, 0, 0, 0.5);
   border-radius: 1.2rem;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 `;
 
 export const HoverBtn = styled.button<{ $backgroundImage: string }>`
@@ -34,9 +35,10 @@ export const ImageContainer = styled.div`
   width: 42.7rem;
   height: 24rem;
   position: relative;
+  cursor: pointer;
 
   &:hover ${HoverImageContainer} {
-    display: flex;
+    opacity: 1;
   }
 `;
 
