@@ -81,7 +81,7 @@ const CategorySection = ({
     <S.SectionContainer>
       <S.SectionTitle>분야</S.SectionTitle>
       <S.SelectFieldContainer>
-        <S.DropdownContainer>
+        <S.DropdownsContainer>
           {/* 대분류 드롭다운 */}
           <S.DropdownHeader ref={categoryRef} onClick={() => setIsCategoryOpen(!isCategoryOpen)}>
             <S.SelectedText $isSelected={!!mainCategory && !isCategoryOpen}>
@@ -89,21 +89,21 @@ const CategorySection = ({
             </S.SelectedText>
             <S.IconContainer $backgroundImage={mainCategory ? blueDownArrow : downArrow} />
             {isCategoryOpen && (
-              <S.OptionList>
-                <S.FirstOptionLine>
-                  대분류
-                  <S.IconContainer $backgroundImage={upArrow} />
-                </S.FirstOptionLine>
-                {categories.map((category, index) => (
-                  <S.Option
-                    key={index}
-                    $isSelectedValue={category.label === mainCategory}
-                    onClick={() => handleCategoryChange(category.label)}
-                  >
-                    {category.label}
-                  </S.Option>
-                ))}
-              </S.OptionList>
+              <S.OptionContainer>
+                <S.OptionList>
+                  <S.FirstOption>대분류</S.FirstOption>
+                  {categories.map((category, index) => (
+                    <S.Option
+                      key={index}
+                      $isSelectedValue={category.label === mainCategory}
+                      onClick={() => handleCategoryChange(category.label)}
+                    >
+                      {category.label}
+                    </S.Option>
+                  ))}
+                </S.OptionList>
+                <S.IconContainer $backgroundImage={upArrow} />
+              </S.OptionContainer>
             )}
           </S.DropdownHeader>
 
@@ -123,24 +123,24 @@ const CategorySection = ({
               }
             />
             {isSubCategoryOpen && selectedCategory && (
-              <S.OptionList>
-                <S.FirstOptionLine>
-                  소분류
-                  <S.IconContainer $backgroundImage={upArrow} />
-                </S.FirstOptionLine>
-                {selectedCategory.subcategories.map((sub, index) => (
-                  <S.Option
-                    key={index}
-                    $isSelectedValue={sub === subCategory}
-                    onClick={() => handleSubCategoryChange(sub)}
-                  >
-                    {sub}
-                  </S.Option>
-                ))}
-              </S.OptionList>
+              <S.OptionContainer>
+                <S.OptionList>
+                  <S.FirstOption>소분류</S.FirstOption>
+                  {selectedCategory.subcategories.map((sub, index) => (
+                    <S.Option
+                      key={index}
+                      $isSelectedValue={sub === subCategory}
+                      onClick={() => handleSubCategoryChange(sub)}
+                    >
+                      {sub}
+                    </S.Option>
+                  ))}
+                </S.OptionList>
+                <S.IconContainer $backgroundImage={upArrow} />
+              </S.OptionContainer>
             )}
           </S.DropdownHeader>
-        </S.DropdownContainer>
+        </S.DropdownsContainer>
         {error && <S.ErrorMessage>필수 선택 항목입니다.</S.ErrorMessage>}
       </S.SelectFieldContainer>
     </S.SectionContainer>

@@ -14,7 +14,7 @@ export const SelectFieldContainer = styled.div`
   width: 100%;
 `;
 
-export const DropdownContainer = styled.div`
+export const DropdownsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
@@ -31,7 +31,7 @@ export const DropdownHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   flex: 1;
-  padding: 1.15rem 1.2rem;
+  padding: 0.8rem 1.2rem;
   border: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 1.2rem;
   background-color: ${(props) => props.theme.colors.gray10};
@@ -57,32 +57,26 @@ export const SelectedText = styled.p<SelectedTextProps>`
 
 export const IconContainer = styled.div<{ $backgroundImage: string }>`
   width: 1.8rem;
-  height: 2.1rem;
+  height: 2.7rem;
   background-image: url(${(props) => props.$backgroundImage});
   background-size: contain;
   background-repeat: no-repeat;
-
-  ${(props) =>
-    props.theme.media.pc(css`
-      height: 2.7rem;
-    `)}
 `;
 
-export const OptionList = styled.ul`
+export const OptionContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   position: absolute;
   z-index: 1;
   top: -0.15rem; /* border 두께만큼 위로 이동 */
   left: -0.15rem; /* border 두께만큼 왼쪽으로 이동 */
   width: calc(100% + 0.3rem); /* 좌우 border 두께를 더해 전체 너비 조정 */
-  padding: 1.15rem 1.2rem;
+  padding: 0.8rem 1.2rem;
   border-radius: 1.2rem;
   border: 0.1rem solid ${(props) => props.theme.colors.blue30};
   background-color: ${(props) => props.theme.colors.gray10};
   box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  gap: 1rem;
 
   ${(props) =>
     props.theme.media.pc(css`
@@ -90,12 +84,24 @@ export const OptionList = styled.ul`
     `)}
 `;
 
-export const FirstOptionLine = styled.div`
+export const OptionList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0.35rem 0rem;
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      margin: 0rem;
+    `)}
+`;
+
+export const FirstOption = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   ${(props) => props.theme.fonts.body4};
-  color: ${(props) => props.theme.colors.gray70};
+  color: ${(props) => props.theme.colors.gray50};
 
   ${(props) =>
     props.theme.media.pc(
