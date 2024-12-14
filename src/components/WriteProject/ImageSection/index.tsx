@@ -1,8 +1,10 @@
 import * as S from '@/components/WriteProject/ImageSection/styles';
 import imageUploadBtn from '@/assets/svgs/WriteProject/imageUploadBtn.svg';
+import imageUploadPCBtn from '@/assets/svgs/WriteProject/imageUploadPCBtn.svg';
 import imageChange from '@/assets/webps/Common/imageChange.webp';
 import imageDelete from '@/assets/webps/Common/imageDelete.webp';
 import { useState, useRef, useEffect } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 
 interface ImageSectionProps {
   setFormData: React.Dispatch<React.SetStateAction<FormData | null>>;
@@ -15,6 +17,7 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const previousImageCount = useRef(0);
+  const { isPC } = useResponsive();
 
   // 이미지 파일 업로드 & 교체
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +112,10 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
         ))}
         {imageFiles.length < 10 && (
           <>
-            <S.UploadBtn $backgroundImage={imageUploadBtn} htmlFor="file-upload" />
+            <S.UploadBtn
+              $backgroundImage={isPC ? imageUploadPCBtn : imageUploadBtn}
+              htmlFor="file-upload"
+            />
             <S.UploadInput
               id="file-upload"
               type="file"

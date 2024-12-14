@@ -1,6 +1,7 @@
 import * as S from '@/components/FormField/HeaderSection/styles';
 import Button from '@/components/Common/Button';
 import CheckBox from '@/components/Common/CheckBox';
+import { useResponsive } from '@/hooks/useResponsive';
 
 interface HeaderSectionProps {
   headerText: string;
@@ -17,6 +18,7 @@ const HeaderSection = ({
   handleUploadClick,
   btnActive,
 }: HeaderSectionProps) => {
+  const { isPC } = useResponsive();
   const handleToggleCheckBox = () => {
     setIsPrivate((prev) => !prev);
   };
@@ -28,7 +30,11 @@ const HeaderSection = ({
         <CheckBox checked={isPrivate} onChange={handleToggleCheckBox} />
         비공개
       </S.PrivateCheckBox>
-      <Button size="medium" type={btnActive ? 'main' : 'inactive'} onClick={handleUploadClick}>
+      <Button
+        size={isPC ? 'medium' : 'small'}
+        type={btnActive ? 'main' : 'inactive'}
+        onClick={handleUploadClick}
+      >
         업로드
       </Button>
     </S.HeaderContainer>

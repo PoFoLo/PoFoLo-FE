@@ -87,11 +87,13 @@ const CategorySection = ({
             <S.SelectedText $isSelected={!!mainCategory && !isCategoryOpen}>
               {isCategoryOpen ? '대분류' : mainCategory || '대분류'}
             </S.SelectedText>
-            <S.IconContainer
-              $backgroundImage={isCategoryOpen ? upArrow : mainCategory ? blueDownArrow : downArrow}
-            />
+            <S.IconContainer $backgroundImage={mainCategory ? blueDownArrow : downArrow} />
             {isCategoryOpen && (
               <S.OptionList>
+                <S.FirstOptionLine>
+                  대분류
+                  <S.IconContainer $backgroundImage={upArrow} />
+                </S.FirstOptionLine>
                 {categories.map((category, index) => (
                   <S.Option
                     key={index}
@@ -122,6 +124,10 @@ const CategorySection = ({
             />
             {isSubCategoryOpen && selectedCategory && (
               <S.OptionList>
+                <S.FirstOptionLine>
+                  소분류
+                  <S.IconContainer $backgroundImage={upArrow} />
+                </S.FirstOptionLine>
                 {selectedCategory.subcategories.map((sub, index) => (
                   <S.Option
                     key={index}
