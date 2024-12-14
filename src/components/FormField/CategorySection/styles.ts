@@ -124,9 +124,16 @@ export const Option = styled.li<OptionProps>`
 `;
 
 export const ErrorMessage = styled.p`
-  ${(props) => props.theme.fonts.caption4};
+  ${(props) => props.theme.fonts.caption5};
   color: ${(props) => props.theme.colors.coral50};
   margin: 0.8rem 0rem 0rem 1.2rem;
+
+  ${(props) =>
+    props.theme.media.pc(
+      () => `
+	  ${props.theme.fonts.caption4};
+  `
+    )}
 `;
 
 export * from '@/components/FormField/styles';
