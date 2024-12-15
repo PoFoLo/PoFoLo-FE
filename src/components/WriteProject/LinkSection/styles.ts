@@ -122,7 +122,7 @@ export const Input = styled.input`
 
   ${(props) =>
     props.theme.media.pc(css`
-      margin: 0rem;
+      margin: 0rem 0.2rem;
     `)}
 `;
 

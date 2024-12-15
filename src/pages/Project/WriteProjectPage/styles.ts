@@ -20,11 +20,12 @@ export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 3.2rem;
+  gap: 2.4rem;
   margin-top: 1.3rem;
 
   ${(props) =>
     props.theme.media.pc(css`
       margin-top: 3.6rem;
+      gap: 3.2rem;
     `)}
 `;
