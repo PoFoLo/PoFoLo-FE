@@ -1,9 +1,11 @@
 import * as S from '@/components/WritePortfolio/ProjectSection/ProjectModal/styles';
 import modalGoBack from '@/assets/webps/Common/modalGoBack.webp';
+import modalClose from '@/assets/webps/Common/modalClose.webp';
 import Button from '@/components/Common/Button';
 import ModalProjectCard from '@/components/WritePortfolio/ProjectSection/ProjectModal/ModalProjectCard';
 import { useEffect, useState } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
+import AOS from 'aos';
 
 interface Project {
   id: number;
@@ -65,14 +67,21 @@ const ProjectModal = ({
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
     <>
       {isOpen && (
         <S.ModalOverlay>
-          <S.ModalContainer>
+          <S.ModalContainer data-aos={isPC ? undefined : 'slide-up'}>
             <S.ModalHeaderContainer>
               <S.ModalTitleContainer>
-                <S.GoBackBtn $backgroundImage={modalGoBack} onClick={() => setIsOpen(false)} />
+                <S.GoBackBtn
+                  $backgroundImage={isPC ? modalGoBack : modalClose}
+                  onClick={() => setIsOpen(false)}
+                />
                 <S.ModalTitleText>프로젝트 선택</S.ModalTitleText>
               </S.ModalTitleContainer>
               <Button

@@ -13,20 +13,30 @@ export const ModalOverlay = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 7.6rem 6.4rem;
+  padding-top: 5.6rem;
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      padding: 7.6rem 6.4rem;
+    `)}
 `;
 
 export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 24px;
+  border-radius: 1.6rem 1.6rem 0rem 0rem;
   background-color: #f9f9f9;
   width: 100%;
-  max-width: 131.2rem;
-  min-width: 47.6rem;
   height: 100%;
-  padding: 3.6rem 4.8rem 4.8rem 4.8rem;
+  padding: 2.4rem 2rem 0rem 2rem;
   box-sizing: border-box;
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      border-radius: 2.4rem;
+      max-width: 131.2rem;
+      padding: 3.6rem 4.8rem 4.8rem 4.8rem;
+    `)}
 `;
 
 export const ModalHeaderContainer = styled.div`
@@ -43,17 +53,31 @@ export const ModalTitleContainer = styled.div`
 `;
 
 export const GoBackBtn = styled.button<{ $backgroundImage: string }>`
-  width: 1.389rem;
-  height: 2.4rem;
+  width: 2rem;
+  height: 2rem;
   background-image: url(${(props) => props.$backgroundImage});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  margin-right: 1.8rem;
+  margin-right: 1.2rem;
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      width: 1.389rem;
+      height: 2.4rem;
+      margin-right: 1.8rem;
+    `)}
 `;
 
 export const ModalTitleText = styled.p`
-  ${(props) => props.theme.fonts.headline2};
+  ${(props) => props.theme.fonts.headline4};
+
+  ${(props) =>
+    props.theme.media.pc(
+      () => `
+	  ${props.theme.fonts.headline2};
+  `
+    )}
 `;
 
 export const ProjectCardContainer = styled.div`
@@ -76,6 +100,5 @@ export const ProjectCardContainer = styled.div`
       display: grid;
       grid-template-columns: repeat(3, calc((100% - 7.6rem) / 3)); /* 3개의 열로 배치, gap 반영 */
       gap: 3.2rem 3.8rem;
-      overflow-y: auto;
     `)}
 `;
