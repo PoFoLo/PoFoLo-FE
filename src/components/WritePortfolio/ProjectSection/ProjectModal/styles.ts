@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -57,12 +57,11 @@ export const ModalTitleText = styled.p`
 `;
 
 export const ProjectCardContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(38rem, max-content));
-  justify-content: center;
-  row-gap: 3.2rem;
-  column-gap: 3.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
   height: 100%;
+  width: 100%;
   overflow-y: auto;
 
   /* 스크롤바 숨기기 */
@@ -71,4 +70,12 @@ export const ProjectCardContainer = styled.div`
   }
   -ms-overflow-style: none; /* IE에서 스크롤바 숨기기 */
   scrollbar-width: none; /* 파이어폭스에서 스크롤바 숨기기 */
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      display: grid;
+      grid-template-columns: repeat(3, calc((100% - 7.6rem) / 3)); /* 3개의 열로 배치, gap 반영 */
+      gap: 3.2rem 3.8rem;
+      overflow-y: auto;
+    `)}
 `;

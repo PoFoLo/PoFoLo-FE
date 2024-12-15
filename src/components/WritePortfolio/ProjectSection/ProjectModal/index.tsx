@@ -3,6 +3,7 @@ import modalGoBack from '@/assets/webps/Common/modalGoBack.webp';
 import Button from '@/components/Common/Button';
 import ModalProjectCard from '@/components/WritePortfolio/ProjectSection/ProjectModal/ModalProjectCard';
 import { useEffect, useState } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 
 interface Project {
   id: number;
@@ -28,6 +29,7 @@ const ProjectModal = ({
 }: ModalProps) => {
   // 모달 내부에서 선택된 프로젝트 id
   const [modalSelectedIds, setModalSelectedIds] = useState<number[]>(selectedIds);
+  const { isPC } = useResponsive();
 
   // 모달 열릴 때 이미 선택되어있던 프로젝트들 정보 전달
   useEffect(() => {
@@ -74,7 +76,7 @@ const ProjectModal = ({
                 <S.ModalTitleText>프로젝트 선택</S.ModalTitleText>
               </S.ModalTitleContainer>
               <Button
-                size="medium"
+                size={isPC ? 'medium' : 'small'}
                 type={modalSelectedIds.length === 0 ? 'inactive' : 'main'}
                 onClick={handleConfirmSelection}
               >

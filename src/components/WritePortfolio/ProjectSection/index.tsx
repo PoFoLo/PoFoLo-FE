@@ -2,8 +2,10 @@ import * as S from '@/components/WritePortfolio/ProjectSection/styles';
 import ProjectCard from '@/components/WritePortfolio/ProjectSection/ProjectCard';
 import ProjectModal from '@/components/WritePortfolio/ProjectSection/ProjectModal';
 import projectAddBtn from '@/assets/svgs/WritePortfolio/projectAddBtn.svg';
+import projectAddPCBtn from '@/assets/svgs/WritePortfolio/projectAddPCBtn.svg';
 import { mockProjects } from './mockData'; // 임시 데이터
 import { useState, useEffect, useRef } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 
 interface ProjectSectionProps {
   projects: number[];
@@ -16,6 +18,7 @@ const ProjectSection = ({ projects, setProjects, setErrors, error }: ProjectSect
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const previousProjectCount = useRef(0);
+  const { isPC } = useResponsive();
 
   // 프로젝트 선택 되면 에러 false
   useEffect(() => {
@@ -27,8 +30,10 @@ const ProjectSection = ({ projects, setProjects, setErrors, error }: ProjectSect
   // 스크롤을 오른쪽으로 이동 (새 프로젝트가 추가된 경우에만)
   useEffect(() => {
     if (containerRef.current && projects.length > previousProjectCount.current) {
-      containerRef.current.scrollLeft =
-        containerRef.current.scrollWidth - containerRef.current.clientWidth;
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollWidth - containerRef.current.clientWidth,
+        behavior: 'smooth',
+      });
     }
     previousProjectCount.current = projects.length;
   }, [projects]);
@@ -54,7 +59,10 @@ const ProjectSection = ({ projects, setProjects, setErrors, error }: ProjectSect
                 handleRemoveProject={handleRemoveProject}
               />
             ))}
-            <S.AddBtn $backgroundImage={projectAddBtn} onClick={() => setIsModalOpen(true)} />
+            <S.AddBtn
+              $backgroundImage={isPC ? projectAddPCBtn : projectAddBtn}
+              onClick={() => setIsModalOpen(true)}
+            />
           </S.StyledScrollContainer>
           {error && <S.ErrorMessage>필수 선택 항목입니다.</S.ErrorMessage>}
         </S.ProjectContainer>
