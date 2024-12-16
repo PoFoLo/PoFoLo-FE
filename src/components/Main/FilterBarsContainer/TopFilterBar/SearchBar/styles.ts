@@ -9,7 +9,7 @@ export const InactiveContainer = styled.div`
   align-items: center;
   gap: 0.8rem;
   border-radius: 4.4rem;
-  border: 1px solid ${(props) => props.theme.colors.gray10});
+  border: 1px solid ${(props) => props.theme.colors.gray10};
   background: #fff;
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
 `;

@@ -12,7 +12,6 @@ interface CardProps {
   likes: number;
   comments: number;
 }
-
 const Card: React.FC<CardProps> = ({ imageUrl, memberName, projectName, likes, comments }) => {
   // imageUrl for later images which are real 삭제 안 돼요.
   return (

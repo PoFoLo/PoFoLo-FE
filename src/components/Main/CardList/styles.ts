@@ -17,6 +17,5 @@ export const CardListContainer = styled.div`
   ${(props) =>
     props.theme.media.tab(css`
       grid-template-columns: repeat(2, 1fr);
-  }
     `)}
 `;
