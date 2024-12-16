@@ -64,7 +64,6 @@ export const ModalHeaderContainer = styled.div`
 export const ModalTitleContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.8rem;
 `;
 
 export const GoBackBtn = styled.button<{ $backgroundImage: string }>`
