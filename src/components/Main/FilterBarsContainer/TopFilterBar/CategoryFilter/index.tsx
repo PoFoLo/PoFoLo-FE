@@ -8,7 +8,9 @@ interface Props {
 
 const CategoryFilter: React.FC<Props> = ({ selectedCategory, setSelectedCategory }) => {
   const handleCategoryClick = (label: string) => {
-    setSelectedCategory(label === selectedCategory ? null : label);
+    if (selectedCategory !== label) {
+      setSelectedCategory(label);
+    }
   };
 
   return (

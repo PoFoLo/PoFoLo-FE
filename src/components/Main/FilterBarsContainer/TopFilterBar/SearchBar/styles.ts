@@ -1,5 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
+// 흔들림 애니메이션 정의
+const shake = keyframes`
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+`;
+
+// 비활성화 상태 컨테이너
 export const InactiveContainer = styled.div`
   display: flex;
   width: 36rem;
@@ -12,6 +21,7 @@ export const InactiveContainer = styled.div`
   border: 1px solid ${(props) => props.theme.colors.gray10};
   background: #fff;
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
+  cursor: text;
 `;
 
 export const InactiveLetter = styled.span`
@@ -26,7 +36,8 @@ export const InactiveIcon = styled.img`
   height: 1.8rem;
 `;
 
-export const ActiveContainer = styled.div`
+// 활성화 상태 컨테이너 (흔들림 효과 포함)
+export const ActiveContainer = styled.div<{ isError?: boolean }>`
   display: flex;
   width: 36rem;
   height: 4rem;
@@ -38,6 +49,12 @@ export const ActiveContainer = styled.div`
   border: 1px solid ${(props) => props.theme.colors.blue30};
   background: #fff;
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
+
+  ${(props) =>
+    props.isError &&
+    css`
+      animation: ${shake} 0.3s ease-in-out;
+    `}
 `;
 
 export const ActiveInput = styled.input`
@@ -57,4 +74,5 @@ export const ActiveIcon = styled.img`
 export const ActiveLetter = styled.span`
   color: ${(props) => props.theme.colors.blue60};
   ${(props) => props.theme.fonts.body2};
+  transition: color 0.3s ease-in-out 5s;
 `;

@@ -13,10 +13,10 @@ const SearchBar: React.FC = () => {
     { id: 2, title: 'Vue.js Guide' },
     { id: 3, title: 'Angular Basics' },
     { id: 4, title: 'Svelte Introduction' },
-  ]); // 초기 데이터
+  ]);
   const [filteredData, setFilteredData] = useState(data);
-
   const activeContainerRef = useRef<HTMLDivElement>(null);
+  const [isError, setIsError] = useState(false);
 
   const handleInactiveDivClick = () => {
     setIsEditing(true);
@@ -34,23 +34,19 @@ const SearchBar: React.FC = () => {
 
   const handleIconClick = () => {
     if (inputValue.trim() === '') {
-      setIsEditing(false);
-      setIsSubmitted(false);
+      setIsError(true);
+      setTimeout(() => setIsError(false), 300);
+      setIsEditing(true);
     } else {
       setIsSubmitted(true);
       setIsEditing(false);
+      setIsError(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (inputValue.trim() === '') {
-        setIsEditing(false);
-        setIsSubmitted(false);
-      } else {
-        setIsSubmitted(true);
-        setIsEditing(false);
-      }
+      handleIconClick();
     }
   };
 
@@ -58,7 +54,6 @@ const SearchBar: React.FC = () => {
     setIsEditing(true);
   };
 
-  // 바깥 클릭을 감지하는 useEffect
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
@@ -88,7 +83,7 @@ const SearchBar: React.FC = () => {
         </S.InactiveContainer>
       )}
       {isEditing && (
-        <S.ActiveContainer ref={activeContainerRef}>
+        <S.ActiveContainer ref={activeContainerRef} isError={isError}>
           <S.ActiveInput
             type="text"
             value={inputValue}
@@ -105,14 +100,6 @@ const SearchBar: React.FC = () => {
           <S.ActiveIcon src={activeIconSrc} alt="Magnifier Icon" onClick={handleIconClick} />
         </S.ActiveContainer>
       )}
-      {/*
-      필터가 잘 됐나 확인. 백엔드와 연결 시 잘 작동하나 확인용으로 쓰기
-      <div>
-        {filteredData.map((item) => (
-          <div key={item.id}>{item.title}</div>
-        ))}
-      </div>
-      */}
     </>
   );
 };

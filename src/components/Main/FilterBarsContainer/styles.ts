@@ -8,7 +8,7 @@ export const ControlPanelContainer = styled.div`
   justify-content: center;
   background-color: white;
   margin-top: 8.8rem;
-  margin-bottom: 2.6rem;
+  margin-bottom: 0.2rem;
 `;
 
 export const ControlPanelBody = styled.div`
