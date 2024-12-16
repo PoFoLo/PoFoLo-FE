@@ -1,4 +1,13 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const slideUp = keyframes`
+  from {
+    transform: translateY(100%); /* 아래에서 시작 */
+  }
+  to {
+    transform: translateY(0); /* 제자리로 이동 */
+  }
+`;
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -21,7 +30,7 @@ export const ModalOverlay = styled.div`
     `)}
 `;
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div<{ $isAnimating?: boolean }>`
   display: flex;
   flex-direction: column;
   border-radius: 1.6rem 1.6rem 0rem 0rem;
@@ -30,6 +39,12 @@ export const ModalContainer = styled.div`
   height: 100%;
   padding: 2.4rem 2rem 0rem 2rem;
   box-sizing: border-box;
+
+  ${(props) =>
+    props.$isAnimating &&
+    css`
+      animation: ${slideUp} 0.6s ease-out forwards;
+    `}
 
   ${(props) =>
     props.theme.media.pc(css`

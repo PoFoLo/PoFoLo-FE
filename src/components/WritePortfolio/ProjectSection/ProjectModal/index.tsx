@@ -5,7 +5,6 @@ import Button from '@/components/Common/Button';
 import ModalProjectCard from '@/components/WritePortfolio/ProjectSection/ProjectModal/ModalProjectCard';
 import { useEffect, useState } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
-import AOS from 'aos';
 
 interface Project {
   id: number;
@@ -31,14 +30,20 @@ const ProjectModal = ({
 }: ModalProps) => {
   // 모달 내부에서 선택된 프로젝트 id
   const [modalSelectedIds, setModalSelectedIds] = useState<number[]>(selectedIds);
+  const [isAnimating, setIsAnimating] = useState(false);
   const { isPC } = useResponsive();
 
-  // 모달 열릴 때 이미 선택되어있던 프로젝트들 정보 전달
+  // 모달 열릴 때 이미 선택되어있던 프로젝트들 정보 전달 + 모바일 버전일때는 애니메이션 실행행
   useEffect(() => {
     if (isOpen) {
       setModalSelectedIds(selectedIds);
+      if (!isPC) {
+        setIsAnimating(true);
+      } else {
+        setIsAnimating(false);
+      }
     }
-  }, [isOpen, selectedIds]);
+  }, [isOpen]);
 
   // 모달 내부에서 선택되는 프로젝트 관리
   const handleCheckboxChange = (id: number, checked: boolean) => {
@@ -67,15 +72,11 @@ const ProjectModal = ({
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
   return (
     <>
       {isOpen && (
         <S.ModalOverlay>
-          <S.ModalContainer data-aos={isPC ? undefined : 'slide-up'}>
+          <S.ModalContainer $isAnimating={isAnimating}>
             <S.ModalHeaderContainer>
               <S.ModalTitleContainer>
                 <S.GoBackBtn
