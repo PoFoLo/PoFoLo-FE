@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './styles';
 
 import filledLikeSrc from '@/assets/webps/Main/filledLike.webp';
-import defaultCommentSrc from '@/assets/webps/Main/defaultComment.webp';
+import filledCommentSrc from '@/assets/webps/Main/filledComment.webp';
 import testImageSrc from '@/assets/webps/Main/testImage.webp';
 
 interface CardProps {
@@ -20,12 +20,12 @@ const Card: React.FC<CardProps> = ({ imageUrl, memberName, projectName, likes, c
       <S.Image src={testImageSrc} alt={projectName} />
       <S.MemberName>{memberName}</S.MemberName>
       <S.ProjectName>{projectName}</S.ProjectName>
-      <S.Reactions>
-        <S.Icon src={filledLikeSrc}></S.Icon>
-        <S.Letter>{likes}</S.Letter>
-        <S.Icon src={defaultCommentSrc}></S.Icon>
-        <S.Letter>{comments}</S.Letter>
-      </S.Reactions>
+      <S.ReactionContainer>
+        <S.ReactionIcon src={filledLikeSrc}></S.ReactionIcon>
+        <S.ReactionLetter>{likes}</S.ReactionLetter>
+        <S.ReactionIcon src={filledCommentSrc}></S.ReactionIcon>
+        <S.ReactionLetter>{comments}</S.ReactionLetter>
+      </S.ReactionContainer>
     </S.Card>
   );
 };

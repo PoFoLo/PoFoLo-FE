@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SortDropdownContainer = styled.div`
-  width: 38rem;
+  width: 23rem;
   height: 4rem;
   display: flex;
   justify-content: flex-end;
@@ -59,11 +59,12 @@ export const MenuLetterContainer = styled.div`
 export const Inactive = styled.span`
   color: ${(props) => props.theme.colors.gray50};
   ${(props) => props.theme.fonts.body3};
-  width: 4.2rem;
+  width: 6.8rem;
   height: 2.4rem;
   cursor: pointer;
 
   &:hover {
+    border-radius: 0.6rem;
     background-color: ${(props) => props.theme.colors.gray10};
   }
 `;
@@ -71,7 +72,12 @@ export const Inactive = styled.span`
 export const Active = styled.span`
   color: ${(props) => props.theme.colors.gray70};
   ${(props) => props.theme.fonts.body3};
-  width: 4.2rem;
+  width: 6.8rem;
   height: 2.4rem;
   cursor: pointer;
+
+  &:hover {
+    border-radius: 0.6rem;
+    background-color: ${(props) => props.theme.colors.gray10};
+  }
 `;

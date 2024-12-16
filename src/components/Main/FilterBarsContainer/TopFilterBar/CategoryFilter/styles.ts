@@ -6,7 +6,7 @@ interface ButtonProps {
 
 export const filterLine1Container = styled.div`
   display: flex;
-  width: 38rem;
+  width: 23rem;
   height: 4rem; /* 고정 높이 */
   justify-content: flex-start;
   align-items: center; /* 버튼 수직 정렬 고정 */
@@ -24,7 +24,7 @@ export const filterLine1BtnContainer = styled.button<ButtonProps>`
   box-sizing: border-box; /* 높이 변화 방지 */
   background: ${({ selected, theme }) => (selected ? theme.colors.blue10 : theme.colors.gray5)};
   box-shadow: ${({ selected, theme }) =>
-    selected ? `0 0 0 2px ${theme.colors.blue50}` : `0 0 0 2px ${theme.colors.gray10}`};
+    selected ? `0 0 0 0.1rem ${theme.colors.blue50}` : `0 0 0 0.1rem ${theme.colors.gray10}`};
   &:focus {
     outline: none; /* 포커스 기본 스타일 제거 */
   }
@@ -35,6 +35,7 @@ export const filterLine1BtnContainer = styled.button<ButtonProps>`
 
 export const filterLine1BtnLetter = styled.span<ButtonProps>`
   height: 2.7rem;
+  padding-top: 0.1rem;
   color: ${({ selected, theme }) =>
     selected ? `${theme.colors.blue60}` : `${theme.colors.gray70}`};
   ${(props) => props.theme.fonts.caption1};

@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from '@/components/Main/ControlPanels/CategoryFilters/CategoryFilter/styles';
+import * as S from '@/components/Main/FilterBarsContainer/TopFilterBar/CategoryFilter/styles';
 
 interface Props {
   selectedCategory: string | null;

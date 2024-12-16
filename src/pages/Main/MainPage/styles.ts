@@ -6,21 +6,30 @@ export const MainContainer = styled.div`
   align-items: center;
 `;
 
-export const ControlPanelContainer = styled.div`
-  height: 7.8rem;
-  margin-top: 8.8rem;
-  margin-bottom: 2.6rem;
+export const FloatingBtnLayout = styled.div`
+  width: 100%;
+  max-width: 131.2rem;
+  position: relative;
+
+  @media (max-width: 1440px) {
+    width: calc(100% - 12.8rem);
+  }
 `;
 
 export const FloatingBtnContainer = styled.div`
-  position: fixed; /* 화면에 고정 */
-  bottom: 8.6rem; /* 화면 하단에서 2rem 간격 */
-  right: 6.4rem; /* 화면 오른쪽에서 2rem 간격 */
+  width: 13.2rem;
+  height: 6.2rem;
+  position: fixed;
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 6.2rem;
   justify-content: center;
+  bottom: 8rem;
+  right: calc(50% - 65.6rem);
+  gap: 2rem;
+
+  @media (max-width: 1440px) {
+    right: 6.4rem;
+  }
 `;
 
 export const FloatingBtnBody = styled.div`

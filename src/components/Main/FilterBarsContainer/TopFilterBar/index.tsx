@@ -1,8 +1,8 @@
 import React from 'react';
-import CategoryFilter from '@/components/Main/ControlPanels/CategoryFilters/CategoryFilter';
-import SearchBar from '@/components/Main/ControlPanels/SearchBar';
-import SortDropdown from '@/components/Main/ControlPanels/SortDropdown';
-import * as S from '@/components/Main/ControlPanels/ControlPanel/styles';
+import CategoryFilter from '@/components/Main/FilterBarsContainer/TopFilterBar/CategoryFilter';
+import SearchBar from '@/components/Main/FilterBarsContainer/TopFilterBar/SearchBar';
+import SortDropdown from '@/components/Main/FilterBarsContainer/TopFilterBar/SortDropdown';
+import * as S from '@/components/Main/FilterBarsContainer/TopFilterBar/styles';
 
 interface Props {
   selectedCategory: string | null;
@@ -11,14 +11,14 @@ interface Props {
 
 const ControlPanelLine1: React.FC<Props> = ({ selectedCategory, setSelectedCategory }) => {
   return (
-    <S.ControlPanelLine1Container>
+    <S.ControlPanelContainer>
       <CategoryFilter
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
       <SearchBar />
       <SortDropdown />
-    </S.ControlPanelLine1Container>
+    </S.ControlPanelContainer>
   );
 };
 
