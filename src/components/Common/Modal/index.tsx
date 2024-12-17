@@ -3,6 +3,7 @@ import checked from '@/assets/webps/Common/modalChecked.webp';
 import warning from '@/assets/webps/Common/modalWarning.webp';
 import Button from '@/components/Common/Button';
 import { useEffect, useCallback, useRef } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 
 interface ModalProps {
   isOpen: boolean;
@@ -28,6 +29,7 @@ const Modal = ({
   RBtnOnclick,
 }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const { isPC } = useResponsive();
   // 모달 열렸을 때 외부 스크롤 막기
   useEffect(() => {
     if (isOpen) {
@@ -67,12 +69,20 @@ const Modal = ({
               <S.SubText>{subText}</S.SubText>
             </S.TextContainer>
             <S.BtnContainer>
-              <S.CursorBtn $buttonSize="large" $buttonType="inactive" onClick={LBtnOnClick}>
+              <S.ModalBtn
+                $buttonSize={isPC ? 'large' : 'medium'}
+                $buttonType="inactive"
+                onClick={LBtnOnClick}
+              >
                 {LBtnText}
-              </S.CursorBtn>
-              <Button size="large" type="main" onClick={RBtnOnclick}>
+              </S.ModalBtn>
+              <S.ModalBtn
+                $buttonSize={isPC ? 'large' : 'medium'}
+                $buttonType="main"
+                onClick={RBtnOnclick}
+              >
                 {RBtnText}
-              </Button>
+              </S.ModalBtn>
             </S.BtnContainer>
           </S.ModalContainer>
         </S.ModalOverlay>
