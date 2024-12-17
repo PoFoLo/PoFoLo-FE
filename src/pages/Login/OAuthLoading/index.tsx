@@ -15,7 +15,7 @@ export const OAuthLoading = () => {
 
     if (code) {
       try {
-        const response = await instance.post('/pofolo/users/login', { code });
+        const response = await instance.post('/pofolo/users/login/', { code });
 
         const { access_token, kakao_id } = response.data;
 

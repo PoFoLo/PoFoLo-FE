@@ -80,6 +80,7 @@ export const InputContainer = styled.div`
 export const InputWrapper = styled.div`
   margin-top: 6.4rem;
   width: 72rem;
+  height: 5.6rem;
 `;
 
 export const DuplicationBtn = styled.div`

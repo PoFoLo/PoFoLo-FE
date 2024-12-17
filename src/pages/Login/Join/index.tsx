@@ -1,4 +1,4 @@
-// import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 import Navbar from '@/components/Layout/Navbar/Navbar';
@@ -9,17 +9,9 @@ import nextWhite from '@/assets/webps/Login/nextWhite.webp';
 import leftBlue from '@/assets/svgs/Login/leftBlue.svg';
 import Checkbox from '@/components/Common/CheckBox';
 import CategorySection from '@/components/FormField/CategorySection';
-import { useNavigate } from 'react-router-dom';
+import { instance } from '@/apis/instance';
 
 export const JoinPage = () => {
-  // const location = useLocation();
-  // const { kakao_id } = location.state || {}; // state에서 kakao_id 추출
-
-  // if (!kakao_id) {
-  //   nav('/');
-  // }
-  const nav = useNavigate();
-
   const [nickname, setNickname] = useState(''); // Step 1
   const [affiliation, setAffiliation] = useState(''); // Step 2
   const [affiliationPrivate, setAffiliationPrivate] = useState(false);
@@ -31,6 +23,13 @@ export const JoinPage = () => {
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [step, setStep] = useState(1);
+  const nav = useNavigate();
+  const location = useLocation();
+  const { kakao_id } = location.state || {}; // state에서 kakao_id 추출
+
+  if (!kakao_id) {
+    nav('/');
+  }
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
@@ -44,10 +43,11 @@ export const JoinPage = () => {
     if (!trimmedNickname) return;
 
     try {
-      // [To Do : 닉네임 중복 검사 api 호출]
-      const isTaken = trimmedNickname === '중복'; // 예시: 중복 닉네임 처리
+      const response = await instance.post('/pofolo/users/nickname/', {
+        nickname: trimmedNickname,
+      });
 
-      if (isTaken) {
+      if (!response.data.is_available) {
         setIsDuplicate(true);
         setError(true);
         setErrorMessage('중복된 닉네임이에요');
@@ -88,9 +88,28 @@ export const JoinPage = () => {
   };
 
   // 회원가입
-  const handleJoin = () => {
+  const handleJoin = async () => {
     if (step === 3 && mainCategory && subCategory) {
-      nav('/home'); //home으로 이동
+      try {
+        const requestData = {
+          kakao_id,
+          nickname: nickname.trim(),
+          education: affiliation.trim(),
+          education_is_public: !affiliationPrivate,
+          main_field:
+            mainCategory === '기획' ? 'plan' : mainCategory === '디자인' ? 'design' : 'develop',
+        };
+
+        const response = await instance.post('/pofolo/users/register/', requestData);
+
+        if (response.status === 200) {
+          console.log(response.data.message); // 성공 메시지
+          nav('/home'); // /home 페이지로 이동
+        }
+      } catch (error) {
+        console.error('회원가입 실패:', error);
+        alert('회원가입 중 오류가 발생했습니다.');
+      }
     }
   };
 
