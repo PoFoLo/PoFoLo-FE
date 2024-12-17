@@ -5,7 +5,7 @@ export const ProjectImage = styled.img`
   aspect-ratio: 16 / 9;
   object-fit: cover;
   margin: 0 auto;
-  border-radius: 1.2rem 1.2rem 0rem 0rem;
+  border-radius: 0.8rem;
   border-top: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-right: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-left: 0.1rem solid ${(props) => props.theme.colors.gray20};
@@ -27,7 +27,7 @@ export const HoverImageContainer = styled.div`
   width: 100%;
   height: 11.4rem;
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 1.2rem 1.2rem 0rem 0rem;
+  border-radius: 0.8rem;
   z-index: 1;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
@@ -57,17 +57,11 @@ export const ProjectInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 6.6rem;
-  padding: 0.8rem 1.2rem 1rem 1.2rem;
-  border-radius: 0rem 0rem 1.2rem 1.2rem;
-  border-bottom: 0.1rem solid ${(props) => props.theme.colors.gray20};
-  border-right: 0.1rem solid ${(props) => props.theme.colors.gray20};
-  border-left: 0.1rem solid ${(props) => props.theme.colors.gray20};
+  margin-top: 1.2rem;
 `;
 
 export const ProjectTitle = styled.p`
-  ${(props) => props.theme.fonts.caption2};
-  margin-left: 0.2rem;
+  ${(props) => props.theme.fonts.caption1};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

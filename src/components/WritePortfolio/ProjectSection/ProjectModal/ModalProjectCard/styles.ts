@@ -42,10 +42,7 @@ export const ProjectImage = styled.img`
       width: 100%;
       height: auto;
       aspect-ratio: 16 / 9;
-      border-radius: 1.2rem 1.2rem 0rem 0rem;
-      border-top: 0.1rem solid ${(props) => props.theme.colors.gray20};
-      border-right: 0.1rem solid ${(props) => props.theme.colors.gray20};
-      border-left: 0.1rem solid ${(props) => props.theme.colors.gray20};
+      border-radius: 0.8rem;
     `)}
 `;
 
@@ -63,12 +60,10 @@ export const ProjectInfoContainer = styled.div`
 
   ${(props) =>
     props.theme.media.pc(css`
-      height: 6.6rem;
-      padding: 0.8rem 1.2rem 1rem 1.2rem;
-      border-radius: 0rem 0rem 1.2rem 1.2rem;
-      border-bottom: 0.1rem solid ${(props) => props.theme.colors.gray20};
-      border-right: 0.1rem solid ${(props) => props.theme.colors.gray20};
-      border-left: 0.1rem solid ${(props) => props.theme.colors.gray20};
+      height: auto;
+      margin-top: 1.2rem;
+      padding: 0;
+      border: none;
     `)}
 `;
 
