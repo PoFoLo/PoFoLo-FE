@@ -73,18 +73,35 @@ export const Nickname = styled.div`
   width: 72rem;
 `;
 
-export const NextBtn = styled.div`
+export const DuplicationBtn = styled.div`
+  position: absolute;
+  top: 7.6rem;
+  right: 3.6rem;
+`;
+
+export const NextBtn = styled.div<{
+  $isSuccess: boolean;
+  $isDisabled: boolean;
+  $isDuplicate: boolean;
+}>`
   position: absolute;
   left: 74.4rem;
   top: 6.4rem;
   width: 5.6rem;
   height: 5.6rem;
-  background-color: ${(props) => props.theme.colors.blue30};
+  background: ${(props) =>
+    props.$isDuplicate || props.$isDisabled
+      ? props.theme.colors.blue30
+      : props.$isSuccess
+        ? 'linear-gradient(135deg, #4B7AFF 0%, #5C8EF3 100%)'
+        : props.theme.colors.blue30};
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: ${(props) =>
+    props.$isSuccess && !props.$isDisabled && !props.$isDuplicate ? 'pointer' : 'default'};
+  pointer-events: ${(props) => (props.$isDisabled || props.$isDuplicate ? 'none' : 'auto')};
 
   img {
     width: 2.4rem;

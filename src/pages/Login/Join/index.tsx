@@ -16,33 +16,45 @@ export const JoinPage = () => {
   //   nav('/');
   // }
 
-  const [nickname, setNickname] = useState(''); // 닉네임 상태
-  const [error, setError] = useState(false); // 에러 상태
-  const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
+  const [nickname, setNickname] = useState('');
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(false);
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
-    // 중복 닉네임 로직
-    if (value) {
-      // [To Do] 중복 닉네임 로직 api 연결
-      setError(true);
-      setErrorMessage('중복된 닉네임입니다.');
-    } else {
-      setError(false);
-      setErrorMessage('');
-    }
-
+    setError(false);
+    setErrorMessage('');
+    setIsDuplicateChecked(false);
     setNickname(value);
   };
 
-  const handleJoin = () => {
-    if (!nickname.trim()) {
+  const handleDuplicateCheck = async () => {
+    const trimmedNickname = nickname.trim();
+
+    try {
+      // [To Do : 닉네임 중복 검사 api 호출]
+      const isTaken = trimmedNickname === '중복'; // 예시: 중복 닉네임 처리
+
+      if (isTaken) {
+        setIsDuplicate(true);
+        setError(true);
+        setErrorMessage('중복된 닉네임이에요');
+      } else {
+        setIsDuplicate(false);
+        setError(false);
+        setErrorMessage('');
+      }
+      setIsDuplicateChecked(true);
+    } catch (error) {
+      console.error('중복 확인 중 오류 발생:', error);
       setError(true);
-      setErrorMessage('닉네임을 입력해주세요.');
-      return;
     }
   };
+
+  const handleJoin = () => {};
 
   return (
     <S.Layout>
@@ -63,12 +75,36 @@ export const JoinPage = () => {
               value={nickname}
               onChange={handleNicknameChange}
               error={error}
-              errorMessage="중복된 닉네임입니다."
-              placeholder="닉네임을 입력해주세요"
+              errorMessage={errorMessage}
+              placeholder="입력해주세요"
             />
+            {!isDuplicateChecked && (
+              <S.DuplicationBtn>
+                <Button
+                  size="small"
+                  type={!nickname.trim() ? 'inactive' : 'sub'}
+                  onClick={handleDuplicateCheck}
+                  disabled={!nickname.trim()}
+                >
+                  중복확인
+                </Button>
+              </S.DuplicationBtn>
+            )}
           </S.Nickname>
-          <S.NextBtn>
-            <img src={nextBlue} alt="next" />
+          <S.NextBtn
+            $isSuccess={isDuplicateChecked && !isDuplicate}
+            $isDisabled={!nickname.trim()}
+            $isDuplicate={isDuplicate}
+            onClick={nickname.trim() && isDuplicateChecked && !isDuplicate ? handleJoin : undefined}
+          >
+            <img
+              src={
+                isDuplicate || !nickname.trim() || (isDuplicateChecked && isDuplicate)
+                  ? nextBlue
+                  : nextWhite
+              }
+              alt="next"
+            />
           </S.NextBtn>
         </S.NicknameContainer>
       </S.StepContainer>
