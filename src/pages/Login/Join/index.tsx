@@ -6,6 +6,8 @@ import * as S from '@/pages/Login/Join/styles';
 import { useState } from 'react';
 import nextBlue from '@/assets/webps/Login/nextBlue.webp';
 import nextWhite from '@/assets/webps/Login/nextWhite.webp';
+import leftBlue from '@/assets/svgs/Login/leftBlue.svg';
+import Checkbox from '@/components/Common/CheckBox';
 
 export const JoinPage = () => {
   // const nav = useNavigate();
@@ -16,23 +18,25 @@ export const JoinPage = () => {
   //   nav('/');
   // }
 
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState(''); // Step 1
+  const [affiliation, setAffiliation] = useState(''); // Step 2
+  const [affiliationPrivate, setAffiliationPrivate] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const [step, setStep] = useState(1);
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
+    setNickname(e.target.value);
     setError(false);
     setErrorMessage('');
     setIsDuplicateChecked(false);
-    setNickname(value);
   };
 
   const handleDuplicateCheck = async () => {
     const trimmedNickname = nickname.trim();
+    if (!trimmedNickname) return;
 
     try {
       // [To Do : 닉네임 중복 검사 api 호출]
@@ -54,7 +58,29 @@ export const JoinPage = () => {
     }
   };
 
-  const handleJoin = () => {};
+  const handleNextStep = () => {
+    if (step === 1) {
+      if (!nickname.trim() || !isDuplicateChecked || isDuplicate) {
+        setError(true);
+        setErrorMessage('닉네임 중복확인을 완료해주세요.');
+        return;
+      }
+      setStep(2);
+    } else if (step === 2) {
+      if (!affiliation.trim()) return;
+      setStep(3);
+    }
+  };
+
+  const handlePrevStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  const handlePrivateCheckbox = () => {
+    setAffiliationPrivate((prev) => !prev); // 상태 토글
+  };
 
   return (
     <S.Layout>
@@ -66,47 +92,94 @@ export const JoinPage = () => {
         </Button>
       </S.TopBar>
       <S.StepContainer>
-        <S.Step>3 중 1단계</S.Step>
-        <S.Title>사용할 닉네임을 정해주세요</S.Title>
-        <S.Description>꼭 실명이 아니어도 괜찮아요</S.Description>
-        <S.NicknameContainer>
-          <S.Nickname>
-            <Input
-              value={nickname}
-              onChange={handleNicknameChange}
-              error={error}
-              errorMessage={errorMessage}
-              placeholder="입력해주세요"
-            />
-            {!isDuplicateChecked && (
-              <S.DuplicationBtn>
-                <Button
-                  size="small"
-                  type={!nickname.trim() ? 'inactive' : 'sub'}
-                  onClick={handleDuplicateCheck}
-                  disabled={!nickname.trim()}
-                >
-                  중복확인
-                </Button>
-              </S.DuplicationBtn>
-            )}
-          </S.Nickname>
-          <S.NextBtn
-            $isSuccess={isDuplicateChecked && !isDuplicate}
-            $isDisabled={!nickname.trim()}
-            $isDuplicate={isDuplicate}
-            onClick={nickname.trim() && isDuplicateChecked && !isDuplicate ? handleJoin : undefined}
-          >
-            <img
-              src={
-                isDuplicate || !nickname.trim() || (isDuplicateChecked && isDuplicate)
-                  ? nextBlue
-                  : nextWhite
-              }
-              alt="next"
-            />
-          </S.NextBtn>
-        </S.NicknameContainer>
+        {step === 1 && (
+          <>
+            <S.Step>3 중 1단계</S.Step>
+            <S.Title>사용할 닉네임을 정해주세요</S.Title>
+            <S.Description>꼭 실명이 아니어도 괜찮아요</S.Description>
+            <S.InputContainer>
+              <S.InputWrapper>
+                <Input
+                  value={nickname}
+                  onChange={handleNicknameChange}
+                  error={error}
+                  errorMessage={errorMessage}
+                  placeholder="입력해주세요"
+                />
+                {!isDuplicateChecked && (
+                  <S.DuplicationBtn>
+                    <Button
+                      size="small"
+                      type={!nickname.trim() ? 'inactive' : 'sub'}
+                      onClick={handleDuplicateCheck}
+                      disabled={!nickname.trim()}
+                    >
+                      중복확인
+                    </Button>
+                  </S.DuplicationBtn>
+                )}
+              </S.InputWrapper>
+              <S.NextBtn
+                $isSuccess={isDuplicateChecked && !isDuplicate}
+                $isDisabled={!nickname.trim()}
+                $isDuplicate={isDuplicate}
+                onClick={
+                  nickname.trim() && isDuplicateChecked && !isDuplicate ? handleNextStep : undefined
+                }
+              >
+                <img
+                  src={
+                    isDuplicate || !nickname.trim() || (isDuplicateChecked && isDuplicate)
+                      ? nextBlue
+                      : nextWhite
+                  }
+                  alt="next"
+                />
+              </S.NextBtn>
+            </S.InputContainer>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <S.Step>
+              <img src={leftBlue} alt="prev" onClick={handlePrevStep} />3 중 2단계
+            </S.Step>
+            <S.Title>학력이나 소속이 있다면 알려주세요</S.Title>
+            <S.Description>공개 여부는 언제든지 변경할 수 있어요</S.Description>
+            <S.InputContainer>
+              <S.InputWrapper>
+                <Input
+                  value={affiliation}
+                  onChange={(e) => setAffiliation(e.target.value)}
+                  placeholder="00대학교 00학과"
+                  hideIcon={true}
+                />
+                <S.PrivateCheckbox onClick={handlePrivateCheckbox}>
+                  <Checkbox checked={affiliationPrivate} />
+                  <p>비공개</p>
+                </S.PrivateCheckbox>
+              </S.InputWrapper>
+              <S.NextBtn
+                $isSuccess={affiliation.trim() !== ''}
+                onClick={affiliation.trim() ? handleNextStep : undefined}
+              >
+                <img src={affiliation.trim() ? nextWhite : nextBlue} alt="next" />
+              </S.NextBtn>
+            </S.InputContainer>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
+            <S.Step>
+              <img src={leftBlue} alt="prev" onClick={handlePrevStep} />
+              마지막 단계
+            </S.Step>
+            <S.Title>IT취업 희망 분야를 알려주세요</S.Title>
+            <S.InputContainer>드롭다운</S.InputContainer>
+          </>
+        )}
       </S.StepContainer>
     </S.Layout>
   );

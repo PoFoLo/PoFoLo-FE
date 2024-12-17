@@ -43,8 +43,17 @@ export const Join = styled.h2`
 `;
 
 export const Step = styled.p`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
   ${(props) => props.theme.fonts.caption1};
   color: ${(props) => props.theme.colors.blue50};
+
+  img {
+    width: 0.9rem;
+    height: 1.4rem;
+    cursor: pointer;
+  }
 `;
 
 export const Title = styled.h2`
@@ -59,7 +68,7 @@ export const Description = styled.h6`
   color: ${(props) => props.theme.colors.gray70};
 `;
 
-export const NicknameContainer = styled.div`
+export const InputContainer = styled.div`
   width: 74.4rem;
   height: 8.1rem;
   display: flex;
@@ -68,7 +77,7 @@ export const NicknameContainer = styled.div`
   position: relative;
 `;
 
-export const Nickname = styled.div`
+export const InputWrapper = styled.div`
   margin-top: 6.4rem;
   width: 72rem;
 `;
@@ -80,9 +89,9 @@ export const DuplicationBtn = styled.div`
 `;
 
 export const NextBtn = styled.div<{
-  $isSuccess: boolean;
-  $isDisabled: boolean;
-  $isDuplicate: boolean;
+  $isSuccess?: boolean;
+  $isDisabled?: boolean;
+  $isDuplicate?: boolean;
 }>`
   position: absolute;
   left: 74.4rem;
@@ -106,5 +115,19 @@ export const NextBtn = styled.div<{
   img {
     width: 2.4rem;
     height: 2.4rem;
+  }
+`;
+
+export const PrivateCheckbox = styled.div`
+  position: absolute;
+  top: 7.8rem;
+  right: 4.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  p {
+    ${(props) => props.theme.fonts.caption2};
+    color: ${(props) => props.theme.colors.gray60};
   }
 `;

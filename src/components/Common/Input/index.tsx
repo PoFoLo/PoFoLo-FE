@@ -9,6 +9,7 @@ interface InputFieldProps {
   error?: boolean; // 에러 변수
   errorMessage?: string; // 에러 발생 시 메시지
   placeholder?: string;
+  hideIcon?: boolean; // 아이콘 숨기기 여부
 }
 
 const Input = ({
@@ -17,11 +18,12 @@ const Input = ({
   value,
   onChange,
   placeholder = '',
+  hideIcon = false,
 }: InputFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   // 아이콘 표시 상태 결정
-  const showIconState = error || (!isFocused && !!value.trim());
+  const showIconState = !hideIcon && (error || (!isFocused && !!value.trim()));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
