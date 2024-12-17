@@ -30,8 +30,8 @@ export const NavLeftGoBack = styled.img`
 `;
 
 export const NavLeftLogo = styled.img`
-  width: 11.1rem;
-  height: 2.675rem;
+  width: 12.8rem;
+  height: 2.9rem;
   cursor: pointer;
 `;
 
