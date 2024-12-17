@@ -1,6 +1,7 @@
 import * as S from '@/pages/Portfolio/WritePortfolioPage/styles';
 import HeaderSection from '@/components/FormField/HeaderSection';
 import TitleSection from '@/components/FormField/TitleSection';
+import NameSection from '@/components/WritePortfolio/NameSection';
 import CategorySection from '@/components/FormField/CategorySection';
 import DescriptionSection from '@/components/FormField/DescriptionSection';
 import SkillSection from '@/components/WritePortfolio/SkillSection';
@@ -14,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 export const WritePortfolioPage = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
+  const [name, setName] = useState<string>('');
   const [mainCategory, setMainCategory] = useState<string>('');
   const [subCategory, setSubCategory] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -22,6 +24,7 @@ export const WritePortfolioPage = () => {
   const [projects, setProjects] = useState<number[]>([]);
   const [errors, setErrors] = useState<Record<string, boolean>>({
     title: false,
+    name: false,
     description: false,
     category: false,
     skill: false,
@@ -37,6 +40,7 @@ export const WritePortfolioPage = () => {
   const validateFields = () => {
     setErrors({
       title: !title.trim() || title.length > 50,
+      name: !name.trim(),
       description: !description.trim(),
       category: !mainCategory || !subCategory,
       skill: !skill.trim(),
@@ -49,6 +53,7 @@ export const WritePortfolioPage = () => {
   const btnActive =
     title.trim().length > 0 &&
     title.length <= 50 &&
+    name.trim().length > 0 &&
     description.trim().length > 0 &&
     !!mainCategory &&
     !!subCategory &&
@@ -65,6 +70,7 @@ export const WritePortfolioPage = () => {
       const data = {
         isPrivate,
         title,
+        name,
         mainCategory,
         subCategory,
         description,
@@ -81,6 +87,7 @@ export const WritePortfolioPage = () => {
   const hasUnsavedData = () => {
     return (
       title.trim() ||
+      name.trim() ||
       description.trim() ||
       mainCategory ||
       subCategory ||
@@ -152,6 +159,7 @@ export const WritePortfolioPage = () => {
       const data = {
         isPrivate: true,
         title,
+        name,
         mainCategory,
         subCategory,
         description,
@@ -188,6 +196,7 @@ export const WritePortfolioPage = () => {
               error={errors.title}
               setErrors={setErrors}
             />
+            <NameSection name={name} setName={setName} error={errors.name} setErrors={setErrors} />
             <CategorySection
               mainCategory={mainCategory}
               setMainCategory={setMainCategory}
