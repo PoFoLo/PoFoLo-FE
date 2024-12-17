@@ -38,6 +38,7 @@ const CheckboxInput = ({
           비공개
         </S.CheckboxLabel>
       </S.CheckboxContainer>
+      {error && <S.ErrorMessage>필수 입력 항목입니다.</S.ErrorMessage>}
     </S.InputContainer>
   );
 };
