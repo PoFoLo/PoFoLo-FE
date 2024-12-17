@@ -69,8 +69,8 @@ export const Description = styled.h6`
 `;
 
 export const InputContainer = styled.div`
-  width: 74.4rem;
-  height: 8.1rem;
+  margin-top: 6.4rem;
+  width: 72rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

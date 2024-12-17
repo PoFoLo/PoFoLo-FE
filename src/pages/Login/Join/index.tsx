@@ -8,6 +8,7 @@ import nextBlue from '@/assets/webps/Login/nextBlue.webp';
 import nextWhite from '@/assets/webps/Login/nextWhite.webp';
 import leftBlue from '@/assets/svgs/Login/leftBlue.svg';
 import Checkbox from '@/components/Common/CheckBox';
+import CategorySection from '@/components/FormField/CategorySection';
 
 export const JoinPage = () => {
   // const nav = useNavigate();
@@ -21,6 +22,9 @@ export const JoinPage = () => {
   const [nickname, setNickname] = useState(''); // Step 1
   const [affiliation, setAffiliation] = useState(''); // Step 2
   const [affiliationPrivate, setAffiliationPrivate] = useState(false);
+  const [mainCategory, setMainCategory] = useState(''); // Step 3 대분류
+  const [subCategory, setSubCategory] = useState(''); // Step 3 소분류
+  const [errors, setErrors] = useState<Record<string, boolean>>({ category: false });
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
@@ -177,7 +181,18 @@ export const JoinPage = () => {
               마지막 단계
             </S.Step>
             <S.Title>IT취업 희망 분야를 알려주세요</S.Title>
-            <S.InputContainer>드롭다운</S.InputContainer>
+            <S.InputContainer>
+              <CategorySection
+                showTitle={false}
+                mainCategory={mainCategory}
+                setMainCategory={setMainCategory}
+                subCategory={subCategory}
+                setSubcategory={setSubCategory}
+                error={errors.category}
+                setErrors={setErrors}
+                direction="column"
+              />
+            </S.InputContainer>
           </>
         )}
       </S.StepContainer>
