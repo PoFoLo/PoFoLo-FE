@@ -109,6 +109,10 @@ export const ProjectCardContainer = styled.div`
   -ms-overflow-style: none; /* IE에서 스크롤바 숨기기 */
   scrollbar-width: none; /* 파이어폭스에서 스크롤바 숨기기 */
 
+  & > label:last-child {
+    margin-bottom: 1.6rem;
+  }
+
   ${(props) =>
     props.theme.media.pc(css`
       display: grid;
