@@ -9,15 +9,16 @@ import nextWhite from '@/assets/webps/Login/nextWhite.webp';
 import leftBlue from '@/assets/svgs/Login/leftBlue.svg';
 import Checkbox from '@/components/Common/CheckBox';
 import CategorySection from '@/components/FormField/CategorySection';
+import { useNavigate } from 'react-router-dom';
 
 export const JoinPage = () => {
-  // const nav = useNavigate();
   // const location = useLocation();
   // const { kakao_id } = location.state || {}; // state에서 kakao_id 추출
 
   // if (!kakao_id) {
   //   nav('/');
   // }
+  const nav = useNavigate();
 
   const [nickname, setNickname] = useState(''); // Step 1
   const [affiliation, setAffiliation] = useState(''); // Step 2
@@ -86,12 +87,24 @@ export const JoinPage = () => {
     setAffiliationPrivate((prev) => !prev); // 상태 토글
   };
 
+  // 회원가입
+  const handleJoin = () => {
+    if (step === 3 && mainCategory && subCategory) {
+      nav('/home'); //home으로 이동
+    }
+  };
+
   return (
     <S.Layout>
       <Navbar />
       <S.TopBar>
         <S.Join>회원가입</S.Join>
-        <Button size="medium" type="sub">
+        <Button
+          size="medium"
+          type={step === 3 && mainCategory && subCategory ? 'main' : 'sub'}
+          onClick={handleJoin}
+          disabled={step !== 3 || !mainCategory || !subCategory}
+        >
           <p>가입하기</p>
         </Button>
       </S.TopBar>
@@ -181,7 +194,7 @@ export const JoinPage = () => {
               마지막 단계
             </S.Step>
             <S.Title>IT취업 희망 분야를 알려주세요</S.Title>
-            <S.InputContainer>
+            <S.InputWrapper>
               <CategorySection
                 showTitle={false}
                 mainCategory={mainCategory}
@@ -192,7 +205,7 @@ export const JoinPage = () => {
                 setErrors={setErrors}
                 direction="column"
               />
-            </S.InputContainer>
+            </S.InputWrapper>
           </>
         )}
       </S.StepContainer>
