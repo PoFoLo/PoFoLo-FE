@@ -10,9 +10,11 @@ import leftBlue from '@/assets/svgs/Login/leftBlue.svg';
 import Checkbox from '@/components/Common/CheckBox';
 import CategorySection from '@/components/FormField/CategorySection';
 import { instance } from '@/apis/instance';
+import { useResponsive } from '@/hooks/useResponsive';
 
 export const JoinPage = () => {
   const [nickname, setNickname] = useState(''); // Step 1
+  const [hideIcon, setHideIcon] = useState(false); // 아이콘 숨기기 상태
   const [affiliation, setAffiliation] = useState(''); // Step 2
   const [affiliationPrivate, setAffiliationPrivate] = useState(false);
   const [mainCategory, setMainCategory] = useState(''); // Step 3 대분류
@@ -26,6 +28,7 @@ export const JoinPage = () => {
   const nav = useNavigate();
   const location = useLocation();
   const { kakao_id } = location.state || {}; // state에서 kakao_id 추출
+  const { isPC, isPhone } = useResponsive();
 
   if (!kakao_id) {
     nav('/');
@@ -119,7 +122,7 @@ export const JoinPage = () => {
       <S.TopBar>
         <S.Join>회원가입</S.Join>
         <Button
-          size="medium"
+          size={isPC ? 'medium' : 'small'}
           type={step === 3 && mainCategory && subCategory ? 'main' : 'sub'}
           onClick={handleJoin}
           disabled={step !== 3 || !mainCategory || !subCategory}
@@ -131,7 +134,9 @@ export const JoinPage = () => {
         {step === 1 && (
           <>
             <S.Step>3 중 1단계</S.Step>
-            <S.Title>사용할 닉네임을 정해주세요</S.Title>
+            <S.Title>
+              <h2>사용할 닉네임을 정해주세요</h2>
+            </S.Title>
             <S.Description>꼭 실명이 아니어도 괜찮아요</S.Description>
             <S.InputContainer>
               <S.InputWrapper>
@@ -141,11 +146,14 @@ export const JoinPage = () => {
                   error={error}
                   errorMessage={errorMessage}
                   placeholder="입력해주세요"
+                  isDuplicated={true}
+                  hideIcon={hideIcon}
+                  setHideIcon={setHideIcon}
                 />
                 {!isDuplicateChecked && (
                   <S.DuplicationBtn>
                     <Button
-                      size="small"
+                      size={isPhone ? 'small2' : 'small'}
                       type={!nickname.trim() ? 'inactive' : 'sub'}
                       onClick={handleDuplicateCheck}
                       disabled={!nickname.trim()}
@@ -164,11 +172,7 @@ export const JoinPage = () => {
                 }
               >
                 <img
-                  src={
-                    isDuplicate || !nickname.trim() || (isDuplicateChecked && isDuplicate)
-                      ? nextBlue
-                      : nextWhite
-                  }
+                  src={nickname.trim() && isDuplicateChecked && !isDuplicate ? nextWhite : nextBlue}
                   alt="next"
                 />
               </S.NextBtn>
@@ -181,7 +185,15 @@ export const JoinPage = () => {
             <S.Step>
               <img src={leftBlue} alt="prev" onClick={handlePrevStep} />3 중 2단계
             </S.Step>
-            <S.Title>학력이나 소속이 있다면 알려주세요</S.Title>
+            <S.Title>
+              {!isPhone && <h2>학력이나 소속이 있다면 알려주세요</h2>}
+              {isPhone && (
+                <div>
+                  <h2>학력이나 소속이 있다면</h2>
+                  <h2>알려주세요</h2>
+                </div>
+              )}
+            </S.Title>
             <S.Description>공개 여부는 언제든지 변경할 수 있어요</S.Description>
             <S.InputContainer>
               <S.InputWrapper>
@@ -190,9 +202,10 @@ export const JoinPage = () => {
                   onChange={(e) => setAffiliation(e.target.value)}
                   placeholder="00대학교 00학과"
                   hideIcon={true}
+                  isPrivateCheckbox={true}
                 />
-                <S.PrivateCheckbox onClick={handlePrivateCheckbox}>
-                  <Checkbox checked={affiliationPrivate} />
+                <S.PrivateCheckbox>
+                  <Checkbox checked={affiliationPrivate} onChange={handlePrivateCheckbox} />
                   <p>비공개</p>
                 </S.PrivateCheckbox>
               </S.InputWrapper>
@@ -212,8 +225,16 @@ export const JoinPage = () => {
               <img src={leftBlue} alt="prev" onClick={handlePrevStep} />
               마지막 단계
             </S.Step>
-            <S.Title>IT취업 희망 분야를 알려주세요</S.Title>
-            <S.InputWrapper>
+            <S.Title>
+              {!isPhone && <h2>IT취업 희망 분야를 알려주세요</h2>}
+              {isPhone && (
+                <div>
+                  <h2>IT취업 희망 분야를</h2>
+                  <h2>알려주세요</h2>
+                </div>
+              )}
+            </S.Title>
+            <S.InputWrapper $isStep3={step === 3}>
               <CategorySection
                 showTitle={false}
                 mainCategory={mainCategory}

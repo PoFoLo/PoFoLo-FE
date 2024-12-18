@@ -8,12 +8,18 @@ export const InputContainer = styled.div`
   width: 100%;
 `;
 
-export const StyledInput = styled.input<{ $error: boolean }>`
+export const StyledInput = styled.input<{
+  $error: boolean;
+  $isDuplicated: boolean;
+  $isPrivateCheckbox: boolean;
+}>`
   ${(props) => props.theme.fonts.body4};
   color: ${(props) => props.theme.colors.gray90};
   background-color: ${(props) => props.theme.colors.gray10};
   padding: 1.15rem 1.2rem;
-  padding-right: 6.4rem;
+  padding-right: ${(props) =>
+    props.$isDuplicated ? '7.6rem' : props.$isPrivateCheckbox ? '8.5rem' : '6.4rem'};
+
   border: 0.1rem solid
     ${(props) => (props.$error ? props.theme.colors.coral50 : props.theme.colors.gray20)};
   border-radius: 1.2rem;
@@ -30,16 +36,20 @@ export const StyledInput = styled.input<{ $error: boolean }>`
   }
 
   ${(props) =>
+    props.theme.media.tab(
+      () => `
+      padding-right: ${props.$isDuplicated ? '10rem' : props.$isPrivateCheckbox ? '9rem' : '6.4rem'};
+    `
+    )}
+
+  ${(props) =>
     props.theme.media.pc(
       () => `
-	  ${props.theme.fonts.body2};
-  `
-    )}
-  ${(props) =>
-    props.theme.media.pc(css`
+      ${props.theme.fonts.body2};
       padding: 1.4rem 1.6rem;
-      padding-right: 6.8rem;
-    `)}
+      padding-right: ${props.$isDuplicated ? '10rem' : props.$isPrivateCheckbox ? '10.5rem' : '6.4rem'};
+    `
+    )}
 `;
 
 export const IconContainer = styled.div<{ $backgroundImage: string }>`
