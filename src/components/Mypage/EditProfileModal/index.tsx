@@ -9,7 +9,7 @@ import ContactSection from '@/components/Mypage/EditProfileModal/ContactSection'
 import IntroductionSection from '@/components/Mypage/EditProfileModal/IntroductionSection';
 import ProfileLinkSection from '@/components/Mypage/EditProfileModal/ProfileLinkSection';
 import AvailabilitySection from '@/components/Mypage/EditProfileModal/AvailabilitySection';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
 
 interface Profile {
@@ -56,18 +56,36 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
     introduction: false,
   });
 
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false); // 애니메이션 작동 여부
+  const [upwardDirection, setUpwardDirection] = useState(false); // 애니메이션 이동 방향
+  const modalRef = useRef<HTMLDivElement>(null);
   const { isPC } = useResponsive();
 
+  // 모달 열릴 때 애니메이션 제어
   useEffect(() => {
     if (isOpen) {
+      setIsOpen(true);
       if (!isPC) {
         setIsAnimating(true);
+        setUpwardDirection(true);
       } else {
         setIsAnimating(false);
       }
     }
   }, [isOpen]);
+
+  // 모달 닫힐 때 애니메이션 제어
+  const handleClose = () => {
+    if (!isPC) {
+      setIsAnimating(true);
+      setUpwardDirection(false);
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 400); // 애니메이션 종료 후 모달 닫기
+    } else {
+      setIsOpen(false);
+    }
+  };
 
   // 모달 열렸을 때 외부 스크롤 막기
   useEffect(() => {
@@ -78,6 +96,25 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
       document.body.style.overflow = 'auto';
     };
   }, [isOpen]);
+
+  // 모달 외부 클릭 시 닫히게
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        handleClose();
+      }
+    },
+    [isPC]
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, handleClickOutside]);
 
   // 필수 입력 항목 유효성 검사 -> 에러 설정
   const validateFields = () => {
@@ -121,12 +158,16 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
     <>
       {isOpen && (
         <S.ModalOverlay>
-          <S.ModalContainer $isAnimating={isAnimating}>
+          <S.ModalContainer
+            ref={modalRef}
+            $upwardDirection={upwardDirection}
+            $isAnimating={isAnimating}
+          >
             <S.ModalHeaderContainer>
               <S.ModalTitleContainer>
                 <S.GoBackBtn
                   $backgroundImage={isPC ? modalGoBack : modalClose}
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                 />
                 <S.ModalTitleText>프로필 수정</S.ModalTitleText>
               </S.ModalTitleContainer>
