@@ -17,11 +17,12 @@ export const OAuthLoading = () => {
       try {
         const response = await instance.post('/pofolo/users/login/', { code });
 
-        const { access, kakao_id } = response.data;
+        const { access, refresh, kakao_id } = response.data;
 
         if (access) {
           // 기존 회원: 토큰 저장 -> /home 으로 이동
           localStorage.setItem('access', access);
+          localStorage.setItem('refresh', refresh);
           nav('/home');
         } else if (kakao_id) {
           // 신규 회원: /join 으로 이동
