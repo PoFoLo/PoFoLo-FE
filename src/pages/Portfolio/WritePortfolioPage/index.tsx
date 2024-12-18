@@ -11,6 +11,7 @@ import Navbar from '@/components/Layout/Navbar/Navbar';
 import Modal from '@/components/Common/Modal';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResponsive } from '@/hooks/useResponsive';
 
 export const WritePortfolioPage = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
@@ -35,6 +36,7 @@ export const WritePortfolioPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [pendingAction, setPendingAction] = useState<null | (() => void)>(null); // 실행할 함수 임시 저장
   const navigate = useNavigate();
+  const { isPC } = useResponsive();
 
   // 필수 입력 항목 유효성 검사 -> 에러 설정
   const validateFields = () => {
@@ -204,6 +206,7 @@ export const WritePortfolioPage = () => {
               setSubcategory={setSubCategory}
               error={errors.category}
               setErrors={setErrors}
+              direction={isPC ? 'row' : 'column'}
             />
             <DescriptionSection
               description={description}
