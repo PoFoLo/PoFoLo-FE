@@ -14,7 +14,7 @@ export const MyPage = () => {
       <Navbar />
       <Profile />
       <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-      <MyPageFilterDetail />
+      <MyPageFilterDetail activeTab={activeTab} />
       <MyPageCardList activeTab={activeTab} />
     </S.Layout>
   );
