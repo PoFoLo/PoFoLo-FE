@@ -119,7 +119,7 @@ export const JoinPage = () => {
 
         const response = await instance.post('/pofolo/users/register/', requestData);
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log(response.data.message); // 성공 메시지
           nav('/home'); // /home 페이지로 이동
         }
