@@ -12,6 +12,7 @@ interface InputFieldProps {
   hideIcon?: boolean; // 아이콘 숨기기 여부
   setHideIcon?: (value: boolean) => void;
   isDuplicated?: boolean;
+  isDuplicateChecked?: boolean;
   isPrivateCheckbox?: boolean;
 }
 
@@ -24,12 +25,14 @@ const Input = ({
   hideIcon = false,
   setHideIcon,
   isDuplicated = false,
+  isDuplicateChecked = false,
   isPrivateCheckbox = false,
 }: InputFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   // 아이콘 표시 상태 결정
-  const showIconState = !hideIcon && (error || (!isFocused && !!value.trim()));
+  const showIconState =
+    !hideIcon && isDuplicateChecked && (error || (!isFocused && !!value.trim()));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);

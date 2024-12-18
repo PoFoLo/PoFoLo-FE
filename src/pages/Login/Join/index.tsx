@@ -179,9 +179,10 @@ export const JoinPage = () => {
                   error={error}
                   errorMessage={errorMessage}
                   placeholder="입력해주세요"
-                  isDuplicated={true}
                   hideIcon={hideIcon}
                   setHideIcon={setHideIcon}
+                  isDuplicated={true}
+                  isDuplicateChecked={isDuplicateChecked} // 추가된 상태 전달
                 />
                 {!isDuplicateChecked && (
                   <S.DuplicationBtn>
