@@ -11,6 +11,8 @@ interface CategorySectionProps {
   setSubcategory: React.Dispatch<React.SetStateAction<string>>;
   error: boolean;
   setErrors: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  showTitle?: boolean;
+  direction?: 'row' | 'column';
 }
 
 const CategorySection = ({
@@ -20,6 +22,8 @@ const CategorySection = ({
   setSubcategory,
   error = false,
   setErrors,
+  showTitle = true,
+  direction,
 }: CategorySectionProps) => {
   const categories = [
     {
@@ -79,9 +83,9 @@ const CategorySection = ({
 
   return (
     <S.SectionContainer>
-      <S.SectionTitle>분야</S.SectionTitle>
+      {showTitle && <S.SectionTitle>분야</S.SectionTitle>}
       <S.SelectFieldContainer>
-        <S.DropdownsContainer>
+        <S.DropdownsContainer direction={direction || 'row'}>
           {/* 대분류 드롭다운 */}
           <S.DropdownHeader ref={categoryRef} onClick={() => setIsCategoryOpen(!isCategoryOpen)}>
             <S.SelectedText $isSelected={!!mainCategory && !isCategoryOpen}>

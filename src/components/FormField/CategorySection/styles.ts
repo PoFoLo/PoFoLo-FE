@@ -14,15 +14,10 @@ export const SelectFieldContainer = styled.div`
   width: 100%;
 `;
 
-export const DropdownsContainer = styled.div`
+export const DropdownsContainer = styled.div<{ direction?: 'row' | 'column' }>`
   display: flex;
-  flex-direction: column;
   gap: 1.6rem;
-
-  ${(props) =>
-    props.theme.media.pc(css`
-      flex-direction: row;
-    `)}
+  flex-direction: ${(props) => props.direction || 'row'};
 `;
 
 export const DropdownHeader = styled.div`
