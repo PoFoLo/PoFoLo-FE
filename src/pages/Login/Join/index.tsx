@@ -1,34 +1,47 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { instance } from '@/apis/instance';
+import { useResponsive } from '@/hooks/useResponsive';
+import Navbar from '@/components/Layout/Navbar/Navbar';
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
-import Navbar from '@/components/Layout/Navbar/Navbar';
+import Checkbox from '@/components/Common/CheckBox';
+import CategorySection from '@/components/FormField/CategorySection';
 import * as S from '@/pages/Login/Join/styles';
-import { useState } from 'react';
 import nextBlue from '@/assets/webps/Login/nextBlue.webp';
 import nextWhite from '@/assets/webps/Login/nextWhite.webp';
 import leftBlue from '@/assets/svgs/Login/leftBlue.svg';
-import Checkbox from '@/components/Common/CheckBox';
-import CategorySection from '@/components/FormField/CategorySection';
-import { instance } from '@/apis/instance';
-import { useResponsive } from '@/hooks/useResponsive';
 
 export const JoinPage = () => {
-  const [nickname, setNickname] = useState(''); // Step 1
-  const [hideIcon, setHideIcon] = useState(false); // 아이콘 숨기기 상태
-  const [affiliation, setAffiliation] = useState(''); // Step 2
-  const [affiliationPrivate, setAffiliationPrivate] = useState(false);
-  const [mainCategory, setMainCategory] = useState(''); // Step 3 대분류
-  const [subCategory, setSubCategory] = useState(''); // Step 3 소분류
-  const [errors, setErrors] = useState<Record<string, boolean>>({ category: false });
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
-  const [isDuplicate, setIsDuplicate] = useState(false);
-  const [step, setStep] = useState(1);
   const nav = useNavigate();
   const location = useLocation();
-  const { kakao_id } = location.state || {}; // state에서 kakao_id 추출
+  const categorySectionRef = useRef<HTMLDivElement>(null);
+  const { kakao_id } = location.state || {};
   const { isPC, isPhone } = useResponsive();
+
+  // Step
+  const [step, setStep] = useState(1);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
+
+  // Step 1
+  const [nickname, setNickname] = useState('');
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Step 2
+  const [affiliation, setAffiliation] = useState('');
+  const [affiliationPrivate, setAffiliationPrivate] = useState(false);
+
+  // Step 3
+  const [mainCategory, setMainCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [errors, setErrors] = useState<Record<string, boolean>>({ category: false });
+
+  // UI
+  const [hideIcon, setHideIcon] = useState(false);
 
   if (!kakao_id) {
     nav('/');
@@ -66,6 +79,11 @@ export const JoinPage = () => {
     }
   };
 
+  const handlePrivateCheckbox = () => {
+    setAffiliationPrivate((prev) => !prev); // 상태 토글
+  };
+
+  // 단계 전환
   const handleNextStep = () => {
     if (step === 1) {
       if (!nickname.trim() || !isDuplicateChecked || isDuplicate) {
@@ -84,10 +102,6 @@ export const JoinPage = () => {
     if (step > 1) {
       setStep(step - 1);
     }
-  };
-
-  const handlePrivateCheckbox = () => {
-    setAffiliationPrivate((prev) => !prev); // 상태 토글
   };
 
   // 회원가입
@@ -116,6 +130,21 @@ export const JoinPage = () => {
     }
   };
 
+  // 바깥 클릭 감지
+  const handleClickOutside = (event: MouseEvent) => {
+    if (categorySectionRef.current && !categorySectionRef.current.contains(event.target as Node)) {
+      setIsCategoryOpen(false);
+      setIsSubCategoryOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <S.Layout>
       <Navbar />
@@ -130,7 +159,11 @@ export const JoinPage = () => {
           <p>가입하기</p>
         </Button>
       </S.TopBar>
-      <S.StepContainer>
+      <S.StepContainer
+        $isStep3={step === 3}
+        $isCategoryOpen={isCategoryOpen}
+        $isSubCategoryOpen={isSubCategoryOpen}
+      >
         {step === 1 && (
           <>
             <S.Step>3 중 1단계</S.Step>
@@ -235,16 +268,20 @@ export const JoinPage = () => {
               )}
             </S.Title>
             <S.InputWrapper $isStep3={step === 3}>
-              <CategorySection
-                showTitle={false}
-                mainCategory={mainCategory}
-                setMainCategory={setMainCategory}
-                subCategory={subCategory}
-                setSubcategory={setSubCategory}
-                error={errors.category}
-                setErrors={setErrors}
-                direction="column"
-              />
+              <div ref={categorySectionRef}>
+                <CategorySection
+                  showTitle={false}
+                  mainCategory={mainCategory}
+                  setMainCategory={setMainCategory}
+                  subCategory={subCategory}
+                  setSubcategory={setSubCategory}
+                  error={errors.category}
+                  setErrors={setErrors}
+                  direction="column"
+                  onCategoryToggle={() => setIsCategoryOpen((prev) => !prev)}
+                  onSubCategoryToggle={() => setIsSubCategoryOpen((prev) => !prev)}
+                />
+              </div>
             </S.InputWrapper>
           </>
         )}

@@ -13,6 +13,8 @@ interface CategorySectionProps {
   setErrors: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
   showTitle?: boolean;
   direction?: 'row' | 'column';
+  onCategoryToggle?: () => void;
+  onSubCategoryToggle?: () => void;
 }
 
 const CategorySection = ({
@@ -24,6 +26,8 @@ const CategorySection = ({
   setErrors,
   showTitle = true,
   direction,
+  onCategoryToggle,
+  onSubCategoryToggle,
 }: CategorySectionProps) => {
   const categories = [
     {
@@ -50,6 +54,22 @@ const CategorySection = ({
 
   const categoryRef = useRef<HTMLDivElement>(null);
   const subCategoryRef = useRef<HTMLDivElement>(null);
+
+  const handleCategoryClick = () => {
+    setIsCategoryOpen((prev) => !prev);
+    if (onCategoryToggle) {
+      onCategoryToggle();
+    }
+  };
+
+  const handleSubCategoryClick = () => {
+    if (mainCategory) {
+      setIsSubCategoryOpen((prev) => !prev);
+      if (onSubCategoryToggle) {
+        onSubCategoryToggle();
+      }
+    }
+  };
 
   // 드롭다운 영역 외부 클릭했을 때 드롭다운 닫히게
   const handleClickOutside = useCallback((event: MouseEvent) => {
@@ -87,7 +107,7 @@ const CategorySection = ({
       <S.SelectFieldContainer>
         <S.DropdownsContainer direction={direction || 'row'}>
           {/* 대분류 드롭다운 */}
-          <S.DropdownHeader ref={categoryRef} onClick={() => setIsCategoryOpen(!isCategoryOpen)}>
+          <S.DropdownHeader ref={categoryRef} onClick={handleCategoryClick}>
             <S.SelectedText $isSelected={!!mainCategory && !isCategoryOpen}>
               {isCategoryOpen ? '대분류' : mainCategory || '대분류'}
             </S.SelectedText>
@@ -112,12 +132,7 @@ const CategorySection = ({
           </S.DropdownHeader>
 
           {/* 소분류 드롭다운 */}
-          <S.DropdownHeader
-            ref={subCategoryRef}
-            onClick={() => {
-              if (mainCategory) setIsSubCategoryOpen(!isSubCategoryOpen);
-            }}
-          >
+          <S.DropdownHeader ref={subCategoryRef} onClick={handleSubCategoryClick}>
             <S.SelectedText $isSelected={!!subCategory && !isSubCategoryOpen}>
               {isSubCategoryOpen ? '소분류' : subCategory || '소분류'}
             </S.SelectedText>

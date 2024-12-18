@@ -37,16 +37,26 @@ export const TopBar = styled.div`
     ${(props) => props.theme.fonts.caption1};
   }
 `;
-
-export const StepContainer = styled.div`
+export const StepContainer = styled.div<{
+  $isStep3?: boolean;
+  $isCategoryOpen?: boolean;
+  $isSubCategoryOpen?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   align-items: center;
 
   position: absolute;
-  top: 50%;
+  top: ${(props) =>
+    props.$isStep3
+      ? '45%' // Step3일 때 기본 위치를 위로
+      : '50%'}; // Step1, 2일 때는 중앙
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: ${(props) =>
+    props.$isCategoryOpen || props.$isSubCategoryOpen
+      ? 'translate(-50%, -65%)' // 카테고리 열릴 때 더 위로
+      : 'translate(-50%, -50%)'}; // 기본 상태
+  transition: transform 0.3s ease-in-out;
 `;
 
 export const Join = styled.h2`
