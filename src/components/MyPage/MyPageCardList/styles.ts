@@ -4,7 +4,8 @@ export const CardListContainer = styled.div<{ isPortfolioTab: boolean }>`
   display: grid;
   grid-template-columns: ${(props) => (props.isPortfolioTab ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)')};
   gap: 2.4rem;
-  margin: 2.4rem 6.4rem 0;
+  margin: 0 6.4rem 0;
+  background-color: ${(props) => props.theme.colors.gray5};
 
   /* 반응형 처리 */
   ${(props) =>

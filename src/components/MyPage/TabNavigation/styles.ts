@@ -1,18 +1,29 @@
 import styled, { css } from 'styled-components';
 
-export const TabsContainer = styled.div`
+export const TabsColorContainer = styled.div`
+  width: 100%;
+  height: 9.2rem;
   display: flex;
-  width: 131.2rem;
-  padding: 1.6rem 0 0 0;
+  justify-content: center;
+  padding: 1.6rem 0 2.8rem 0;
+  background-color: ${(props) => props.theme.colors.gray5};
+`;
+
+export const TabsContainer = styled.div`
+  width: 100%;
+  max-width: 131.2rem;
+
+  @media (max-width: 1440px) {
+    margin: 0 6.4rem;
+    width: calc(100% - 11.2rem);
+  }
+
+  height: 4.8rem;
+  margin-bottom: 2.8rem;
+  display: flex;
   align-items: center;
   gap: 1.6rem;
-  margin: 0 auto;
-
-  ${(props) =>
-    props.theme.media.pc(css`
-      width: 100%;
-      padding: 1.6rem 6.4rem 0;
-    `)}
+  background-color: ${(props) => props.theme.colors.gray5};
 `;
 
 export const TabContainer = styled.div<{ active?: boolean }>`

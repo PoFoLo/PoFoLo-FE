@@ -1,14 +1,20 @@
 import styled, { css } from 'styled-components';
 
 export const FilterDetailContainer = styled.div`
-  display: flex;
   width: 100%;
   max-width: 131.2rem;
-  padding: 0rem 6.4rem;
+
+  @media (max-width: 1440px) {
+    margin: 0 6.4rem;
+    width: calc(100% - 11.2rem);
+  }
+
+  height: 7rem;
+  display: flex;
   align-items: center;
-  margin: 1.2rem 0 3.4rem 0;
+  padding-bottom: 3.4rem;
   justify-content: space-between;
-  margin: 0 calc(100% - 1440px) / 2;
+  background-color: ${(props) => props.theme.colors.gray5};
 `;
 
 export const FilterBtnsContainer = styled.div`
@@ -22,7 +28,7 @@ export const FilterButton = styled.button<{ selected: boolean }>`
   all: unset; /* 버튼의 기본 스타일 제거 */
   display: flex;
   height: 3.6rem;
-  padding: 0.8rem 1.2rem;
+  padding: 0.45rem 1.2rem;
   justify-content: center;
   align-items: center;
   border-radius: 5.6rem;

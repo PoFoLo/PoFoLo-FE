@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import * as S from '@/components/MyPage/Profile/styles';
 import defaultProfileSrc from '@/assets/webps/MyPage/defaultProfile.webp';
 import offerIconSrc from '@/assets/webps/MyPage/offerIcon.webp';
@@ -6,6 +7,17 @@ import phoneIconSrc from '@/assets/webps/MyPage/phoneIcon.webp';
 import linkIconSrc from '@/assets/webps/MyPage/linkIcon.webp';
 
 const Profile = () => {
+  const [isPhoneContactVisible, setIsPhoneContactVisible] = useState(false);
+  const [isEmailContactVisible, setIsEmailContactVisible] = useState(false);
+
+  const handlePhoneClick = () => {
+    setIsPhoneContactVisible((prev) => !prev); // 클릭 시 상태 토글
+  };
+
+  const handleEmailClick = () => {
+    setIsEmailContactVisible((prev) => !prev);
+  };
+
   return (
     <S.ProfileLayout>
       <S.ProfileHeader>
@@ -18,10 +30,10 @@ const Profile = () => {
                 <S.OfferBtnIcon src={offerIconSrc} alt="offerIcon" />
                 <S.OfferBtnLetter>제안 받음</S.OfferBtnLetter>
               </S.OfferBtnContainer>
-              <S.EmailBadgeContainer>
+              <S.EmailBadgeContainer onClick={handleEmailClick}>
                 <S.EmailBadgeIcon src={emailIconSrc} alt="emailIcon" />
               </S.EmailBadgeContainer>
-              <S.PhoneBadgeContainer>
+              <S.PhoneBadgeContainer onClick={handlePhoneClick}>
                 <S.PhoneBadgeIcon src={phoneIconSrc} alt="phoneIcon" />
               </S.PhoneBadgeContainer>
             </S.BadgesContainer>
@@ -40,6 +52,22 @@ const Profile = () => {
           </S.LinkBtnsContainer>
         </S.ProfileInfo>
       </S.ProfileHeader>
+      {isEmailContactVisible && ( // 주황색 말풍선 표시
+        <S.EmailContact>
+          <S.ContactLetterContainer>
+            <S.ContactLetter>honggd@hongik.ac.kr</S.ContactLetter>
+          </S.ContactLetterContainer>
+          <S.ContactTriangle />
+        </S.EmailContact>
+      )}
+      {isPhoneContactVisible && (
+        <S.PhoneContact>
+          <S.ContactLetterContainer>
+            <S.ContactLetter>010-2345-6789</S.ContactLetter>
+          </S.ContactLetterContainer>
+          <S.ContactTriangle />
+        </S.PhoneContact>
+      )}
     </S.ProfileLayout>
   );
 };
