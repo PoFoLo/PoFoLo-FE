@@ -61,10 +61,17 @@ export const ProjectInfoContainer = styled.div`
 `;
 
 export const ProjectTitle = styled.p`
-  ${(props) => props.theme.fonts.caption1};
+  ${(props) => props.theme.fonts.caption3};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  ${(props) =>
+    props.theme.media.pc(
+      () => `
+	  ${props.theme.fonts.caption1};
+  `
+    )}
 `;
 
 export const LikeCommentContainer = styled.div`

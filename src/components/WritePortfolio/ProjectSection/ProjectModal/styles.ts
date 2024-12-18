@@ -9,6 +9,15 @@ const slideUp = keyframes`
   }
 `;
 
+const slideDown = keyframes`
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+`;
+
 export const ModalOverlay = styled.div`
   position: fixed;
   display: flex;
@@ -30,7 +39,7 @@ export const ModalOverlay = styled.div`
     `)}
 `;
 
-export const ModalContainer = styled.div<{ $isAnimating?: boolean }>`
+export const ModalContainer = styled.div<{ $upwardDirection: boolean; $isAnimating: boolean }>`
   display: flex;
   flex-direction: column;
   border-radius: 1.6rem 1.6rem 0rem 0rem;
@@ -39,11 +48,10 @@ export const ModalContainer = styled.div<{ $isAnimating?: boolean }>`
   height: 100%;
   padding: 2.4rem 2rem 0rem 2rem;
   box-sizing: border-box;
-
-  ${(props) =>
-    props.$isAnimating &&
+  ${({ $isAnimating, $upwardDirection }) =>
+    $isAnimating &&
     css`
-      animation: ${slideUp} 0.6s ease-out forwards;
+      animation: ${$upwardDirection ? slideUp : slideDown} 0.4s ease-out forwards;
     `}
 
   ${(props) =>

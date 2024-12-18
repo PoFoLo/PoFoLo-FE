@@ -3,7 +3,7 @@ import modalGoBack from '@/assets/webps/Common/modalGoBack.webp';
 import modalClose from '@/assets/webps/Common/modalClose.webp';
 import Button from '@/components/Common/Button';
 import ModalProjectCard from '@/components/WritePortfolio/ProjectSection/ProjectModal/ModalProjectCard';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
 
 interface Project {
@@ -22,26 +22,49 @@ interface ModalProps {
   setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 const ProjectModal = ({
-  isOpen = false,
+  isOpen,
   setIsOpen,
-  projectList = [],
-  selectedIds = [],
+  projectList,
+  selectedIds,
   setSelectedIds,
 }: ModalProps) => {
   // 모달 내부에서 선택된 프로젝트 id
   const [modalSelectedIds, setModalSelectedIds] = useState<number[]>(selectedIds);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false); // 애니메이션 작동 여부
+  const [upwardDirection, setUpwardDirection] = useState(false); // 애니메이션 이동 방향
   const { isPC } = useResponsive();
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  // 모달 열릴 때 이미 선택되어있던 프로젝트들 정보 전달 + 모바일 버전일때는 애니메이션 실행행
+  // 모달 열릴 때 애니메이션 제어
   useEffect(() => {
     if (isOpen) {
-      setModalSelectedIds(selectedIds);
+      setIsOpen(true);
       if (!isPC) {
         setIsAnimating(true);
+        setUpwardDirection(true);
       } else {
         setIsAnimating(false);
       }
+    }
+  }, [isOpen]);
+
+  // 모달 닫힐 때 애니메이션 제어
+  const handleClose = () => {
+    if (!isPC) {
+      setIsAnimating(true);
+      setUpwardDirection(false);
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 400); // 애니메이션 종료 후 모달 닫기
+    } else {
+      setIsOpen(false);
+    }
+  };
+
+  // 모달 열릴 때 이미 선택되어있던 프로젝트들 정보 전달
+  useEffect(() => {
+    if (isOpen) {
+      setModalSelectedIds(selectedIds);
     }
   }, [isOpen]);
 
@@ -58,7 +81,7 @@ const ProjectModal = ({
   const handleConfirmSelection = () => {
     if (modalSelectedIds.length !== 0) {
       setSelectedIds(modalSelectedIds);
-      setIsOpen(false);
+      handleClose();
     }
   };
 
@@ -72,16 +95,39 @@ const ProjectModal = ({
     };
   }, [isOpen]);
 
+  // 모달 외부 클릭 시 닫히게
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        handleClose();
+      }
+    },
+    [isPC]
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, handleClickOutside]);
+
   return (
     <>
       {isOpen && (
         <S.ModalOverlay>
-          <S.ModalContainer $isAnimating={isAnimating}>
+          <S.ModalContainer
+            ref={modalRef}
+            $upwardDirection={upwardDirection}
+            $isAnimating={isAnimating}
+          >
             <S.ModalHeaderContainer>
               <S.ModalTitleContainer>
                 <S.GoBackBtn
                   $backgroundImage={isPC ? modalGoBack : modalClose}
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                 />
                 <S.ModalTitleText>프로젝트 선택</S.ModalTitleText>
               </S.ModalTitleContainer>
