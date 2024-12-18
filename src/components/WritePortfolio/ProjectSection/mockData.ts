@@ -13,7 +13,8 @@ export const mockProjects = [
   {
     id: 2,
     writer: 1,
-    title: '테스트 프로젝트2',
+    title:
+      '테스트 프로젝트2테스트 프로젝트2테스트 프로젝트2테스트 프로젝트2테스트 프로젝트2테스트 프로젝트2',
     major_field: 'plan',
     sub_field: 'machine learning',
     liked_count: 8,

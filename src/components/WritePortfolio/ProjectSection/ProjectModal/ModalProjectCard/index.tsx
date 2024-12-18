@@ -26,7 +26,7 @@ const ModalProjectCard = ({ project, isChecked, onCheckboxChange }: ModalProject
       <S.CheckboxContainer>
         <Checkbox id={`checkbox-${id}`} checked={isChecked} onChange={handleCheckboxClick} />
       </S.CheckboxContainer>
-      <S.LProjectImage src={thumbnail} />
+      <S.ProjectImage src={thumbnail} />
       <S.ProjectInfoContainer>
         <S.ProjectTitle>{title}</S.ProjectTitle>
         <S.LikeCommentContainer>
