@@ -5,7 +5,7 @@ export const ProfileLayout = styled.div`
   height: 18.4rem;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: space-between;
   position: relative;
 
   width: 100%;
@@ -218,5 +218,22 @@ export const LinkBtnIcon = styled.img`
 export const LinkBtnLetter = styled.a`
   color: ${(props) => props.theme.colors.gray80};
   ${(props) => props.theme.fonts.caption1}
+  height: 2.7rem;
+`;
+
+export const EditProfileBtn = styled.div`
+  display: flex;
+  height: 3.6rem;
+  padding: 0.45rem 1.6rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4rem;
+  background: ${(props) => props.theme.colors.blue10};
+  cursor: pointer;
+`;
+
+export const EditProfileBtnLetter = styled.div`
+  color: ${(props) => props.theme.colors.blue60};
+  ${(props) => props.theme.fonts.caption1};
   height: 2.7rem;
 `;

@@ -7,15 +7,14 @@ import phoneIconSrc from '@/assets/webps/MyPage/phoneIcon.webp';
 import linkIconSrc from '@/assets/webps/MyPage/linkIcon.webp';
 
 const Profile = () => {
-  const [isPhoneContactVisible, setIsPhoneContactVisible] = useState(false);
-  const [isEmailContactVisible, setIsEmailContactVisible] = useState(false);
+  const [visibleContact, setVisibleContact] = useState<string | null>(null);
 
   const handlePhoneClick = () => {
-    setIsPhoneContactVisible((prev) => !prev); // 클릭 시 상태 토글
+    setVisibleContact((prev) => (prev === 'phone' ? null : 'phone'));
   };
 
   const handleEmailClick = () => {
-    setIsEmailContactVisible((prev) => !prev);
+    setVisibleContact((prev) => (prev === 'email' ? null : 'email'));
   };
 
   return (
@@ -52,7 +51,7 @@ const Profile = () => {
           </S.LinkBtnsContainer>
         </S.ProfileInfo>
       </S.ProfileHeader>
-      {isEmailContactVisible && ( // 주황색 말풍선 표시
+      {visibleContact === 'email' && (
         <S.EmailContact>
           <S.ContactLetterContainer>
             <S.ContactLetter>honggd@hongik.ac.kr</S.ContactLetter>
@@ -60,7 +59,7 @@ const Profile = () => {
           <S.ContactTriangle />
         </S.EmailContact>
       )}
-      {isPhoneContactVisible && (
+      {visibleContact === 'phone' && (
         <S.PhoneContact>
           <S.ContactLetterContainer>
             <S.ContactLetter>010-2345-6789</S.ContactLetter>
@@ -68,6 +67,9 @@ const Profile = () => {
           <S.ContactTriangle />
         </S.PhoneContact>
       )}
+      <S.EditProfileBtn>
+        <S.EditProfileBtnLetter>프로필 수정</S.EditProfileBtnLetter>
+      </S.EditProfileBtn>
     </S.ProfileLayout>
   );
 };
