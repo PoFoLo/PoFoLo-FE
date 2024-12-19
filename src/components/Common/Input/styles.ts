@@ -16,6 +16,7 @@ export const StyledInput = styled.input<{
   ${(props) => props.theme.fonts.body4};
   color: ${(props) => props.theme.colors.gray90};
   background-color: ${(props) => props.theme.colors.gray10};
+  height: 4.4rem;
   padding: 1.15rem 1.2rem;
   padding-right: ${(props) =>
     props.$isDuplicated ? '7.6rem' : props.$isPrivateCheckbox ? '8.5rem' : '6.4rem'};
@@ -24,7 +25,6 @@ export const StyledInput = styled.input<{
     ${(props) => (props.$error ? props.theme.colors.coral50 : props.theme.colors.gray20)};
   border-radius: 1.2rem;
   outline: none;
-  box-sizing: border-box;
 
   &:focus {
     border-color: ${(props) =>
@@ -46,8 +46,10 @@ export const StyledInput = styled.input<{
     props.theme.media.pc(
       () => `
       ${props.theme.fonts.body2};
-      padding: 1.4rem 1.6rem;
-      padding-right: ${props.$isDuplicated ? '10rem' : props.$isPrivateCheckbox ? '10.5rem' : '6.4rem'};
+      height: 5.6rem;
+      margin: 0rem;
+      padding: 1.45rem 1.6rem;
+      padding-right: ${props.$isDuplicated ? '10rem' : props.$isPrivateCheckbox ? '10.5rem' : '6.8rem'};
     `
     )}
 `;

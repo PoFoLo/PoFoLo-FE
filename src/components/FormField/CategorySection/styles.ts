@@ -26,7 +26,8 @@ export const DropdownHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   flex: 1;
-  padding: 0.8rem 1.2rem;
+  max-height: 4.4rem;
+  padding: 0.85rem 1.2rem;
   border: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 1.2rem;
   background-color: ${(props) => props.theme.colors.gray10};
@@ -35,6 +36,7 @@ export const DropdownHeader = styled.div`
 
   ${(props) =>
     props.theme.media.pc(css`
+      max-height: 5.6rem;
       padding: 1.45rem 1.6rem;
     `)}
 `;

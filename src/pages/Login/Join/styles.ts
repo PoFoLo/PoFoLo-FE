@@ -198,13 +198,13 @@ export const DuplicationBtn = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      top: 7.7rem;
+      top: 7.55rem;
       right: 7.2rem;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
-      top: 7.1rem;
+      top: 7rem;
       right: 2.8rem;
     `)}
 `;
@@ -247,22 +247,22 @@ export const NextBtn = styled.div<{
     props.theme.media.ph(css`
       left: 27.6rem;
       top: 6.4rem;
-      width: 4.6rem;
-      height: 4.6rem;
+      width: 4.4rem;
+      height: 4.4rem;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
       left: 57.6rem;
       top: 6.4rem;
-      width: 4.6rem;
-      height: 4.6rem;
+      width: 4.4rem;
+      height: 4.4rem;
     `)}
 `;
 
 export const PrivateCheckbox = styled.div`
   position: absolute;
-  top: 7.4rem;
+  top: 7.3rem;
   right: 3.2rem;
   display: flex;
   align-items: center;
@@ -270,7 +270,7 @@ export const PrivateCheckbox = styled.div`
 
   ${(props) =>
     props.theme.media.pc(css`
-      top: 7.8rem;
+      top: 7.7rem;
       right: 4.2rem;
       gap: 0.8rem;
     `)}

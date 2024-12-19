@@ -19,7 +19,6 @@ export const StyledTextArea = styled.textarea<{ $error: boolean }>`
   border-radius: 1.2rem;
   resize: none;
   outline: none;
-  box-sizing: border-box;
   overflow: hidden;
 
   &:focus {
@@ -39,7 +38,7 @@ export const StyledTextArea = styled.textarea<{ $error: boolean }>`
     )}
   ${(props) =>
     props.theme.media.pc(css`
-      padding: 1.4rem 1.6rem;
+      padding: 1.45rem 1.6rem;
       padding-right: 6.8rem;
     `)}
 `;

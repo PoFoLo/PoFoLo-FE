@@ -4,6 +4,7 @@ export const LinkInputContainer = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  height: 4.4rem;
   padding: 0.8rem;
   border: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 1.2rem;
@@ -15,8 +16,13 @@ export const LinkInputContainer = styled.div`
 
   ${(props) =>
     props.theme.media.pc(css`
+      height: 5.6rem;
       padding: 1.4rem;
     `)}
+
+  &:focus-within {
+    border-color: ${(props) => props.theme.colors.blue50};
+  }
 `;
 
 export const Link = styled.div`
