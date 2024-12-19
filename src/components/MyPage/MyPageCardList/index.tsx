@@ -17,27 +17,29 @@ const MyPageCardList: React.FC<MyPageCardListProps> = ({ activeTab }) => {
   }));
 
   return (
-    <S.CardListContainer isPortfolioTab={activeTab === 'portfolio'}>
-      {dummyCards.map((card, index) =>
-        activeTab === 'portfolio' ? (
-          <P.PortfolioCard key={index}>
-            <P.PortfolioCardImg
-              src={defaultPortfolioThumbnailSrc}
-              alt={'defaultPortfolioThumbnail'}
+    <S.CardListColorContainer>
+      <S.CardListContainer isPortfolioTab={activeTab === 'portfolio'}>
+        {dummyCards.map((card, index) =>
+          activeTab === 'portfolio' ? (
+            <P.PortfolioCard key={index}>
+              <P.PortfolioCardImg
+                src={defaultPortfolioThumbnailSrc}
+                alt={'defaultPortfolioThumbnail'}
+              />
+              <P.ProjectName>포트폴리오 이름</P.ProjectName>
+            </P.PortfolioCard>
+          ) : (
+            <Card
+              key={index}
+              imageUrl={card.imageUrl}
+              projectName={card.projectName}
+              likes={card.likes}
+              comments={card.comments}
             />
-            <P.ProjectName>포트폴리오 이름</P.ProjectName>
-          </P.PortfolioCard>
-        ) : (
-          <Card
-            key={index}
-            imageUrl={card.imageUrl}
-            projectName={card.projectName}
-            likes={card.likes}
-            comments={card.comments}
-          />
-        )
-      )}
-    </S.CardListContainer>
+          )
+        )}
+      </S.CardListContainer>
+    </S.CardListColorContainer>
   );
 };
 
