@@ -56,7 +56,7 @@ export const ReactionLetter = styled.span`
 `;
 
 export const PortfolioCard = styled.div`
-  max-width: 41.6rem; /* 최대 너비 설정 */
+  max-width: 64rem; /* 최대 너비 설정 */
   width: 100%; /* 화면 크기에 따라 줄어듦 */
   height: auto;
 

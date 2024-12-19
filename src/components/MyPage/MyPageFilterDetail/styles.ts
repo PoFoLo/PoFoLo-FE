@@ -1,6 +1,14 @@
 import styled, { css } from 'styled-components';
 
-export const FilterDetailContainer = styled.div`
+export const FilterAllProjectColorContainer = styled.div`
+  width: 100%;
+  height: 8.2rem;
+  display: flex;
+  justify-content: center;
+  background-color: ${(props) => props.theme.colors.gray5};
+`;
+
+export const FilterAllProjectContainer = styled.div`
   width: 100%;
   max-width: 131.2rem;
 
@@ -9,10 +17,10 @@ export const FilterDetailContainer = styled.div`
     width: calc(100% - 11.2rem);
   }
 
-  height: 7rem;
+  height: 8.2rem;
   display: flex;
   align-items: center;
-  padding-bottom: 3.4rem;
+  padding: 1.2rem 0 3.4rem 0;
   justify-content: space-between;
   background-color: ${(props) => props.theme.colors.gray5};
 `;
@@ -57,6 +65,31 @@ export const FilterLetter = styled.span<{ selected: boolean }>`
       : css`
           color: ${props.theme.colors.gray70};
         `}
+`;
+
+export const FilterPortfolioColorContainer = styled.div`
+  width: 100%;
+  height: 8.6rem;
+  display: flex;
+  justify-content: center;
+  background-color: ${(props) => props.theme.colors.gray5};
+`;
+
+export const FilterPortfolioContainer = styled.div`
+  width: 100%;
+  max-width: 131.2rem;
+
+  @media (max-width: 1440px) {
+    margin: 0 6.4rem;
+    width: calc(100% - 11.2rem);
+  }
+
+  height: 8.6rem;
+  display: flex;
+  align-items: center;
+  padding: 1.4rem 0 3.6rem 0;
+  justify-content: flex-end;
+  background-color: ${(props) => props.theme.colors.gray5};
 `;
 
 export const CreateBtnContainer = styled.button`

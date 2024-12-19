@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const TabsColorContainer = styled.div`
   width: 100%;
-  height: 9.2rem;
+  height: 8rem;
   display: flex;
   justify-content: center;
   padding: 1.6rem 0 2.8rem 0;

@@ -1,10 +1,11 @@
 import React from 'react';
 import * as S from './styles';
 import Card from '@/components/MyPage/MyPageCardList/MyPageCard';
-import * as P from '@/components/MyPage/MyPageCardList/MyPageCard/styles'; // PortfolioCard 스타일 컴포넌트 임포트
+import * as P from '@/components/MyPage/MyPageCardList/MyPageCard/styles';
+import defaultPortfolioThumbnailSrc from '@/assets/webps/MyPage/defaultPortfolioThumbnail.webp';
 
 interface MyPageCardListProps {
-  activeTab: 'all' | 'portfolio'; // '모든 프로젝트' 또는 '포트폴리오' 여부
+  activeTab: 'all' | 'portfolio';
 }
 
 const MyPageCardList: React.FC<MyPageCardListProps> = ({ activeTab }) => {
@@ -20,8 +21,11 @@ const MyPageCardList: React.FC<MyPageCardListProps> = ({ activeTab }) => {
       {dummyCards.map((card, index) =>
         activeTab === 'portfolio' ? (
           <P.PortfolioCard key={index}>
-            <P.PortfolioCardImg src={card.imageUrl} alt={card.projectName} />
-            <P.ProjectName>{card.projectName}</P.ProjectName>
+            <P.PortfolioCardImg
+              src={defaultPortfolioThumbnailSrc}
+              alt={'defaultPortfolioThumbnail'}
+            />
+            <P.ProjectName>포트폴리오 이름</P.ProjectName>
           </P.PortfolioCard>
         ) : (
           <Card
