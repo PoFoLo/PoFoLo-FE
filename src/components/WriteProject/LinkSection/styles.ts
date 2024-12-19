@@ -1,24 +1,25 @@
 import styled, { css } from 'styled-components';
 
-export const LinkInputContainer = styled.div`
+export const LinkInputContainer = styled.div<{ $hasLinks: boolean }>`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  height: 4.4rem;
   padding: 0.8rem;
   border: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-radius: 1.2rem;
   background-color: ${(props) => props.theme.colors.gray10};
   gap: 1.2rem 1.8rem;
   width: 100%;
+  height: ${(props) => (props.$hasLinks ? 'auto' : '4.4rem')};
   min-width: 0;
-  min-height: 4.4rem;
 
   ${(props) =>
-    props.theme.media.pc(css`
-      height: 5.6rem;
+    props.theme.media.pc(
+      () => `
       padding: 1.4rem;
-    `)}
+      height: ${props.$hasLinks ? 'auto' : '5.6rem'};
+    `
+    )}
 
   &:focus-within {
     border-color: ${(props) => props.theme.colors.blue50};

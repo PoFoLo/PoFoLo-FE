@@ -63,7 +63,7 @@ const LinkSection = ({ links, setLinks }: LinkSectionProps) => {
   return (
     <S.SectionContainer>
       <S.SectionTitle>링크</S.SectionTitle>
-      <S.LinkInputContainer>
+      <S.LinkInputContainer $hasLinks={Object.keys(links).length > 0}>
         {Object.entries(links).map(([title, url], index) => (
           <S.Link key={index}>
             <S.LinkIcon $backgroundImage={linkIcon} />
