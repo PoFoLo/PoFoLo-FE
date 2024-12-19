@@ -33,13 +33,13 @@ export const FilterBtnsContainer = styled.div`
 `;
 
 export const FilterButton = styled.button<{ selected: boolean }>`
-  all: unset; /* 버튼의 기본 스타일 제거 */
   display: flex;
   height: 3.6rem;
-  padding: 0.45rem 1.2rem;
+  padding: 0.35rem 1.3rem;
   justify-content: center;
   align-items: center;
   border-radius: 5.6rem;
+
   cursor: pointer;
 
   ${(props) =>
