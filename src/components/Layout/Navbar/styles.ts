@@ -1,46 +1,81 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const NavContainer = styled.div`
-  display: flex;
-  align-items: center;
+export const NavbarContainer = styled.div`
   width: 100%;
   height: 6.4rem;
-  justify-content: center;
-  position: fixed;
-  z-index: 10;
-  background-color: white;
-  padding: 0 6.4rem;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(60px);
+
+  position: fixed;
+  z-index: 20;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      margin-top: 1.6rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      max-width: 79.4rem;
+      height: 56px;
+      padding: 14px 20px;
+      flex-direction: column;
+      align-items: center;
+      gap: 939px;
+    `)}
 `;
 
-export const NavBody = styled.div`
-  display: flex;
-  width: 131.2rem;
+export const NavbarBody = styled.div`
+  width: 100%;
+  max-width: 131.2rem;
   height: 4.2rem;
+  @media (max-width: 1440px) {
+    margin: 0 6.4rem;
+    width: calc(100% - 11.2rem);
+  }
+
+  display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      margin-top: 1.6rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      max-width: 79.4rem;
+      height: 56px;
+      padding: 14px 20px;
+      flex-direction: column;
+      align-items: center;
+      gap: 939px;
+    `)}
 `;
 
-export const NavLeftGoBack = styled.img`
+export const NavbarLeftGoBackButton = styled.img`
   width: 1.45rem;
   height: 2.4rem;
   cursor: pointer;
 `;
 
-export const NavLeftLogo = styled.img`
+export const NavbarLeftLogo = styled.img`
   width: 11.1rem;
   height: 2.675rem;
   cursor: pointer;
 `;
 
-export const NavRight = styled.div`
+export const NavbarRightContainer = styled.div`
   display: flex;
   align-items: center;
 `;
 
-export const NavLink = styled.span<{ width: number }>`
+export const NavbarPageButton = styled.span<{ width: number }>`
   color: ${(props) => props.theme.colors.gray80};
   ${(props) => props.theme.fonts.subhead2};
   width: ${({ width }) => width}rem;
@@ -52,7 +87,7 @@ export const NavLink = styled.span<{ width: number }>`
   margin-left: 3.2rem;
 `;
 
-export const LoginButton = styled.button`
+export const NavbarLoginButton = styled.button`
   color: ${(props) => props.theme.colors.gray70};
   ${(props) => props.theme.fonts.subhead3};
   display: flex;
@@ -69,25 +104,27 @@ export const LoginButton = styled.button`
   margin-left: 3.2rem;
 `;
 
-export const MyPageButton = styled.div`
-  width: 3.6rem;
-  height: 3.6rem;
-  border-radius: 50%;
-  overflow: hidden;
+export const NavbarMyPageButton = styled.div`
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 4.8rem;
+  border: 0.15rem solid ${(props) => props.theme.colors.gray20};
+
   margin-left: 3.2rem;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 `;
 
-export const MyPageImage = styled.img`
+export const NavbarMyPageImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
 
-export const LogoutButtonContainer = styled.button`
+export const NavbarLogoutButtonContainer = styled.button`
   display: flex;
   width: 10rem;
   height: 3.2rem;
@@ -102,7 +139,7 @@ export const LogoutButtonContainer = styled.button`
   margin-left: 3.2rem;
 `;
 
-export const LogoutText = styled.span`
+export const NavbarLogoutButtonLetter = styled.span`
   color: ${(props) => props.theme.colors.gray30};
   ${(props) => props.theme.fonts.caption2};
   width: 5.6rem;
@@ -112,7 +149,7 @@ export const LogoutText = styled.span`
   justify-content: center;
 `;
 
-export const IconContainer = styled.img`
+export const NavbarLogoutButtonIcon = styled.img`
   width: 1.5rem;
   height: 1.4rem;
   flex-shrink: 0;
