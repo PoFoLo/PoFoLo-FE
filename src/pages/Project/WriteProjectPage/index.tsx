@@ -37,13 +37,33 @@ export const WriteProjectPage = () => {
   const navigate = useNavigate();
   const { isPC } = useResponsive();
 
-  // 필수 입력 항목 유효성 검사 -> 에러 설정
-  const validateFields = () => {
-    setErrors({
-      title: !title.trim() || title.length > 50,
-      description: !description.trim(),
-      category: !mainCategory || !subCategory,
-    });
+  // 프로젝트 업로드
+  const uploadData = async (isPrivateOverride?: boolean) => {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('major_field', mainCategory);
+    formData.append('sub_field', subCategory);
+    formData.append('skills', skill);
+    formData.append('links', JSON.stringify(links));
+    const isPublic = isPrivateOverride ? 'false' : isPrivate ? 'false' : 'true';
+    formData.append('is_public', isPublic);
+    for (let i = 0; i < images.length; i++) {
+      formData.append('project_img', images[i]);
+    }
+
+    try {
+      const response = await instance.post('/pofolo/projects/create/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setPendingAction(() => () => {
+        navigate(`/project/${response.data.id}`); // navigate 함수를 저장했다가 '프로젝트 보기' 클릭 시 넘어감
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // 조건을 만족하면 업로드 버튼 활성화
@@ -54,36 +74,13 @@ export const WriteProjectPage = () => {
     !!mainCategory &&
     !!subCategory;
 
-  const uploadData = async (isPrivateOverride?: boolean) => {
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('major_field', mainCategory);
-    formData.append('sub_field', subCategory);
-    formData.append('skills', skill);
-    formData.append('links', JSON.stringify(links));
-
-    const isPublic = isPrivateOverride ? 'false' : isPrivate ? 'false' : 'true';
-    formData.append('is_public', isPublic);
-    for (let i = 0; i < images.length; i++) {
-      formData.append('project_img', images[i]);
-    }
-
-    try {
-      const accessToken = localStorage.getItem('access');
-      const response = await instance.post('/pofolo/projects/create/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      setPendingAction(() => () => {
-        navigate(`/project/${response.data.id}`); // navigate 함수를 저장했다가 '프로젝트 보기' 클릭 시 넘어감
-      });
-      setIsCompleteModalOpen(true);
-    } catch (error) {
-      console.log(error);
-    }
+  // 필수 입력 항목 유효성 검사 -> 에러 설정
+  const validateFields = () => {
+    setErrors({
+      title: !title.trim() || title.length > 50,
+      description: !description.trim(),
+      category: !mainCategory || !subCategory,
+    });
   };
 
   // 업로드 버튼을 누르면 유효성 검사 실시 -> 에러 설정, 버튼이 활성화 되어있는 경우 업로드 처리 로직
@@ -91,7 +88,8 @@ export const WriteProjectPage = () => {
     validateFields();
 
     if (btnActive) {
-      uploadData();
+      await uploadData();
+      setIsCompleteModalOpen(true);
     }
   };
 
@@ -108,7 +106,7 @@ export const WriteProjectPage = () => {
     );
   };
 
-  // 브라우저에서 뒤로가기, 새로고침, 창 닫기 했을 때 경고
+  // 입력 값이 있을 때 브라우저에서 뒤로가기, 새로고침, 창 닫기 했을 때 경고
   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
     if (hasUnsavedData()) {
       event.preventDefault();
@@ -124,7 +122,7 @@ export const WriteProjectPage = () => {
   }, [hasUnsavedData]);
 
   // 모달 열기
-  const openModal = (action: () => void) => {
+  const openAlertModal = (action: () => void) => {
     setPendingAction(() => action);
     setIsAlertModalOpen(true);
   };
@@ -134,7 +132,7 @@ export const WriteProjectPage = () => {
     // 입력 값이 있는 상태에서 페이지 떠날 때 경고 모달 열기
     if (hasUnsavedData()) {
       // '나가기' 눌렀을 때 동작할 함수 전달
-      openModal(() => {
+      openAlertModal(() => {
         if (typeof path === 'number') {
           navigate(path);
         } else {
@@ -156,17 +154,17 @@ export const WriteProjectPage = () => {
     if (pendingAction) {
       pendingAction(); // 임시 저장 함수 실행
     }
-    setIsAlertModalOpen(false);
   };
 
   // 경고 모달에서 비공개 업로드 버튼 클릭
-  const handleAlertModalPrivateUpload = () => {
+  const handleAlertModalPrivateUpload = async () => {
     setIsAlertModalOpen(false);
     setIsPrivate(true);
     validateFields();
 
     if (btnActive) {
-      uploadData(true);
+      await uploadData(true);
+      handleAlertModalExit();
     }
   };
 

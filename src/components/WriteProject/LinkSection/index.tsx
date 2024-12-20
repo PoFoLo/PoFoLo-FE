@@ -21,12 +21,7 @@ const LinkSection = ({ links, setLinks }: LinkSectionProps) => {
       const trimmedValue = inputValue.trim();
       if (trimmedValue && !Object.values(links).includes(trimmedValue)) {
         try {
-          const accessToken = localStorage.getItem('access');
-          const response = await instance.post(
-            '/pofolo/projects/links/',
-            { link: trimmedValue },
-            { headers: { Authorization: `Bearer ${accessToken}` } }
-          );
+          const response = await instance.post('/pofolo/projects/links/', { link: trimmedValue });
           setLinks((prevLinks) => ({
             ...prevLinks,
             [response.data.title]: trimmedValue,
