@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as S from '@/components/Common/TextArea/styles';
-import Invalidate from '@/assets/webps/WriteProject/invalidate.webp';
-import Validate from '@/assets/webps/WriteProject/validate.webp';
+import invalidate from '@/assets/webps/Common/invalidate.webp';
+import validate from '@/assets/webps/Common/validate.webp';
 
 // Textarea 컴포넌트 (여러 줄 입력)
 interface TextAreaFieldProps {
@@ -61,7 +61,7 @@ const TextArea = ({
         $error={error}
         placeholder={placeholder}
       />
-      {showIconState && <S.IconContainer $backgroundImage={error ? Invalidate : Validate} />}
+      {showIconState && <S.IconContainer $backgroundImage={error ? invalidate : validate} />}
       {error && errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
     </S.TextAreaContainer>
   );
