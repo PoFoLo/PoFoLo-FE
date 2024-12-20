@@ -7,7 +7,7 @@ import DescriptionSection from '@/components/FormField/DescriptionSection';
 import SkillSection from '@/components/WritePortfolio/SkillSection';
 import CareerSection from '@/components/WritePortfolio/CareerSection';
 import ProjectSection from '@/components/WritePortfolio/ProjectSection';
-import Navbar from '@/components/Layout/Navbar/Navbar';
+import Navbar from '@/components/Layout/Navbar/NavbarPC';
 import Modal from '@/components/Common/Modal';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

@@ -15,17 +15,12 @@ export const NavbarContainer = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      margin-top: 1.6rem;
+      height: 5.6rem;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
-      max-width: 79.4rem;
-      height: 56px;
-      padding: 14px 20px;
-      flex-direction: column;
-      align-items: center;
-      gap: 939px;
+      height: 5.6rem;
     `)}
 `;
 
@@ -44,17 +39,14 @@ export const NavbarBody = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      margin-top: 1.6rem;
+      max-width: 32rem;
+      height: 2.8rem;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
       max-width: 79.4rem;
-      height: 56px;
-      padding: 14px 20px;
-      flex-direction: column;
-      align-items: center;
-      gap: 939px;
+      height: 2.8rem;
     `)}
 `;
 
@@ -67,6 +59,14 @@ export const NavbarLeftGoBackButton = styled.img`
 export const NavbarLeftLogo = styled.img`
   width: 11.1rem;
   height: 2.675rem;
+  cursor: pointer;
+`;
+
+export const NavbarLeftLogoTabletMobile = styled.img`
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: contain; /* 이미지를 잘라내지 않고 크기에 맞춤 */
+  flex-grow: 0; /* 부모 flex 컨테이너가 크기를 줄이지 못하도록 설정 */
   cursor: pointer;
 `;
 
@@ -91,17 +91,15 @@ export const NavbarLoginButton = styled.button`
   color: ${(props) => props.theme.colors.gray70};
   ${(props) => props.theme.fonts.subhead3};
   display: flex;
-  height: 3.2rem;
-  padding: 0.2rem 1rem;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  height: 3.05rem;
+  padding: 0.2rem 1rem;
   border-radius: 0.8rem;
-  border: 0.075rem solid var(--Gray-20, #e4e4e6);
+  border: 0.075rem solid ${(props) => props.theme.colors.gray20};
   background-color: white;
-  cursor: pointer;
-  width: 6.2rem;
   margin-left: 3.2rem;
+  cursor: pointer;
 `;
 
 export const NavbarMyPageButton = styled.div`
@@ -126,7 +124,6 @@ export const NavbarMyPageImg = styled.img`
 
 export const NavbarLogoutButtonContainer = styled.button`
   display: flex;
-  width: 10rem;
   height: 3.2rem;
   padding: 0.4rem 1.2rem;
   justify-content: center;
@@ -137,6 +134,16 @@ export const NavbarLogoutButtonContainer = styled.button`
   background-color: ${(props) => props.theme.colors.gray05};
   cursor: pointer;
   margin-left: 3.2rem;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 2.4rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 2.4rem;
+    `)}
 `;
 
 export const NavbarLogoutButtonLetter = styled.span`
@@ -153,4 +160,66 @@ export const NavbarLogoutButtonIcon = styled.img`
   width: 1.5rem;
   height: 1.4rem;
   flex-shrink: 0;
+`;
+
+export const NavbarHamburgerButtonTabletMobile = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+`;
+
+export const NavbarDetailContainerTabletMobile = styled.div<{ isExtended: boolean }>`
+  width: 100%;
+  height: ${(props) => (props.isExtended ? '13.4rem' : '9.6rem')};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(60px);
+
+  position: fixed;
+  z-index: 20;
+  margin-top: 5.6rem;
+`;
+
+export const NavbarDetailBodyTabletMobile = styled.div`
+  width: 100%;
+  max-width: 79.4rem;
+  height: 6rem;
+  @media (max-width: 1440px) {
+    margin: 0 6.4rem;
+    width: calc(100% - 11.2rem);
+  }
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.2rem;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      max-width: 32rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      max-width: 79.4rem;
+    `)}
+`;
+
+export const NavbarDetailPageButtonContainerTabletMobile = styled.div`
+  width: 100%;
+  height: 2.4rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const NavbarDetailPageButtonTabletMobile = styled.div`
+  color: ${(props) => props.theme.colors.gray80};
+  ${(props) => props.theme.fonts.subhead3};
+
+  height: 2.4rem;
+  cursor: pointer;
 `;
