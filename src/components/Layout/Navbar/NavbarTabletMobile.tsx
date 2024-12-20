@@ -79,6 +79,7 @@ const NavbarTabletMobile = ({ isLoggedIn, onGoBackClick }: NavbarMobileProps) =>
           ) : (
             <>
               <S.NavbarLeftLogoTabletMobile src={navbarLogoSrc} alt="Logo" />
+              <S.NavbarRightContainerTabletMobile>
               <S.NavbarLoginButton onClick={() => handleNavigate('login')}>
                 로그인
               </S.NavbarLoginButton>
@@ -87,6 +88,7 @@ const NavbarTabletMobile = ({ isLoggedIn, onGoBackClick }: NavbarMobileProps) =>
                 alt="hamburgerButton"
                 onClick={toggleMenu}
               />
+              </S.NavbarRightContainerTabletMobile>
             </>
           )}
         </S.NavbarBody>

@@ -7,7 +7,7 @@ import { MockUp } from '@/components/About/MockUp';
 export const AboutPage = () => {
   return (
     <S.Layout>
-      <Navbar isLoggedIn={true}/>
+      <Navbar isLoggedIn={false}/>
       <Title />
       <Motivation />
       <MockUp />

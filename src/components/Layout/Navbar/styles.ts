@@ -162,6 +162,14 @@ export const NavbarLogoutButtonIcon = styled.img`
   flex-shrink: 0;
 `;
 
+export const NavbarRightContainerTabletMobile = styled.div`
+  height: 2.8rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.6rem;
+`;
+
 export const NavbarHamburgerButtonTabletMobile = styled.img`
   width: 1.8rem;
   height: 1.8rem;
