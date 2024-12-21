@@ -21,16 +21,18 @@ const CardList: React.FC = () => {
 
   return (
     <S.CardListContainer>
-      {dummyCards.map((card, index) => (
-        <Card
-          key={index}
-          imageUrl={card.imageUrl}
-          memberName={card.memberName}
-          projectName={card.projectName}
-          likes={card.likes}
-          comments={card.comments}
-        />
-      ))}
+      <S.CardList>
+        {dummyCards.map((card, index) => (
+          <Card
+            key={index}
+            imageUrl={card.imageUrl}
+            memberName={card.memberName}
+            projectName={card.projectName}
+            likes={card.likes}
+            comments={card.comments}
+          />
+        ))}
+      </S.CardList>
     </S.CardListContainer>
   );
 };
