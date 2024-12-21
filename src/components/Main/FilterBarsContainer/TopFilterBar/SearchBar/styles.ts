@@ -18,10 +18,21 @@ export const InactiveContainer = styled.div`
   align-items: center;
   gap: 0.8rem;
   border-radius: 4.4rem;
-  border: 1px solid ${(props) => props.theme.colors.gray10};
+  border: 0.1rem solid ${(props) => props.theme.colors.gray10};
   background: #fff;
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
   cursor: text;
+
+  &:hover {
+    border-radius: 4.4rem;
+    border: 0.1rem solid var(--Blue-20, #cbdcff);
+    background: var(--Blue-5, #f3f7ff);
+
+    // InactiveLetter의 색상 변경
+    & > span {
+      color: ${(props) => props.theme.colors.blue30};
+    }
+  }
 `;
 
 export const InactiveLetter = styled.span`
@@ -32,6 +43,11 @@ export const InactiveLetter = styled.span`
 `;
 
 export const InactiveIcon = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
+`;
+
+export const InactiveIconHover = styled.img`
   width: 1.8rem;
   height: 1.8rem;
 `;

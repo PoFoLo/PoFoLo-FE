@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as S from './styles';
 
 import inactiveIconSrc from '@/assets/webps/Main/inactiveIcon.webp';
+import inactiveIconHoverSrc from '@/assets/webps/Main/inactiveIconHover.webp';
 import activeIconSrc from '@/assets/webps/Main/activeIcon.webp';
 
 const SearchBar: React.FC = () => {
@@ -54,6 +55,11 @@ const SearchBar: React.FC = () => {
     setIsEditing(true);
   };
 
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseLeave = () => setIsHovering(false);
+
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
@@ -77,9 +83,17 @@ const SearchBar: React.FC = () => {
   return (
     <>
       {!isEditing && !isSubmitted && (
-        <S.InactiveContainer onClick={handleInactiveDivClick}>
+        <S.InactiveContainer
+          onClick={handleInactiveDivClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <S.InactiveLetter>검색</S.InactiveLetter>
-          <S.InactiveIcon src={inactiveIconSrc} alt="Magnifier Icon" />
+          {isHovering ? (
+            <S.InactiveIconHover src={inactiveIconHoverSrc} alt="Magnifier Icon" />
+          ) : (
+            <S.InactiveIcon src={inactiveIconSrc} alt="Magnifier Icon" />
+          )}
         </S.InactiveContainer>
       )}
       {isEditing && (
