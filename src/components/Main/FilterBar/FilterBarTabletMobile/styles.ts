@@ -6,7 +6,6 @@ export const FilterBarContainerTabletMobile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   background-color: white;
   padding: 1.6rem 0 1.6rem 0;
   margin-top: 5.6rem;
@@ -25,10 +24,10 @@ export const FilterBarBodyTabletMobile = styled.div`
     margin: 0 6.4rem;
     width: calc(100% - 11.2rem);
   }
-
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 
   ${(props) =>
     props.theme.media.ph(css`
@@ -36,7 +35,7 @@ export const FilterBarBodyTabletMobile = styled.div`
     `)}
 `;
 
-export const FilterOrSortButtonTabletMobile = styled.img`
+export const FilterOrSortIconTabletMobile = styled.img`
   width: 3rem;
   height: 3rem;
   cursor: pointer;
@@ -48,8 +47,8 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 999; /* 필터보다 아래로 */
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 30;
 `;
 
 export const FilterContainerTabletMobile = styled.div`
@@ -59,16 +58,37 @@ export const FilterContainerTabletMobile = styled.div`
   border: 0.075rem solid ${(props) => props.theme.colors.gray10};
   background: #fff;
   box-shadow: 0rem 0rem 1.2rem 0rem rgba(0, 0, 0, 0.05);
+  position: absolute;
+  top: 12rem;
+  left: 6.2rem;
+  z-index: 40;
 `;
 
-export const FilterButtonTabletMobile = styled.div`
-  color: var(--Gray-70, #74757a);
+export const FilterOrSortButtonTabletMobile = styled.div<{ isSelected?: boolean }>`
+  color: ${(props) => (props.isSelected ? '#000' : 'var(--Gray-70, #74757a)')};
   font-family: Pretendard;
   font-size: 1.2rem;
   font-style: normal;
-  font-weight: 400;
-  line-height: 150%; /* 18px */
+  font-weight: ${(props) => (props.isSelected ? '600' : '400')};
+  line-height: 150%;
   letter-spacing: 0.006rem;
-
   height: 1.8rem;
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.blue30};
+  }
+`;
+
+export const SortContainerTabletMobile = styled.div`
+  padding: 0.6rem 2.85rem 0.6rem 0.9rem;
+  gap: 0.75rem;
+  border-radius: 0.6rem;
+  border: 0.075rem solid ${(props) => props.theme.colors.gray10};
+  background: #fff;
+  box-shadow: 0rem 0rem 1.2rem 0rem rgba(0, 0, 0, 0.05);
+  position: absolute;
+  top: 12rem;
+  right: 6.2rem;
+  z-index: 40;
 `;
