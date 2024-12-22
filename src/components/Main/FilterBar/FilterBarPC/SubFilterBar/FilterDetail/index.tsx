@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from '@/components/Main/FilterBarsContainer/SubFilterBar/FilterDetail/styles';
+import * as S from '@/components/Main/FilterBar/FilterBarPC/SubFilterBar/FilterDetail/styles';
 import filterLine2UncheckedSrc from '@/assets/webps/Main/filterLine2Unchecked.webp';
 import filterLine2CheckedSrc from '@/assets/webps/Main/filterLine2Checked.webp';
 

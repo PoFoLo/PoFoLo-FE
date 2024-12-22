@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import * as S from '@/components/Main/FilterBarsContainer/styles';
-import ControlPanel from '@/components/Main/FilterBarsContainer/TopFilterBar';
-import ControlPanelDetail from '@/components/Main/FilterBarsContainer/SubFilterBar';
+import * as S from '@/components/Main/FilterBar/FilterBarPC/styles';
+import ControlPanel from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar';
+import ControlPanelDetail from '@/components/Main/FilterBar/FilterBarPC/SubFilterBar';
 
 const ControlPanels: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>('기획');

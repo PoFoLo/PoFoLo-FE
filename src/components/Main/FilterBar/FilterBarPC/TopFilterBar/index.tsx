@@ -1,8 +1,8 @@
 import React from 'react';
-import CategoryFilter from '@/components/Main/FilterBarsContainer/TopFilterBar/CategoryFilter';
-import SearchBar from '@/components/Main/FilterBarsContainer/TopFilterBar/SearchBar';
-import SortDropdown from '@/components/Main/FilterBarsContainer/TopFilterBar/SortDropdown';
-import * as S from '@/components/Main/FilterBarsContainer/TopFilterBar/styles';
+import CategoryFilter from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/CategoryFilter';
+import SearchBar from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/SearchBar';
+import SortDropdown from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/SortDropdown';
+import * as S from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/styles';
 
 interface Props {
   selectedCategory: string | null;

@@ -16,7 +16,7 @@ export const CardList = styled.div`
     width: calc(100% - 11.2rem);
   }
 
-  padding: 2.6rem;
+  padding-top: 2.6rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2.4rem; /* 카드 간 간격 */
@@ -29,6 +29,7 @@ export const CardList = styled.div`
     props.theme.media.ph(css`
       grid-template-columns: 1fr;
       max-width: 32rem;
+      padding-top: 2rem;
     `)}
 
   ${(props) =>
@@ -36,5 +37,6 @@ export const CardList = styled.div`
       grid-template-columns: repeat(2, 1fr);
       max-width: 79.4rem;
       gap: 2rem;
+      padding-top: 1.6rem;
     `)}
 `;

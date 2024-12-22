@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as S from '@/components/Main/FilterBarsContainer/TopFilterBar/SortDropdown/styles';
+import * as S from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/SortDropdown/styles';
 
 import sortCaretSrc from '@/assets/webps/Main/sortCaret.webp';
 
