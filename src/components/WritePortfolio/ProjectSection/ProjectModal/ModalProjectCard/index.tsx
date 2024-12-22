@@ -9,7 +9,7 @@ interface ModalProjectCardProps {
     title: string;
     liked_count: number;
     comment_count: number;
-    thumbnail: string;
+    thumbnail: string | null;
   };
   isChecked: boolean;
   onCheckboxChange: (id: number, checked: boolean) => void;
@@ -26,7 +26,7 @@ const ModalProjectCard = ({ project, isChecked, onCheckboxChange }: ModalProject
       <S.CheckboxContainer>
         <Checkbox id={`checkbox-${id}`} checked={isChecked} onChange={handleCheckboxClick} />
       </S.CheckboxContainer>
-      <S.ProjectImage src={thumbnail} />
+      <S.ProjectImage src={thumbnail || 'https://placehold.co/600x400?text=project'} />
       <S.ProjectInfoContainer>
         <S.ProjectTitle>{title}</S.ProjectTitle>
         <S.LikeCommentContainer>

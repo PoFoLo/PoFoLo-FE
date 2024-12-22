@@ -12,6 +12,7 @@ import Modal from '@/components/Common/Modal';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResponsive } from '@/hooks/useResponsive';
+import { instance } from '@/apis/instance';
 
 export const WritePortfolioPage = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
@@ -33,10 +34,35 @@ export const WritePortfolioPage = () => {
     projects: false,
   });
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [pendingAction, setPendingAction] = useState<null | (() => void)>(null); // 실행할 함수 임시 저장
   const navigate = useNavigate();
   const { isPC } = useResponsive();
+
+  // 포트폴리오 업로드
+  const uploadPortfolio = async () => {
+    try {
+      const data = {
+        is_public: !isPrivate,
+        title: title,
+        username: name,
+        major_field: mainCategory,
+        sub_field: subCategory,
+        description: description,
+        skills: skill,
+        experiences: career,
+        related_projects: projects,
+      };
+
+      const response = await instance.post('pofolo/portfolios/create/', data);
+      setPendingAction(() => () => {
+        navigate(`/portfolio/${response.data.id}`); // navigate 함수를 저장했다가 '포트폴리오 보기' 클릭 시 넘어감
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // 필수 입력 항목 유효성 검사 -> 에러 설정
   const validateFields = () => {
@@ -64,24 +90,12 @@ export const WritePortfolioPage = () => {
     projects.length > 0;
 
   // 업로드 버튼을 누르면 유효성 검사 실시 -> 에러 설정, 버튼이 활성화 되어있는 경우 업로드 처리 로직
-  const handleUploadClick = () => {
+  const handleUploadClick = async () => {
     validateFields();
 
     if (btnActive) {
-      // 사진 처리
-      const data = {
-        isPrivate,
-        title,
-        name,
-        mainCategory,
-        subCategory,
-        description,
-        career,
-        projects,
-        // 사진 url
-      };
-      console.log('업로드 처리', data);
-      // 페이지 이동
+      await uploadPortfolio();
+      setIsCompleteModalOpen(true);
     }
   };
 
@@ -106,7 +120,6 @@ export const WritePortfolioPage = () => {
       event.returnValue = '';
     }
   };
-
   useEffect(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
 
@@ -116,9 +129,9 @@ export const WritePortfolioPage = () => {
   }, [hasUnsavedData]);
 
   // 모달 열기
-  const openModal = (action: () => void) => {
+  const openAlertModal = (action: () => void) => {
     setPendingAction(() => action);
-    setIsModalOpen(true);
+    setIsAlertModalOpen(true);
   };
 
   // 네비게이션 함수
@@ -126,7 +139,7 @@ export const WritePortfolioPage = () => {
     // 입력 값이 있는 상태에서 페이지 떠날 때 경고 모달 열기
     if (hasUnsavedData()) {
       // '나가기' 눌렀을 때 동작할 함수 전달
-      openModal(() => {
+      openAlertModal(() => {
         if (typeof path === 'number') {
           navigate(path);
         } else {
@@ -142,36 +155,18 @@ export const WritePortfolioPage = () => {
     }
   };
 
-  // 모달에서 나가기 버튼 클릭
-  const handleModalExit = () => {
+  // 경고 모달에서 나가기 버튼 클릭
+  const handleAlertModalExit = () => {
     window.removeEventListener('beforeunload', handleBeforeUnload); // 모달에서 나가기 클릭할때는 beforeunload 이벤트 제거
     if (pendingAction) {
       pendingAction(); // 임시 저장 함수 실행
     }
-    setIsModalOpen(false);
   };
 
-  // 모달에서 비공개 업로드 버튼 클릭
-  const handleModalPrivateUpload = () => {
-    setIsModalOpen(false);
+  // 경고 모달에서 비공개 업로드 버튼 클릭
+  const handleAlertModalPrivateUpload = async () => {
     setIsPrivate(true);
-    validateFields();
-    if (btnActive) {
-      // 사진 처리
-      const data = {
-        isPrivate: true,
-        title,
-        name,
-        mainCategory,
-        subCategory,
-        description,
-        skill,
-        career,
-        // 사진 url
-      };
-      console.log('업로드 처리', data);
-      // 페이지 이동
-    }
+    setIsAlertModalOpen(false);
   };
 
   return (
@@ -236,15 +231,29 @@ export const WritePortfolioPage = () => {
         </S.PortFolioLayout>
       </S.Layout>
       <Modal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
+        isOpen={isAlertModalOpen}
+        setIsOpen={setIsAlertModalOpen}
         icon="warning"
         mainText="작성 중인 글이 있어요"
         subText={`지금 나가면 작성 중인 내용이 모두 사라져요.\n비공개로 업로드하고 언제든지 수정하세요.`}
         LBtnText="나가기"
-        LBtnOnClick={handleModalExit}
+        LBtnOnClick={handleAlertModalExit}
         RBtnText="비공개 업로드"
-        RBtnOnclick={handleModalPrivateUpload}
+        RBtnOnclick={handleAlertModalPrivateUpload}
+      />
+      <Modal
+        isOpen={isCompleteModalOpen}
+        setIsOpen={setIsCompleteModalOpen}
+        icon="checked"
+        mainText="포트폴리오가 완성되었어요!"
+        LBtnText="닫기"
+        LBtnOnClick={() => navigate('/mypage')} // 닫기를 누르면 이전 페이지(마이페이지)로 이동
+        RBtnText="포트폴리오 보기"
+        RBtnOnclick={() => {
+          if (pendingAction) {
+            pendingAction();
+          }
+        }}
       />
     </>
   );

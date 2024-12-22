@@ -9,7 +9,7 @@ interface ProjectCardProps {
     title: string;
     liked_count: number;
     comment_count: number;
-    thumbnail: string;
+    thumbnail: string | null;
   };
   handleRemoveProject: (id: number) => void;
 }
@@ -21,7 +21,7 @@ const ProjectCard = ({ project, handleRemoveProject }: ProjectCardProps) => {
       <S.HoverImageContainer>
         <S.HoverBtn $backgroundImage={imageDelete} onClick={() => handleRemoveProject(id)} />
       </S.HoverImageContainer>
-      <S.ProjectImage src={thumbnail} />
+      <S.ProjectImage src={thumbnail || 'https://placehold.co/600x400?text=project'} />
       <S.ProjectInfoContainer>
         <S.ProjectTitle>{title}</S.ProjectTitle>
         <S.LikeCommentContainer>
