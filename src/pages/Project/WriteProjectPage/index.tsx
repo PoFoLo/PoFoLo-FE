@@ -38,7 +38,7 @@ export const WriteProjectPage = () => {
   const { isPC } = useResponsive();
 
   // 프로젝트 업로드
-  const uploadData = async (isPrivateOverride?: boolean) => {
+  const uploadData = async () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -46,7 +46,7 @@ export const WriteProjectPage = () => {
     formData.append('sub_field', subCategory);
     formData.append('skills', skill);
     formData.append('links', JSON.stringify(links));
-    const isPublic = isPrivateOverride ? 'false' : isPrivate ? 'false' : 'true';
+    const isPublic = isPrivate ? 'false' : 'true';
     formData.append('is_public', isPublic);
     for (let i = 0; i < images.length; i++) {
       formData.append('project_img', images[i]);
@@ -158,14 +158,8 @@ export const WriteProjectPage = () => {
 
   // 경고 모달에서 비공개 업로드 버튼 클릭
   const handleAlertModalPrivateUpload = async () => {
-    setIsAlertModalOpen(false);
     setIsPrivate(true);
-    validateFields();
-
-    if (btnActive) {
-      await uploadData(true);
-      handleAlertModalExit();
-    }
+    setIsAlertModalOpen(false);
   };
 
   // 프로젝트 완성 모달에서 닫기 버튼 클릭
