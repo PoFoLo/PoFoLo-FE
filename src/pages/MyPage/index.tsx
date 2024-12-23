@@ -7,7 +7,7 @@ import MyPageCardList from '@/components/MyPage/MyPageCardList';
 import * as S from '@/pages/MyPage/styles';
 
 export const MyPage = () => {
-  const [activeTab, setActiveTab] = useState<'all' | 'portfolio'>('all');
+  const [activeTab, setActiveTab] = useState<'allProjects' | 'portfolio'>('allProjects');
 
   return (
     <S.Layout>

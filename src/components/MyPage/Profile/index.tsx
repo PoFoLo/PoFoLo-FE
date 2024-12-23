@@ -19,9 +19,9 @@ const Profile = () => {
 
   return (
     <S.ProfileLayout>
-      <S.ProfileHeader>
+      <S.ProfileContainer>
         <S.ProfilePic src={defaultProfileSrc} alt="defaultProfile" />
-        <S.ProfileInfo>
+        <S.ProfileInfoContainer>
           <S.NameAndBadgesContainer>
             <S.Name>홍길동</S.Name>
             <S.BadgesContainer>
@@ -49,8 +49,8 @@ const Profile = () => {
               <S.LinkBtnLetter href="https://linkname.link">linkname.link</S.LinkBtnLetter>
             </S.LinkBtn>
           </S.LinkBtnsContainer>
-        </S.ProfileInfo>
-      </S.ProfileHeader>
+        </S.ProfileInfoContainer>
+      </S.ProfileContainer>
       {visibleContact === 'email' && (
         <S.EmailContact>
           <S.ContactLetterContainer>

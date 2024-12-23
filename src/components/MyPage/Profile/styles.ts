@@ -10,27 +10,45 @@ export const ProfileLayout = styled.div`
 
   width: 100%;
   max-width: 131.2rem;
+  background-color: #fff;
 
   @media (max-width: 1440px) {
-    margin: 0 6.4rem;
-    width: calc(100% - 11.2rem);
+    margin: 12.8rem 6.4rem 0rem 6.4rem;
+    width: calc(100% - 12.8rem); // 얘는 11.2로 하니까 이상해지네. 원래대로 12.8이 옳네.
   }
-  background-color: #fff;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 16.1rem;
+      margin: 5.6rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
+    `)}
 `;
 
-export const ProfileHeader = styled.div`
+export const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 2.8rem;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      gap: 1.6rem;
+    `)}
 `;
 
 export const ProfilePic = styled.img`
   width: 14.4rem;
   height: 14.4rem;
   border-radius: 1.2rem;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 11.2rem;
+      height: 11.2rem;
+    `)}
 `;
 
-export const ProfileInfo = styled.div`
+export const ProfileInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -42,6 +60,12 @@ export const NameAndBadgesContainer = styled.div`
   gap: 1.2rem;
   width: 27.7rem;
   height: 4.2rem;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 22.3rem;
+      height: 3.1rem;
+    `)}
 `;
 
 export const Name = styled.div`
@@ -49,6 +73,16 @@ export const Name = styled.div`
   font-size: 2.4rem;
   font-weight: bold;
   ${(props) => props.theme.fonts.subhead1}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      font-family: Pretendard;
+      font-size: 2.4rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 130%; /* 31.2px */
+      letter-spacing: 0.012rem;
+    `)}
 `;
 
 export const BadgesContainer = styled.div`
@@ -57,6 +91,12 @@ export const BadgesContainer = styled.div`
   gap: 0.8rem;
   width: 19.2rem;
   height: 3.2rem;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 14.8rem;
+      height: 2.4rem;
+    `)}
 `;
 
 export const OfferBtnContainer = styled.button`
@@ -84,6 +124,15 @@ export const OfferBtnContainer = styled.button`
     background: #ccc;
     cursor: not-allowed;
   }
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      padding: 0.3rem 1.2rem;
+      border-radius: 2.4rem;
+      gap: 0.45rem;
+      width: 8.4rem;
+      height: 2.4rem;
+    `)}
 `;
 
 export const OfferBtnIcon = styled.img`
@@ -100,6 +149,18 @@ export const OfferBtnIcon = styled.img`
 export const OfferBtnLetter = styled.div`
   color: #fff;
   ${(props) => props.theme.fonts.caption2};
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      color: #fff;
+      font-family: Pretendard;
+      font-size: 1.2rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 140%; /* 16.8px */
+      letter-spacing: 0.003rem;
+      height: 1.8rem;
+    `)}
 `;
 
 export const EmailContact = styled.div`
@@ -154,12 +215,24 @@ export const EmailBadgeContainer = styled.div`
   align-items: center;
   padding: 1.1rem 0.9rem;
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 1.6rem;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 1.2rem;
+    `)}
 `;
 
 export const EmailBadgeIcon = styled.img`
   width: 1.4rem;
   height: 1rem;
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 1.1rem;
+      height: 0.8rem;
+    `)}
 `;
 
 export const PhoneBadgeContainer = styled.div`
@@ -171,24 +244,43 @@ export const PhoneBadgeContainer = styled.div`
   align-items: center;
   padding: 1rem;
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 1.6rem;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 2.4rem;
+      height: 2.4rem;
+    `)}
 `;
 
 export const PhoneBadgeIcon = styled.img`
-  width: 1.2rem;
-  height: 1.2rem;
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 0.9rem;
+      height: 0.9rem;
+    `)}
 `;
 
 export const Organization = styled.div`
   color: #303030;
   font-size: 1.6rem;
   ${(props) => props.theme.fonts.caption1};
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      ${(props) => props.theme.fonts.caption3};
+    `)}
 `;
 
 export const Introduction = styled.div`
   color: rgba(0, 0, 0, 0.5);
   font-size: 1.4rem;
   ${(props) => props.theme.fonts.caption2}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      ${(props) => props.theme.fonts.caption4};
+    `)}
 `;
 
 export const LinkBtnsContainer = styled.div`
@@ -213,6 +305,12 @@ export const LinkBtn = styled.div`
 export const LinkBtnIcon = styled.img`
   width: 1.6rem;
   height: 1.5996rem;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 1.2rem;
+      height: 1.1997rem;
+    `)}
 `;
 
 export const LinkBtnLetter = styled.a`
