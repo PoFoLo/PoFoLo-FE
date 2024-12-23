@@ -18,6 +18,13 @@ export const ProfileLayout = styled.div`
   }
 
   ${(props) =>
+    props.theme.media.ph(css`
+      height: 19.7rem;
+      margin: 5.6rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
+    `)}
+
+  ${(props) =>
     props.theme.media.tab(css`
       height: 16.1rem;
       margin: 5.6rem 2rem 0rem 2rem;

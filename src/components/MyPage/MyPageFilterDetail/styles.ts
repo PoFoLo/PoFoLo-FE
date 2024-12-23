@@ -6,6 +6,18 @@ export const FilterAllProjectColorContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${(props) => props.theme.colors.gray5};
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 7.9rem;
+      background-color: #fff;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 7.9rem;
+      background-color: #fff;
+    `)}
 `;
 
 export const FilterAllProjectContainer = styled.div`
@@ -23,6 +35,24 @@ export const FilterAllProjectContainer = styled.div`
   padding: 1.2rem 0 3.4rem 0;
   justify-content: space-between;
   background-color: ${(props) => props.theme.colors.gray5};
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 7.9rem;
+      padding: 2rem 0rem 3.2rem 0rem;
+      margin: 0rem 2rem;
+      width: calc(100% - 4rem);
+      background-color: #fff;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 7.9rem;
+      padding: 2rem 0rem 3.2rem 0rem;
+      margin: 0rem 2rem;
+      width: calc(100% - 4rem);
+      background-color: #fff;
+    `)}
 `;
 
 export const FilterBtnsContainer = styled.div`
@@ -30,6 +60,7 @@ export const FilterBtnsContainer = styled.div`
   width: 43.9rem;
   height: 3.6rem;
   gap: 1.2rem;
+  flex: 1 0 0;
 `;
 
 export const FilterButton = styled.button<{ selected: boolean }>`
@@ -73,6 +104,18 @@ export const FilterPortfolioColorContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${(props) => props.theme.colors.gray5};
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 7.9rem;
+      background-color: #fff;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 7.9rem;
+      background-color: #fff;
+    `)}
 `;
 
 export const FilterPortfolioContainer = styled.div`
@@ -90,6 +133,24 @@ export const FilterPortfolioContainer = styled.div`
   padding: 1.4rem 0 3.6rem 0;
   justify-content: flex-end;
   background-color: ${(props) => props.theme.colors.gray5};
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 7.9rem;
+      padding: 2rem 0rem 3.2rem 0rem;
+      margin: 0rem 2rem;
+      width: calc(100% - 4rem);
+      background-color: #fff;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 7.9rem;
+      padding: 2rem 0rem 3.2rem 0rem;
+      margin: 0rem 2rem;
+      width: calc(100% - 4rem);
+      background-color: #fff;
+    `)}
 `;
 
 export const CreateBtnContainer = styled.button`
