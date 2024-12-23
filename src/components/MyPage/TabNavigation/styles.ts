@@ -96,7 +96,7 @@ export const TabContainerTabletMobile = styled.div<{ active?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  //flex: 1 0 0;
+  flex: 1 0 0;
   border-bottom: 0.2rem solid ${(props) => (props.active ? 'var(--blue-50, #598df6)' : '#fff')};
   background-color: ${(props) => (props.active ? 'var(--Blue-5, #F3F7FF)' : '#fff')};
 
