@@ -7,12 +7,12 @@ import { useState, useRef, useEffect } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
 
 interface ImageSectionProps {
-  setFormData: React.Dispatch<React.SetStateAction<FormData | null>>;
+  images: File[];
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
 }
 
-const ImageSection = ({ setFormData }: ImageSectionProps) => {
+const ImageSection = ({ images, setImages }: ImageSectionProps) => {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [replaceIndex, setReplaceIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -25,7 +25,7 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
 
     if (replaceIndex !== null && files.length > 0) {
       // 특정 인덱스의 이미지를 교체
-      const updatedFiles = [...imageFiles];
+      const updatedFiles = [...images];
       const newFile = files[0];
       updatedFiles[replaceIndex] = newFile;
 
@@ -39,13 +39,12 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
       };
       reader.readAsDataURL(newFile);
 
-      setImageFiles(updatedFiles);
-      setFormData(createFormData(updatedFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
+      setImages(updatedFiles);
       setReplaceIndex(null); // 교체 후 초기화
     } else {
       // 새로 추가된 파일 처리
-      const newFiles = [...imageFiles, ...files].slice(0, 10);
-      newFiles.slice(imageFiles.length).forEach((file) => {
+      const newFiles = [...images, ...files].slice(0, 10);
+      newFiles.slice(images.length).forEach((file) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           if (reader.result) {
@@ -55,26 +54,17 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
         reader.readAsDataURL(file);
       });
 
-      setImageFiles(newFiles);
-      setFormData(createFormData(newFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
+      setImages(newFiles);
     }
 
     e.target.value = ''; // 사진 input 초기화
   };
 
-  // formData 생성 함수
-  const createFormData = (files: File[]) => {
-    const formData = new FormData();
-    files.forEach((file) => formData.append('file[]', file));
-    return formData;
-  };
-
   // 이미지 삭제
   const handleRemoveImage = (index: number) => {
-    const updatedFiles = imageFiles.filter((_, i) => i !== index);
+    const updatedFiles = images.filter((_, i) => i !== index);
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
-    setImageFiles(updatedFiles);
-    setFormData(createFormData(updatedFiles)); // formdata 형식으로 만들어서 상위 컴포넌트로 전달
+    setImages(updatedFiles);
   };
 
   // Change 버튼 클릭 시 인덱스 설정 후 input 클릭하여 파일 선택 창 열기
@@ -110,7 +100,7 @@ const ImageSection = ({ setFormData }: ImageSectionProps) => {
             <S.StyledImg src={preview} alt={`사진${index}`} />
           </S.ImageContainer>
         ))}
-        {imageFiles.length < 10 && (
+        {images.length < 10 && (
           <>
             <S.UploadBtn
               $backgroundImage={isPC ? imageUploadPCBtn : imageUploadBtn}
