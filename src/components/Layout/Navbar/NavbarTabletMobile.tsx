@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
 import { useMediaQuery } from 'react-responsive';
 
-import navbarLogoSrc from '@/assets/webps/Common/navbarLogo.webp';
+import navbarLogoTabletMobileSrc from '@/assets/webps/Common/navbarLogoTabletMobile.webp';
 import navbarGoBackSrc from '@/assets/webps/Common/navbarGoBack.webp';
 import navbarHamburgerSrc from '@/assets/webps/Common/navbarHamburger.webp';
 import logoutIconSrc from '@/assets/webps/Common/logoutIcon.webp';
@@ -65,7 +65,7 @@ const NavbarTabletMobile = ({ isLoggedIn, onGoBackClick }: NavbarMobileProps) =>
             ) : (
               <>
                 <S.NavbarLeftLogoTabletMobile
-                  src={navbarLogoSrc}
+                  src={navbarLogoTabletMobileSrc}
                   alt="Logo"
                   onClick={() => handleNavigate('home')}
                 />
@@ -78,16 +78,16 @@ const NavbarTabletMobile = ({ isLoggedIn, onGoBackClick }: NavbarMobileProps) =>
             )
           ) : (
             <>
-              <S.NavbarLeftLogoTabletMobile src={navbarLogoSrc} alt="Logo" />
+              <S.NavbarLeftLogoTabletMobile src={navbarLogoTabletMobileSrc} alt="Logo" />
               <S.NavbarRightContainerTabletMobile>
-              <S.NavbarLoginButton onClick={() => handleNavigate('login')}>
-                로그인
-              </S.NavbarLoginButton>
-              <S.NavbarHamburgerButtonTabletMobile
-                src={navbarHamburgerSrc}
-                alt="hamburgerButton"
-                onClick={toggleMenu}
-              />
+                <S.NavbarLoginButton onClick={() => handleNavigate('login')}>
+                  로그인
+                </S.NavbarLoginButton>
+                <S.NavbarHamburgerButtonTabletMobile
+                  src={navbarHamburgerSrc}
+                  alt="hamburgerButton"
+                  onClick={toggleMenu}
+                />
               </S.NavbarRightContainerTabletMobile>
             </>
           )}
