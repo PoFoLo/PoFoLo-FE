@@ -23,21 +23,25 @@ export const CardList = styled.div`
   gap: 2.4rem; /* 카드 간 간격 */
 
   justify-content: center; /* 카드 중앙 정렬 */
-  align-items: start;
+  align-items: center;
 
   /* 반응형 그리드로. */
   ${(props) =>
     props.theme.media.ph(css`
       grid-template-columns: 1fr;
-      max-width: 32rem;
-      padding-top: 2rem;
+      padding-top: 0.4rem;
+      margin: 0rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
+      flex: 1 0 0;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
       grid-template-columns: repeat(2, 1fr);
-      max-width: 79.4rem;
       gap: 2rem;
-      padding-top: 1.6rem;
+      padding-top: 0rem;
+      margin: 0rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
+      flex: 1 0 0;
     `)}
 `;

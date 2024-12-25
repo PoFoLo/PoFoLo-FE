@@ -18,7 +18,6 @@ export const FilterBarContainerTabletMobile = styled.div`
 
 export const FilterBarBodyTabletMobile = styled.div`
   width: 100%;
-  max-width: 79.4rem;
   height: 3rem;
   @media (max-width: 1440px) {
     margin: 0 6.4rem;
@@ -31,8 +30,16 @@ export const FilterBarBodyTabletMobile = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      max-width: 32rem;
       gap: 1rem;
+      margin: 0rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      gap: 1rem;
+      margin: 0rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
     `)}
 `;
 
@@ -60,8 +67,8 @@ export const FilterContainerTabletMobile = styled.div`
   background: #fff;
   box-shadow: 0rem 0rem 1.2rem 0rem rgba(0, 0, 0, 0.05);
   position: absolute;
-  top: 12rem;
-  left: 6.2rem;
+  top: 13rem;
+  left: 2rem;
   z-index: 40;
 `;
 
@@ -89,7 +96,7 @@ export const SortContainerTabletMobile = styled.div`
   background: #fff;
   box-shadow: 0rem 0rem 1.2rem 0rem rgba(0, 0, 0, 0.05);
   position: absolute;
-  top: 12rem;
-  right: 6.2rem;
+  top: 13rem;
+  right: 2rem;
   z-index: 40;
 `;

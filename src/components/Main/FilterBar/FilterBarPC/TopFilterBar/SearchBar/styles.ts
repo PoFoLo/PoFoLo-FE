@@ -23,6 +23,17 @@ export const InactiveContainer = styled.div`
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
   cursor: text;
 
+  // This code doesn't work when it's after the &:hover lines.
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 3rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 3rem;
+    `)}
+      
   &:hover {
     border-radius: 4.4rem;
     border: 0.1rem solid var(--Blue-20, #cbdcff);
@@ -55,40 +66,71 @@ export const InactiveIconHover = styled.img`
 // 활성화 상태 컨테이너 (흔들림 효과 포함)
 export const ActiveContainer = styled.div<{ isError?: boolean }>`
   display: flex;
-  min-width: 22.2rem;
+  width: 36rem;
   height: 4rem;
   padding: 1.2rem;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 0.8rem;
   border-radius: 4.4rem;
   border: 1px solid ${(props) => props.theme.colors.blue30};
   background: #fff;
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
+  transition: color 0.3s ease-in-out 5s;
 
   ${(props) =>
     props.isError &&
     css`
       animation: ${shake} 0.3s ease-in-out;
     `}
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 3rem;
+      padding: 0.9rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 3rem;
+      padding: 0.9rem;
+    `)}
 `;
 
 export const ActiveInput = styled.input`
   all: unset; /* 기본 스타일 초기화 */
-  min-width: 19.95rem;
+  width: 30.6rem;
   height: 2.7rem;
   color: ${(props) => props.theme.colors.gray90};
   ${(props) => props.theme.fonts.body2};
   outline: none; /* 기본 outline 제거 */
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      width: 18rem;
+    `)}
+
+  ${(props) => props.theme.media.tab(css``)}
 `;
 
 export const ActiveIcon = styled.img`
   width: 1.8rem;
   height: 1.8rem;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      width: 1.35rem;
+      height: 1.35rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 1.35rem;
+      height: 1.35rem;
+    `)}
 `;
 
 export const ActiveLetter = styled.span`
   color: ${(props) => props.theme.colors.blue60};
   ${(props) => props.theme.fonts.body2};
-  transition: color 0.3s ease-in-out 5s;
 `;

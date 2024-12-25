@@ -1,8 +1,8 @@
 import React from 'react';
 import * as S from './styles';
 
-import filledLikeSrc from '@/assets/webps/Main/filledLike.webp';
-import filledCommentSrc from '@/assets/webps/Main/filledComment.webp';
+import filledLikeSrc from '@/assets/webps/Main/likeFilled.webp';
+import filledCommentSrc from '@/assets/webps/Main/commentFilled.webp';
 import testImageSrc from '@/assets/webps/Main/testImage.webp';
 
 interface CardProps {
