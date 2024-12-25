@@ -32,6 +32,7 @@ export const FilterBarBodyTabletMobile = styled.div`
   ${(props) =>
     props.theme.media.ph(css`
       max-width: 32rem;
+      gap: 1rem;
     `)}
 `;
 

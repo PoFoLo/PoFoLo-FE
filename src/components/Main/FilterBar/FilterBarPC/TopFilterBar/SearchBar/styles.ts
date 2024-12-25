@@ -55,7 +55,7 @@ export const InactiveIconHover = styled.img`
 // 활성화 상태 컨테이너 (흔들림 효과 포함)
 export const ActiveContainer = styled.div<{ isError?: boolean }>`
   display: flex;
-  width: 36rem;
+  min-width: 22.2rem;
   height: 4rem;
   padding: 1.2rem;
   justify-content: center;
@@ -75,7 +75,7 @@ export const ActiveContainer = styled.div<{ isError?: boolean }>`
 
 export const ActiveInput = styled.input`
   all: unset; /* 기본 스타일 초기화 */
-  width: 30.6rem;
+  min-width: 19.95rem;
   height: 2.7rem;
   color: ${(props) => props.theme.colors.gray90};
   ${(props) => props.theme.fonts.body2};
