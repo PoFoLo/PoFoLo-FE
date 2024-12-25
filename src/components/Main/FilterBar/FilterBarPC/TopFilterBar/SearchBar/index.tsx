@@ -9,6 +9,7 @@ const SearchBar: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isCentered, setIsCentered] = useState(false); // 중앙 정렬 상태
   const [data, setData] = useState([
     { id: 1, title: 'React Tutorial' },
     { id: 2, title: 'Vue.js Guide' },
@@ -41,6 +42,7 @@ const SearchBar: React.FC = () => {
     } else {
       setIsSubmitted(true);
       setIsEditing(false);
+      setIsCentered(true); // 엔터 후 중앙 정렬
       setIsError(false);
     }
   };
@@ -53,6 +55,7 @@ const SearchBar: React.FC = () => {
 
   const handleActiveDivClick = () => {
     setIsEditing(true);
+    setIsCentered(false); // 편집 시작 시 다시 왼쪽 정렬
   };
 
   const [isHovering, setIsHovering] = useState(false);
@@ -68,6 +71,7 @@ const SearchBar: React.FC = () => {
       ) {
         setIsEditing(false);
         setIsSubmitted(false);
+        setIsCentered(false); // 편집 종료 시 중앙 정렬 해제
       }
     };
 

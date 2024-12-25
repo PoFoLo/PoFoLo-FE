@@ -23,6 +23,11 @@ export const InactiveContainer = styled.div`
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
   cursor: text;
 
+  transition:
+    border 0.2s ease-in-out,
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+
   // This code doesn't work when it's after the &:hover lines.
   ${(props) =>
     props.theme.media.ph(css`
@@ -64,37 +69,34 @@ export const InactiveIconHover = styled.img`
 `;
 
 // 활성화 상태 컨테이너 (흔들림 효과 포함)
-export const ActiveContainer = styled.div<{ isError?: boolean }>`
+export const ActiveContainer = styled.div<{ isError?: boolean; isCentered?: boolean }>`
   display: flex;
   width: 36rem;
   height: 4rem;
   padding: 1.2rem;
-  justify-content: space-between;
+  justify-content: ${({ isCentered }) => (isCentered ? 'center' : 'space-between')};
   align-items: center;
   gap: 0.8rem;
   border-radius: 4.4rem;
   border: 1px solid ${(props) => props.theme.colors.blue30};
   background: #fff;
   box-shadow: 0rem 0rem 1.6rem 0rem rgba(0, 0, 0, 0.05);
-  transition: color 0.3s ease-in-out 5s;
 
   ${(props) =>
     props.isError &&
     css`
       animation: ${shake} 0.3s ease-in-out;
     `}
-
   ${(props) =>
     props.theme.media.ph(css`
       height: 3rem;
       padding: 0.9rem;
     `)}
-
-  ${(props) =>
+    ${(props) =>
     props.theme.media.tab(css`
       height: 3rem;
       padding: 0.9rem;
-    `)}
+    `)};
 `;
 
 export const ActiveInput = styled.input`
