@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Card = styled.div`
   max-width: 41.6rem; /* 최대 너비 설정 */
@@ -9,6 +9,16 @@ export const Card = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      max-width: none;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      max-width: none;
+    `)}
 `;
 
 export const CardImg = styled.img`

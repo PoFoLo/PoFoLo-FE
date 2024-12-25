@@ -5,6 +5,16 @@ export const CardListColorContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${(props) => props.theme.colors.gray5};
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      background-color: #fff;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      background-color: #fff;
+    `)}
 `;
 
 export const CardListContainer = styled.div<{ isPortfolioTab: boolean }>`
@@ -22,14 +32,19 @@ export const CardListContainer = styled.div<{ isPortfolioTab: boolean }>`
   padding: 0 0 6.4rem 0;
   background-color: ${(props) => props.theme.colors.gray5};
 
-  /* 반응형 처리 */
   ${(props) =>
     props.theme.media.ph(css`
+      margin: 0rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
       grid-template-columns: 1fr;
+      background-color: #fff;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
+      margin: 0rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
       grid-template-columns: repeat(2, 1fr);
+      background-color: #fff;
     `)}
 `;
