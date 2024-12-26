@@ -38,6 +38,11 @@ export const ProfileContainer = styled.div`
   gap: 2.8rem;
 
   ${(props) =>
+    props.theme.media.ph(css`
+      gap: 1.6rem;
+    `)}
+
+  ${(props) =>
     props.theme.media.tab(css`
       gap: 1.6rem;
     `)}
@@ -74,6 +79,12 @@ export const NameAndBadgesContainer = styled.div`
   gap: 1.2rem;
   width: 27.7rem;
   height: 4.2rem;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 21.2rem;
+      height: 2.4rem;
+    `)}
 
   ${(props) =>
     props.theme.media.tab(css`
@@ -452,6 +463,7 @@ export const Organization = styled.div`
     props.theme.media.ph(css`
       ${(props) => props.theme.fonts.caption3}
 
+      width: 21.2rem;
       height: 2rem;
     `)}
 
@@ -459,6 +471,7 @@ export const Organization = styled.div`
     props.theme.media.tab(css`
       ${(props) => props.theme.fonts.caption3}
 
+      width: 21.2rem;
       height: 2rem;
     `)}
 `;
@@ -469,11 +482,13 @@ export const Introduction = styled.div`
   ${(props) => props.theme.fonts.caption2}
 
   height: 2.2rem;
+  overflow: hidden;
 
   ${(props) =>
     props.theme.media.ph(css`
       ${(props) => props.theme.fonts.caption4}
 
+      width: 21.2rem;
       height: 1.7rem;
     `)}
 
@@ -481,6 +496,7 @@ export const Introduction = styled.div`
     props.theme.media.tab(css`
       ${(props) => props.theme.fonts.caption4}
 
+      width: 21.2rem;
       height: 1.7rem;
     `)}
 `;
@@ -495,6 +511,7 @@ export const LinkBtnsContainer = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
+      width: 21.2rem;
       height: 3.3rem;
     `)}
 
@@ -502,7 +519,6 @@ export const LinkBtnsContainer = styled.div`
     props.theme.media.tab(css`
       width: 21.2rem;
       height: 3.3rem;
-      overflow: visible;
     `)}
 `;
 

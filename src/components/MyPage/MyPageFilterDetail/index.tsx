@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
 import * as S from '@/components/MyPage/MyPageFilterDetail/styles';
 import uploadMyPageSrc from '@/assets/webps/MyPage/uploadMyPage.webp';
@@ -8,7 +8,32 @@ interface MyPageFilterDetailProps {
 }
 
 const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) => {
-  // '모든 프로젝트' 탭일 때
+  const [selectedFilter, setSelectedFilter] = useState<string>('내 프로젝트');
+  const filters = ['내 프로젝트', '좋아요한 프로젝트', '댓글 단 프로젝트'];
+  const { isPhone } = useResponsive();
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleFilterClick = (filter: string, index: number) => {
+    setSelectedFilter(filter);
+
+    // 버튼을 중앙으로 스크롤
+    if (containerRef.current && buttonRefs.current[index]) {
+      const container = containerRef.current;
+      const button = buttonRefs.current[index];
+      const buttonCenter = button.offsetLeft + button.offsetWidth / 2;
+      const containerCenter = container.offsetWidth / 2;
+      const scrollPosition = buttonCenter - containerCenter;
+
+      container.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  // '포트폴리오' 탭
   if (activeTab === 'portfolio') {
     return (
       <S.FilterPortfolioColorContainer>
@@ -21,20 +46,17 @@ const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) =>
     );
   }
 
-  // '포트폴리오'가 아닐 때 ('모든 프로젝트')
-  const [selectedFilter, setSelectedFilter] = useState<string>('내 프로젝트');
-  const filters = ['내 프로젝트', '좋아요한 프로젝트', '댓글 단 프로젝트'];
-  const { isPhone } = useResponsive();
-
+  // '모든 프로젝트' 탭
   return (
     <S.FilterAllProjectColorContainer>
       <S.FilterAllProjectContainer>
-        <S.FilterBtnsContainer>
-          {filters.map((filter) => (
+        <S.FilterBtnsContainer ref={containerRef}>
+          {filters.map((filter, index) => (
             <S.FilterButton
               key={filter}
+              ref={(el) => (buttonRefs.current[index] = el)}
               selected={selectedFilter === filter}
-              onClick={() => setSelectedFilter(filter)}
+              onClick={() => handleFilterClick(filter, index)}
             >
               <S.FilterLetter selected={selectedFilter === filter}>{filter}</S.FilterLetter>
             </S.FilterButton>

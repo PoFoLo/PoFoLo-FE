@@ -43,6 +43,7 @@ export const FilterAllProjectContainer = styled.div`
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
+      gap: 1.8rem;
     `)}
 
   ${(props) =>
@@ -52,6 +53,7 @@ export const FilterAllProjectContainer = styled.div`
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
+      gap: 1.8rem;
     `)}
 `;
 
@@ -61,6 +63,7 @@ export const FilterBtnsContainer = styled.div`
   height: 3.6rem;
   gap: 1.2rem;
   flex: 1 0 0;
+  overflow: hidden;
 
   ${(props) =>
     props.theme.media.ph(css`
@@ -78,6 +81,7 @@ export const FilterButton = styled.button<{ selected: boolean }>`
   height: 3.6rem;
   padding: 0.35rem 1.3rem;
   border-radius: 5.6rem;
+  flex-shrink: 0; // It was the key point.. to maintain the button's letter to cut off the remaining right part of the button itself.
 
   cursor: pointer;
 
@@ -166,11 +170,12 @@ export const FilterLetter = styled.span<{ selected: boolean }>`
 `;
 
 export const uploadButton = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.7rem;
+  height: 2.7rem;
 
   background: var(--blue, linear-gradient(135deg, #4b7aff 0%, #5c8ef3 100%));
-  border-radius: 1.2rem;
+  border-radius: 1.35rem;
+  cursor: pointer;
 `;
 
 export const FilterPortfolioColorContainer = styled.div`

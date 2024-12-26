@@ -42,26 +42,19 @@ const Profile = () => {
               </S.PhoneBadgeContainer>
               <S.SeparationRectangle />
               <S.EditProfileContainerMobile>
-                <S.EditProfileIconMobile
-                  src={editProfileMobileSrc}
-                  alt="editProfile"
-                />
+                <S.EditProfileIconMobile src={editProfileMobileSrc} alt="editProfile" />
               </S.EditProfileContainerMobile>
             </S.BadgesContainer>
             <S.Organization>홍익대학교 컴퓨터공학과</S.Organization>
-            <S.Introduction>백엔드 개발과 데이터 분석에 관심이 있어요</S.Introduction>
+            <S.Introduction>백엔드 개발과 데이터 분석에 관심있어요</S.Introduction>
             <S.LinkBtnsContainer>
               <S.LinkBtnContainer>
                 <S.LinkBtnIcon src={linkIconSrc} alt="linkIcon" />
-                <S.LinkBtnLetter href="https://linkname.link">
-                  linkname.link
-                </S.LinkBtnLetter>
+                <S.LinkBtnLetter href="https://linkname.link">linkname.link</S.LinkBtnLetter>
               </S.LinkBtnContainer>
               <S.LinkBtnContainer>
                 <S.LinkBtnIcon src={linkIconSrc} alt="linkIcon" />
-                <S.LinkBtnLetter href="https://linkname.link">
-                  linkname.link
-                </S.LinkBtnLetter>
+                <S.LinkBtnLetter href="https://linkname.link">linkname.link</S.LinkBtnLetter>
               </S.LinkBtnContainer>
             </S.LinkBtnsContainer>
           </S.ProfileInfoContainer>
@@ -113,15 +106,11 @@ const Profile = () => {
           <S.LinkBtnsContainer>
             <S.LinkBtnContainer>
               <S.LinkBtnIcon src={linkIconSrc} alt="linkIcon" />
-              <S.LinkBtnLetter href="https://linkname.link">
-                linkname.link
-              </S.LinkBtnLetter>
+              <S.LinkBtnLetter href="https://linkname.link">linkname.link</S.LinkBtnLetter>
             </S.LinkBtnContainer>
             <S.LinkBtnContainer>
               <S.LinkBtnIcon src={linkIconSrc} alt="linkIcon" />
-              <S.LinkBtnLetter href="https://linkname.link">
-                linkname.link
-              </S.LinkBtnLetter>
+              <S.LinkBtnLetter href="https://linkname.link">linkname.link</S.LinkBtnLetter>
             </S.LinkBtnContainer>
           </S.LinkBtnsContainer>
         </S.ProfileInfoContainer>

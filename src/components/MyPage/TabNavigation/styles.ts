@@ -103,11 +103,6 @@ export const TabContainerTabletMobile = styled.div<{ active?: boolean }>`
   width: 39.7rem;
   height: 4rem;
   cursor: pointer;
-
-  ${(props) =>
-    props.theme.media.ph(css`
-      padding: 0.95rem 4.15rem 0.75rem 4.15rem;
-    `)}
 `;
 
 export const TabLetterTabletMobile = styled.div<{ active?: boolean }>`
