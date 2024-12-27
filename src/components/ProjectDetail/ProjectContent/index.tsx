@@ -35,14 +35,8 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
   const { isPC } = useResponsive();
   const { project_id } = useParams<{ project_id: string }>(); // URL 파라미터에서 project_id 가져오기
   const nav = useNavigate();
-  // const images = [projectImg1, projectImg2, projectImg3];
   const projectContainerRef = useRef<HTMLDivElement | null>(null);
   const floatingButtonRef = useRef<HTMLDivElement | null>(null);
-
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
-    setLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
-  };
 
   const fetchProjectData = async () => {
     try {
@@ -63,6 +57,55 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
     } catch (error) {
       console.error('프로젝트 데이터를 가져오는 중 오류 발생:', error);
       nav('/'); // 오류 발생 시 홈으로 이동
+    }
+  };
+
+  const fetchLikeStatus = async () => {
+    try {
+      const response = await instance.get('/pofolo/projects/liked/');
+      const likedProjects = response.data; // 내가 좋아요 누른 프로젝트 ID 리스트
+
+      if (
+        project_id &&
+        likedProjects.some((project: { id: number }) => project.id === Number(project_id))
+      ) {
+        setIsLiked(true); // 현재 프로젝트에 좋아요 누른 상태로 설정
+      } else {
+        setIsLiked(false); // 좋아요를 누르지 않은 상태로 설정
+      }
+    } catch (error) {
+      console.error('좋아요 상태를 가져오는 중 오류 발생:', error);
+      setIsLiked(false); // 오류 발생 시 기본 상태로 초기화
+    }
+  };
+
+  const handleLikeClick = async () => {
+    try {
+      // 서버에 요청 보내기 전에 좋아요 상태 및 좋아요 수 즉시 반영
+      setIsLiked((prevIsLiked) => {
+        setLikeCount((prevCount) => (prevIsLiked ? prevCount - 1 : prevCount + 1));
+        return !prevIsLiked;
+      });
+
+      const response = await instance.post(`/pofolo/projects/${project_id}/like/`);
+
+      if (response.data.message === 'Like added') {
+        setIsLiked(true);
+      } else if (response.data.message === 'Like removed') {
+        setIsLiked(false);
+      }
+
+      // 서버에서 최신 데이터를 가져와 동기화
+      const updatedData = await instance.get(`/pofolo/projects/${project_id}/`);
+      setLikeCount(updatedData.data.liked_count);
+    } catch (error) {
+      console.error('좋아요 처리 중 오류 발생:', error);
+
+      // 서버 요청 실패 시 상태 복구
+      setIsLiked((prevIsLiked) => {
+        setLikeCount((prevCount) => (prevIsLiked ? prevCount + 1 : prevCount - 1));
+        return !prevIsLiked;
+      });
     }
   };
 
@@ -87,14 +130,18 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
   };
 
   useEffect(() => {
-    fetchProjectData();
-  }, [project_id, nav]);
+    const fetchData = async () => {
+      await fetchProjectData();
+      await fetchLikeStatus(); // 프로젝트 데이터 이후 좋아요 상태 확인
+    };
+    fetchData();
+  }, [project_id]);
 
   useEffect(() => {
     if (projectData?.writer) {
       fetchWriterProfile(projectData.writer);
     }
-  }, [projectData]);
+  }, [project_id, nav]);
 
   // 플로팅 버튼 고정
   useEffect(() => {
@@ -145,7 +192,13 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
             </C.ProfileContent>
           </C.ProfileInfo>
 
-          <C.Date>{new Date(projectData.created_at).toLocaleDateString()}</C.Date>
+          <C.Date>
+            {new Date(projectData.created_at).toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </C.Date>
         </C.TopInfo>
 
         <C.BodyText>
