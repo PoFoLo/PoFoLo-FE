@@ -10,7 +10,7 @@ import Navbar from '@/components/Layout/Navbar/Navbar';
 import Modal from '@/components/Common/Modal';
 import { instance } from '@/apis/instance';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useResponsive } from '@/hooks/useResponsive';
 
 interface SiteLink {
@@ -25,7 +25,7 @@ export const WriteProjectPage = () => {
   const [description, setDescription] = useState<string>('');
   const [skill, setSkill] = useState<string>('');
   const [links, setLinks] = useState<SiteLink>({});
-  const [images, setImages] = useState<File[]>([]);
+  const [uploadImages, setUploadImages] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, boolean>>({
     title: false,
     description: false,
@@ -36,9 +36,34 @@ export const WriteProjectPage = () => {
   const [pendingAction, setPendingAction] = useState<null | (() => void)>(null); // 실행할 함수 임시 저장
   const navigate = useNavigate();
   const { isPC } = useResponsive();
+  const { projectId } = useParams();
+  const isEditMode = !!projectId; // projectId가 있으면 수정 모드
+
+  // 수정모드일때 프로젝트 불러오기
+  useEffect(() => {
+    if (isEditMode) {
+      const fetchProject = async () => {
+        try {
+          const response = await instance.get(`/pofolo/projects/${projectId}/`);
+          const data = response.data;
+          setTitle(data.title);
+          setDescription(data.description);
+          setMainCategory(data.major_field);
+          setSubCategory(data.sub_field);
+          setSkill(data.skills || '');
+          setLinks(data.links || []);
+          setUploadImages([]); // 이미지는 새로 업로드해야 하므로 초기화
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchProject();
+    }
+  }, [isEditMode, projectId]);
 
   // 프로젝트 업로드
-  const uploadData = async () => {
+  const uploadProject = async () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -48,8 +73,8 @@ export const WriteProjectPage = () => {
     formData.append('links', JSON.stringify(links));
     const isPublic = isPrivate ? 'false' : 'true';
     formData.append('is_public', isPublic);
-    for (let i = 0; i < images.length; i++) {
-      formData.append('project_img', images[i]);
+    for (let i = 0; i < uploadImages.length; i++) {
+      formData.append('project_img', uploadImages[i]);
     }
 
     try {
@@ -63,6 +88,28 @@ export const WriteProjectPage = () => {
       });
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  // 프로젝트 수정
+  const editProject = async () => {
+    try {
+      const data = {
+        is_public: !isPrivate,
+        title: title,
+        description: description,
+        major_field: mainCategory,
+        sub_field: subCategory,
+        skills: skill,
+        links: links,
+      };
+
+      const response = await instance.patch(`pofolo/projects/${projectId}/`, data);
+      setPendingAction(() => () => {
+        navigate(`/project/${response.data.id}`);
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -88,7 +135,11 @@ export const WriteProjectPage = () => {
     validateFields();
 
     if (btnActive) {
-      await uploadData();
+      if (isEditMode) {
+        await editProject();
+      } else {
+        await uploadProject();
+      }
       setIsCompleteModalOpen(true);
     }
   };
@@ -100,7 +151,7 @@ export const WriteProjectPage = () => {
       description.trim() ||
       skill.trim() ||
       Object.keys(links).length > 0 ||
-      (images && Array.from(images.entries()).length > 0) ||
+      (uploadImages && Array.from(uploadImages.entries()).length > 0) ||
       mainCategory ||
       subCategory
     );
@@ -209,7 +260,7 @@ export const WriteProjectPage = () => {
             />
             <SkillSection skill={skill} setSkill={setSkill} />
             <LinkSection links={links} setLinks={setLinks} />
-            <ImageSection images={images} setImages={setImages} />
+            <ImageSection uploadImages={uploadImages} setUploadImages={setUploadImages} />
           </S.FormContainer>
         </S.PortFolioLayout>
       </S.Layout>
@@ -228,7 +279,7 @@ export const WriteProjectPage = () => {
         isOpen={isCompleteModalOpen}
         setIsOpen={setIsCompleteModalOpen}
         icon="checked"
-        mainText="프로젝트가 완성되었어요!"
+        mainText={isEditMode ? '프로젝트가 수정되었어요!' : '프로젝트가 완성되었어요!'}
         LBtnText="닫기"
         LBtnOnClick={handleCompleteModalClose}
         RBtnText="프로젝트 보기"
