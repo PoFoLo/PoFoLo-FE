@@ -4,6 +4,8 @@ import { CommentInput } from '@/components/ProjectDetail/Comment/CommentInput';
 import { CommentList } from '@/components/ProjectDetail/Comment/CommentList';
 import * as S from '@/components/ProjectDetail/Comment/styles';
 import commentIcon from '@/assets/webps/ProjectDetail/commentIcon.webp';
+import { useParams } from 'react-router-dom';
+import { instance } from '@/apis/instance';
 
 interface CommentProps {
   updateCommentCount: (count: number) => void; // 댓글 개수 업데이트 콜백
@@ -15,6 +17,60 @@ export const Comment = ({ updateCommentCount }: CommentProps) => {
   const [replyClicked, setReplyClicked] = useState<number | null>(null);
   const [replyContent, setReplyContent] = useState<{ [key: number]: string }>({});
   const newCommentRef = useRef<HTMLLIElement | null>(null); // 새 댓글 참조
+  const { project_id } = useParams<{ project_id: string }>(); // URL 파라미터에서 project_id 가져오기
+
+  const fetchComments = async () => {
+    try {
+      const response = await instance.get(`/pofolo/projects/${project_id}/comments/`);
+      setComments(response.data); // 댓글 목록 설정
+    } catch (error) {
+      console.error('댓글 목록 가져오기 오류:', error);
+    }
+  };
+
+  const scrollToNewComment = () => {
+    newCommentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  const handlePostComment = async () => {
+    if (comment.trim()) {
+      try {
+        const response = await instance.post(`/pofolo/projects/${project_id}/comments/`, {
+          text: comment,
+        });
+        setComments((prev) => [response.data, ...prev]); // 새 댓글 추가
+        setComment('');
+        setTimeout(scrollToNewComment, 0); // 새로운 댓글로 스크롤
+      } catch (error) {
+        console.error('댓글 작성 오류:', error);
+      }
+    }
+  };
+
+  const handlePostReply = async (commentId: number) => {
+    const content = replyContent[commentId]?.trim();
+    if (content) {
+      try {
+        const response = await instance.post(`/pofolo/projects/${project_id}/comments/`, {
+          text: content,
+          parent_comment: commentId,
+        });
+        setComments((prev) =>
+          prev.map((comment) =>
+            comment.id === commentId
+              ? { ...comment, replies: [...comment.replies, response.data] }
+              : comment
+          )
+        );
+        setReplyContent((prev) => ({ ...prev, [commentId]: '' }));
+        setReplyClicked(null);
+      } catch (error) {
+        console.error('답글 작성 오류:', error);
+      }
+    }
+  };
+
+  const handleReplyClick = (id: number) => setReplyClicked((prev) => (prev === id ? null : id));
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setComment(e.target.value);
@@ -23,47 +79,9 @@ export const Comment = ({ updateCommentCount }: CommentProps) => {
     setReplyContent((prev) => ({ ...prev, [commentId]: e.target.value }));
   };
 
-  const scrollToNewComment = () => {
-    newCommentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  };
-
-  const handlePostComment = () => {
-    if (comment.trim()) {
-      const newComment = {
-        id: Date.now(),
-        nickname: '심수연',
-        content: comment,
-        createdAt: new Date(),
-        replies: [],
-      };
-      setComments((prev) => [newComment, ...prev]);
-      setComment('');
-
-      setTimeout(scrollToNewComment, 0); // 새로운 댓글로 스크롤
-    }
-  };
-
-  const handlePostReply = (commentId: number) => {
-    if (replyContent[commentId]?.trim()) {
-      const newReply = {
-        id: Date.now(),
-        nickname: '심수연',
-        content: replyContent[commentId],
-        createdAt: new Date(),
-      };
-      setComments((prev) =>
-        prev.map((comment) =>
-          comment.id === commentId
-            ? { ...comment, replies: [...comment.replies, newReply] }
-            : comment
-        )
-      );
-      setReplyContent((prev) => ({ ...prev, [commentId]: '' }));
-      setReplyClicked(null);
-    }
-  };
-
-  const handleReplyClick = (id: number) => setReplyClicked((prev) => (prev === id ? null : id));
+  useEffect(() => {
+    fetchComments(); // 컴포넌트가 처음 렌더링될 때 댓글 목록 로드
+  }, [project_id]);
 
   useEffect(() => {
     updateCommentCount(comments.length); // 댓글 수 변경 시 업데이트

@@ -131,17 +131,30 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchProjectData();
-      await fetchLikeStatus(); // 프로젝트 데이터 이후 좋아요 상태 확인
+      try {
+        await fetchProjectData(); // 프로젝트 데이터 가져오기
+        await fetchLikeStatus();
+      } catch (error) {
+        console.error('프로젝트 데이터 가져오기 실패:', error);
+      }
     };
+
     fetchData();
   }, [project_id]);
 
   useEffect(() => {
-    if (projectData?.writer) {
-      fetchWriterProfile(projectData.writer);
-    }
-  }, [project_id, nav]);
+    const fetchWriterData = async () => {
+      if (projectData?.writer) {
+        try {
+          await fetchWriterProfile(projectData.writer); // 작성자 프로필 가져오기
+        } catch (error) {
+          console.error('작성자 프로필 가져오기 실패:', error);
+        }
+      }
+    };
+
+    fetchWriterData();
+  }, [projectData]); // projectData가 변경될 때 작성자 정보를 가져옴
 
   // 플로팅 버튼 고정
   useEffect(() => {
