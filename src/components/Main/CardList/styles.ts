@@ -6,7 +6,7 @@ export const CardListContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 42rem;
+  padding-bottom: 3rem;
 `;
 
 export const CardList = styled.div`

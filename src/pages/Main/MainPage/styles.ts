@@ -33,12 +33,14 @@ export const FloatingBtnContainer = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
+      height: 3.6rem;
       right: calc(50% - 5rem);
       bottom: 2rem;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
+      height: 3.6rem;
       right: 2rem;
       bottom: 2rem;
     `)}

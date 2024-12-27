@@ -9,6 +9,7 @@ export const Card = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   ${(props) =>
     props.theme.media.ph(css`
@@ -16,11 +17,10 @@ export const Card = styled.div`
       max-height: 100%;
       flex: 1 0 0;
     `)}
-
   ${(props) =>
     props.theme.media.tab(css`
       flex: 1 0 0;
-    `)}
+    `)};
 `;
 
 export const Image = styled.img`

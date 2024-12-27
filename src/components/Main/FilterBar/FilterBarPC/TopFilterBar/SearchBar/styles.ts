@@ -69,12 +69,12 @@ export const InactiveIconHover = styled.img`
 `;
 
 // 활성화 상태 컨테이너 (흔들림 효과 포함)
-export const ActiveContainer = styled.div<{ isError?: boolean; isCentered?: boolean }>`
+export const ActiveContainer = styled.div<{ isError?: boolean; isSubmitted?: boolean }>`
   display: flex;
   width: 36rem;
   height: 4rem;
   padding: 1.2rem;
-  justify-content: ${({ isCentered }) => (isCentered ? 'center' : 'space-between')};
+  justify-content: ${({ isSubmitted }) => (isSubmitted ? 'center' : 'space-between')};
   align-items: center;
   gap: 0.8rem;
   border-radius: 4.4rem;

@@ -9,7 +9,6 @@ const SearchBar: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isCentered, setIsCentered] = useState(false); // 중앙 정렬 상태
   const [data, setData] = useState([
     { id: 1, title: 'React Tutorial' },
     { id: 2, title: 'Vue.js Guide' },
@@ -22,7 +21,7 @@ const SearchBar: React.FC = () => {
 
   const handleInactiveDivClick = () => {
     setIsEditing(true);
-    setIsSubmitted(false);
+    setIsSubmitted(false); // 편집 시작 시 검색 완료 상태 초기화
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,22 +39,26 @@ const SearchBar: React.FC = () => {
       setTimeout(() => setIsError(false), 300);
       setIsEditing(true);
     } else {
-      setIsSubmitted(true);
-      setIsEditing(false);
-      setIsCentered(true); // 엔터 후 중앙 정렬
+      console.log('Setting isSubmitted to true'); // 디버깅 로그
+      setIsEditing(false); // 검색 완료 후 편집 모드 종료
+      setIsSubmitted(true); // 검색 완료 상태 설정
       setIsError(false);
     }
   };
 
+  useEffect(() => {
+    console.log('isSubmitted:', isSubmitted);
+  }, [isSubmitted]);
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isSubmitted) {
+      // 중복 방지
       handleIconClick();
     }
   };
 
   const handleActiveDivClick = () => {
-    setIsEditing(true);
-    setIsCentered(false); // 편집 시작 시 다시 왼쪽 정렬
+    setIsEditing(true); // 다시 입력 가능한 상태로 전환
   };
 
   const [isHovering, setIsHovering] = useState(false);
@@ -70,8 +73,6 @@ const SearchBar: React.FC = () => {
         !activeContainerRef.current.contains(event.target as Node)
       ) {
         setIsEditing(false);
-        setIsSubmitted(false);
-        setIsCentered(false); // 편집 종료 시 중앙 정렬 해제
       }
     };
 
@@ -86,6 +87,7 @@ const SearchBar: React.FC = () => {
 
   return (
     <>
+      {/* 검색 상태가 비활성화된 초기 상태 */}
       {!isEditing && !isSubmitted && (
         <S.InactiveContainer
           onClick={handleInactiveDivClick}
@@ -100,6 +102,8 @@ const SearchBar: React.FC = () => {
           )}
         </S.InactiveContainer>
       )}
+
+      {/* 검색창이 활성화된 상태 (입력 가능) */}
       {isEditing && (
         <S.ActiveContainer ref={activeContainerRef} isError={isError}>
           <S.ActiveInput
@@ -112,10 +116,15 @@ const SearchBar: React.FC = () => {
           <S.ActiveIcon src={activeIconSrc} alt="Magnifier Icon" onClick={handleIconClick} />
         </S.ActiveContainer>
       )}
-      {!isEditing && isSubmitted && inputValue.trim() !== '' && (
-        <S.ActiveContainer onClick={handleActiveDivClick}>
+
+      {/* 검색 결과가 표시된 상태 */}
+      {!isEditing && isSubmitted && (
+        <S.ActiveContainer
+          isSubmitted={true}
+          onClick={handleActiveDivClick} // 클릭 시 입력 상태로 전환
+        >
           <S.ActiveLetter>{inputValue}</S.ActiveLetter>
-          <S.ActiveIcon src={activeIconSrc} alt="Magnifier Icon" onClick={handleIconClick} />
+          <S.ActiveIcon src={activeIconSrc} alt="Magnifier Icon" />
         </S.ActiveContainer>
       )}
     </>

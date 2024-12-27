@@ -35,7 +35,7 @@ export const SelectedCaret = styled.img`
 
 export const MenuContainer = styled.div`
   display: inline-flex;
-  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+  padding: 0.7rem;
   align-items: flex-start;
   border-radius: 0.8rem;
   border: 0.1rem solid ${(props) => props.theme.colors.gray10};
@@ -57,10 +57,11 @@ export const MenuLetterContainer = styled.div`
 `;
 
 export const Inactive = styled.span`
-  color: ${(props) => props.theme.colors.gray50};
+  color: var(--Gray-60, #919298);
   ${(props) => props.theme.fonts.body3};
-  width: 6.8rem;
+  width: 7.8rem;
   height: 2.4rem;
+  padding-left: 0.5rem;
   cursor: pointer;
 
   &:hover {
@@ -70,10 +71,11 @@ export const Inactive = styled.span`
 `;
 
 export const Active = styled.span`
-  color: ${(props) => props.theme.colors.gray70};
+  color: var(--Gray-90, #303133);
   ${(props) => props.theme.fonts.body3};
-  width: 6.8rem;
+  width: 7.8rem;
   height: 2.4rem;
+  padding-left: 0.5rem;
   cursor: pointer;
 
   &:hover {
