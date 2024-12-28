@@ -13,20 +13,21 @@ const AvailabilitySection = ({
 }: AvailabilitySectionProps) => {
   const { isPC } = useResponsive();
 
-  const options = ['프로젝트 합류', '외주', '프리랜서', '정규직'];
-  const isRejected = availability.length === 0;
+  const options = ['프로젝트 합류', '외주', '프리랜서', '정규직', '제안 받지 않음'];
+  const isRejected = availability.includes('제안 받지 않음');
 
-  // 제안 받지 않음 체크하면 모든 옵션 선택 해제
   const handleRejectChange = () => {
-    onAvailabilityChange([]);
+    if (!isRejected) {
+      onAvailabilityChange(['제안 받지 않음']);
+    }
   };
 
   const handleOptionChange = (option: string) => {
     const updatedAvailability = availability.includes(option)
       ? availability.filter((item) => item !== option)
-      : [...availability, option];
+      : [...availability.filter((item) => item !== '제안 받지 않음'), option];
 
-    onAvailabilityChange(updatedAvailability);
+    onAvailabilityChange(updatedAvailability.length > 0 ? updatedAvailability : ['제안 받지 않음']);
   };
 
   return (
@@ -39,15 +40,17 @@ const AvailabilitySection = ({
         </S.LabelText>
         {!isPC && <S.GreyLine />}
         <S.OptionsContainer>
-          {options.map((option) => (
-            <S.LabelText key={option}>
-              <Checkbox
-                checked={availability.includes(option)}
-                onChange={() => handleOptionChange(option)}
-              />
-              {option}
-            </S.LabelText>
-          ))}
+          {options
+            .filter((option) => option !== '제안 받지 않음')
+            .map((option) => (
+              <S.LabelText key={option}>
+                <Checkbox
+                  checked={availability.includes(option)}
+                  onChange={() => handleOptionChange(option)}
+                />
+                {option}
+              </S.LabelText>
+            ))}
         </S.OptionsContainer>
       </S.AvailabilityContainer>
     </S.SectionContainer>
