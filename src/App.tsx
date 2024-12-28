@@ -29,6 +29,7 @@ function App() {
         <Route path="/home" element={<MainPage />} />
         <Route path="/project/:project_id" element={<ProjectDetailPage />} />
         <Route path="/project/write" element={<WriteProjectPage />} />
+        <Route path="/project/edit/:project_id" element={<WriteProjectPage />} />
         <Route path="/portfolio/:portfolio_id" element={<PortfolioDetailPage />} />
         <Route path="/portfolio/write" element={<WritePortfolioPage />} />
         <Route path="/mypage" element={<Mypage />} />
