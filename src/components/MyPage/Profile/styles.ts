@@ -1,13 +1,6 @@
 import styled, { css } from 'styled-components';
 
 export const ProfileLayout = styled.div`
-  margin: 12.8rem 0 0 0;
-  height: 18.4rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  position: relative;
-
   width: 100%;
   max-width: 131.2rem;
   background-color: #fff;
@@ -17,17 +10,24 @@ export const ProfileLayout = styled.div`
     width: calc(100% - 12.8rem); // 얘는 11.2로 하니까 이상해지네. 원래대로 12.8이 옳네.
   }
 
+  margin: 12.8rem 0 0 0;
+  height: 18.4rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+
   ${(props) =>
     props.theme.media.ph(css`
       height: 19.7rem;
-      margin: 5.6rem 2rem 0rem 2rem;
+      margin: 8rem 2rem 0rem 2rem;
       width: calc(100% - 4rem);
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
       height: 16.1rem;
-      margin: 5.6rem 2rem 0rem 2rem;
+      margin: 8rem 2rem 0rem 2rem;
       width: calc(100% - 4rem);
     `)}
 `;
@@ -108,24 +108,28 @@ export const Name = styled.div`
   ${(props) => props.theme.fonts.subhead1}
 
   ${(props) =>
-    props.theme.media.ph(css`
+    props.theme.media.ph(
+      () => `
       font-family: 'Pretendard';
       font-size: 2.4rem;
       font-style: normal;
       font-weight: 700;
       line-height: 130%; /* 3.12rem */
       letter-spacing: 0.012rem;
-    `)}
+  `
+    )}
 
   ${(props) =>
-    props.theme.media.tab(css`
+    props.theme.media.tab(
+      () => `
       font-family: 'Pretendard';
       font-size: 2.4rem;
       font-style: normal;
       font-weight: 700;
       line-height: 130%; /* 3.12rem */
       letter-spacing: 0.012rem;
-    `)}
+  `
+    )}
 `;
 
 export const BadgesContainer = styled.div`
@@ -458,22 +462,25 @@ export const Organization = styled.div`
   ${(props) => props.theme.fonts.caption1}
 
   height: 2.7rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
   ${(props) =>
-    props.theme.media.ph(css`
-      ${(props) => props.theme.fonts.caption3}
-
-      width: 21.2rem;
-      height: 2rem;
-    `)}
+    props.theme.media.ph(
+      () => `
+	  ${props.theme.fonts.caption3};
+    height: 2rem;
+  `
+    )}
 
   ${(props) =>
-    props.theme.media.tab(css`
-      ${(props) => props.theme.fonts.caption3}
-
-      width: 21.2rem;
-      height: 2rem;
-    `)}
+    props.theme.media.tab(
+      () => `
+	  ${props.theme.fonts.caption3};
+    height: 2rem;
+  `
+    )}
 `;
 
 export const Introduction = styled.div`
@@ -483,22 +490,25 @@ export const Introduction = styled.div`
 
   height: 2.2rem;
   overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
   ${(props) =>
-    props.theme.media.ph(css`
-      ${(props) => props.theme.fonts.caption4}
-
-      width: 21.2rem;
-      height: 1.7rem;
-    `)}
+    props.theme.media.ph(
+      () => `
+	  ${props.theme.fonts.caption4};
+    height: 1.7rem;
+  `
+    )}
 
   ${(props) =>
-    props.theme.media.tab(css`
-      ${(props) => props.theme.fonts.caption4}
-
-      width: 21.2rem;
-      height: 1.7rem;
-    `)}
+    props.theme.media.tab(
+      () => `
+	  ${props.theme.fonts.caption4};
+    height: 1.7rem;
+  `
+    )}
 `;
 
 export const LinkBtnsContainer = styled.div`
@@ -579,20 +589,20 @@ export const LinkBtnLetter = styled.a`
   text-overflow: ellipsis;
 
   ${(props) =>
-    props.theme.media.ph(css`
-      ${(props) => props.theme.fonts.caption4}
-
-      width: 7.2rem;
-      height: 1.7rem;
-    `)}
+    props.theme.media.ph(
+      () => `
+	  ${props.theme.fonts.caption4};
+    height: 1.7rem;
+  `
+    )}
 
   ${(props) =>
-    props.theme.media.tab(css`
-      ${(props) => props.theme.fonts.caption4}
-
-      width: 7.2rem;
-      height: 1.7rem;
-    `)}
+    props.theme.media.tab(
+      () => `
+	  ${props.theme.fonts.caption4};
+    height: 1.7rem;
+  `
+    )}
 `;
 
 export const EditProfileBtn = styled.div`

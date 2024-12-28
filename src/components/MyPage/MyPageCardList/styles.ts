@@ -29,7 +29,7 @@ export const CardListContainer = styled.div<{ isPortfolioTab: boolean }>`
   display: grid;
   grid-template-columns: ${(props) => (props.isPortfolioTab ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)')};
   gap: 2.4rem;
-  padding: 0 0 42rem 0;
+  padding: 0 0 3rem 0;
   background-color: ${(props) => props.theme.colors.gray5};
 
   ${(props) =>

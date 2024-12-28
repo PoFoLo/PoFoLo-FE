@@ -17,13 +17,17 @@ const TabNavigation = ({ activeTab, setActiveTab }: TabNavigationProps) => {
           active={activeTab === 'allProjects'}
           onClick={() => setActiveTab('allProjects')}
         >
-          <S.TabLetterTabletMobile>모든 프로젝트</S.TabLetterTabletMobile>
+          <S.TabLetterTabletMobile active={activeTab === 'allProjects'}>
+            모든 프로젝트
+          </S.TabLetterTabletMobile>
         </S.TabContainerTabletMobile>
         <S.TabContainerTabletMobile
           active={activeTab === 'portfolio'}
           onClick={() => setActiveTab('portfolio')}
         >
-          <S.TabLetterTabletMobile>포트폴리오</S.TabLetterTabletMobile>
+          <S.TabLetterTabletMobile active={activeTab === 'portfolio'}>
+            포트폴리오
+          </S.TabLetterTabletMobile>
         </S.TabContainerTabletMobile>
       </S.TabsContainer>
     );
@@ -36,14 +40,14 @@ const TabNavigation = ({ activeTab, setActiveTab }: TabNavigationProps) => {
           active={activeTab === 'allProjects'}
           onClick={() => setActiveTab('allProjects')}
         >
-          <S.TabLetter>모든 프로젝트</S.TabLetter>
+          <S.TabLetter active={activeTab === 'allProjects'}>모든 프로젝트</S.TabLetter>
           <S.TabIcon active={activeTab === 'allProjects'} />
         </S.TabContainer>
         <S.TabContainer
           active={activeTab === 'portfolio'}
           onClick={() => setActiveTab('portfolio')}
         >
-          <S.TabLetter>포트폴리오</S.TabLetter>
+          <S.TabLetter active={activeTab === 'portfolio'}>포트폴리오</S.TabLetter>
           <S.TabIcon active={activeTab === 'portfolio'} />
         </S.TabContainer>
       </S.TabsContainer>

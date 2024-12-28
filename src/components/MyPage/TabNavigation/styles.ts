@@ -65,6 +65,23 @@ export const TabsContainer = styled.div`
     `)}
 `;
 
+export const TabLetter = styled.div<{ active?: boolean }>`
+  color: ${(props) => (props.active ? props.theme.colors.blue60 : 'var(--Gray-50, #B0B1B6)')};
+  ${(props) => props.theme.fonts.subhead3};
+  height: 2.4rem;
+
+  transition: color 0.2s ease-in-out;
+`;
+
+export const TabIcon = styled.div<{ active?: boolean }>`
+  width: 3.5rem;
+  height: 0.3rem;
+  border-radius: 2rem;
+  background-color: ${(props) => (props.active ? props.theme.colors.blue40 : '#fff')};
+
+  transition: background-color 0.2s ease-in-out;
+`;
+
 export const TabContainer = styled.div<{ active?: boolean }>`
   display: flex;
   height: 4.8rem;
@@ -76,19 +93,30 @@ export const TabContainer = styled.div<{ active?: boolean }>`
   border-radius: 0.8rem;
   background: ${(props) => (props.active ? props.theme.colors.blue10 : '#fff')};
   cursor: pointer;
+
+  // Use the method when I want to change other components' property when hovering a component.
+  &:hover {
+    ${TabLetter} {
+      color: var(--blue-50, #598df6);
+    }
+    ${TabIcon} {
+      background-color: var(--Gray-10, #f2f2f3);
+    }
+  }
 `;
 
-export const TabLetter = styled.div<{ active?: boolean }>`
-  color: ${(props) => (props.active ? props.theme.colors.blue60 : 'var(--blue-50, #598df6)')};
-  ${(props) => props.theme.fonts.subhead3};
-  height: 2.4rem;
-`;
+export const TabLetterTabletMobile = styled.div<{ active?: boolean }>`
+  // Clear.
+  color: ${(props) => (props.active ? props.theme.colors.blue60 : 'var(--Gray-50, #B0B1B6)')};
+  font-family: 'Pretendard'; // Single quotes should enclose the word.
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 2.1rem */
+  letter-spacing: 0.0035rem;
 
-export const TabIcon = styled.div<{ active?: boolean }>`
-  width: 3.5rem;
-  height: 0.3rem;
-  border-radius: 2rem;
-  background: ${(props) => (props.active ? props.theme.colors.blue40 : '#fff')};
+  height: 2.1rem;
+  transition: color 0.2s ease-in-out;
 `;
 
 export const TabContainerTabletMobile = styled.div<{ active?: boolean }>`
@@ -98,22 +126,16 @@ export const TabContainerTabletMobile = styled.div<{ active?: boolean }>`
   align-items: center;
   flex: 1 0 0;
   border-bottom: 0.2rem solid ${(props) => (props.active ? 'var(--blue-50, #598df6)' : '#fff')};
-  background-color: ${(props) => (props.active ? 'var(--Blue-5, #F3F7FF)' : '#fff')};
+  background-color: ${(props) =>
+    props.active ? 'var(--Blue-5, #F3F7FF)' : 'var(--Gray-05, #F8F8F8)'};
 
   width: 39.7rem;
   height: 4rem;
   cursor: pointer;
-`;
 
-export const TabLetterTabletMobile = styled.div<{ active?: boolean }>`
-  // Clear.
-  color: ${(props) => (props.active ? props.theme.colors.blue60 : 'var(--blue-50, #598df6)')};
-  font-family: 'Pretendard'; // Single quotes should enclose the word.
-  font-size: 1.4rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%; /* 2.1rem */
-  letter-spacing: 0.0035rem;
-
-  height: 2.1rem;
+  &:hover {
+    ${TabLetterTabletMobile} {
+      color: var(--blue-50, #598df6);
+    }
+  }
 `;

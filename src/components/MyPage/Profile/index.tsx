@@ -58,8 +58,8 @@ const Profile = () => {
               </S.LinkBtnContainer>
             </S.LinkBtnsContainer>
           </S.ProfileInfoContainer>
-          <S.ProfilePic src={defaultProfileImgSrc} alt="defaultProfile" />
         </S.ProfileContainer>
+        <S.ProfilePic src={defaultProfileImgSrc} alt="defaultProfile" />
         {visibleContact === 'email' && (
           <S.EmailContactContainer>
             <S.ContactLetterContainer>

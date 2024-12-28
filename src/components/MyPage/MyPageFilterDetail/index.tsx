@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useResponsive } from '@/hooks/useResponsive';
 import * as S from '@/components/MyPage/MyPageFilterDetail/styles';
 import uploadMyPageSrc from '@/assets/webps/MyPage/uploadMyPage.webp';
@@ -33,6 +34,12 @@ const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) =>
     }
   };
 
+  const navigate = useNavigate();
+
+  const handleUpload = () => {
+    navigate('/project/write');
+  };
+
   // '포트폴리오' 탭
   if (activeTab === 'portfolio') {
     return (
@@ -62,7 +69,9 @@ const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) =>
             </S.FilterButton>
           ))}
         </S.FilterBtnsContainer>
-        {isPhone && <S.uploadButton src={uploadMyPageSrc} alt="uploadButton" />}
+        {isPhone && (
+          <S.uploadButton src={uploadMyPageSrc} alt="uploadButton" onClick={handleUpload} />
+        )}
       </S.FilterAllProjectContainer>
     </S.FilterAllProjectColorContainer>
   );
