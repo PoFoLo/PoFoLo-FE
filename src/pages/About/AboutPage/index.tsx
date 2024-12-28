@@ -1,4 +1,4 @@
-import Navbar from '@/components/Layout/Navbar/Navbar';
+import Navbar from '@/components/Layout/Navbar/index';
 import { Title } from '@/components/About/Title';
 import { Motivation } from '@/components/About/Motivation';
 import * as S from '@/pages/About/AboutPage/styles';
@@ -7,7 +7,7 @@ import { MockUp } from '@/components/About/MockUp';
 export const AboutPage = () => {
   return (
     <S.Layout>
-      <Navbar />
+      <Navbar isLoggedIn={false}/>
       <Title />
       <Motivation />
       <MockUp />

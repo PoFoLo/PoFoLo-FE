@@ -8,8 +8,8 @@ import { ProjectDetailPage } from '@/pages/Project/ProjectDetailPage';
 import { WriteProjectPage } from '@/pages/Project/WriteProjectPage';
 import { WritePortfolioPage } from '@/pages/Portfolio/WritePortfolioPage';
 import { PortfolioDetailPage } from '@/pages/Portfolio/PortfolioDetailPage';
-import { MyPage } from '@/pages/MyPage';
 import { NotFoundPage } from '@/pages/NotFound/NotFoundPage';
+import { MyPage } from '@/pages/MyPage';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 

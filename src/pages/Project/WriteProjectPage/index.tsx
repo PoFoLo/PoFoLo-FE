@@ -6,7 +6,7 @@ import DescriptionSection from '@/components/FormField/DescriptionSection';
 import SkillSection from '@/components/WriteProject/SkillSection';
 import LinkSection from '@/components/WriteProject/LinkSection';
 import ImageSection from '@/components/WriteProject/ImageSection';
-import Navbar from '@/components/Layout/Navbar/Navbar';
+import Navbar from '@/components/Layout/Navbar/NavbarPC';
 import Modal from '@/components/Common/Modal';
 import { instance } from '@/apis/instance';
 import { useState, useEffect } from 'react';

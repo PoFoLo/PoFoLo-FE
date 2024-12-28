@@ -1,6 +1,5 @@
 import * as S from '@/components/MyPage/EditProfileModal/ContactSection/styles';
-import Input from '@/components/Common/Input';
-import Checkbox from '@/components/Common/CheckBox';
+import CheckboxInput from '@/components/MyPage/EditProfileModal/CheckboxInput';
 
 interface ContactSectionProps {
   phoneNum: string | null;
@@ -23,46 +22,24 @@ const ContactSection = ({
   emailIsPublic,
   setEmailIsPublic,
 }: ContactSectionProps) => {
-  const handleEmailCheckbox = () => {
-    setEmailIsPublic((prev) => !prev);
-  };
-  const handlePhoneNumCheckbox = () => {
-    setPhoneNumIsPublic((prev) => !prev);
-  };
   return (
     <S.SectionContainer>
       <S.SectionTitle>연락처</S.SectionTitle>
       <S.InputsContainer>
-        <S.InputWrapper>
-          <Input
-            value={email || ''}
-            onChange={(e) => setEmail(e.target.value || null)}
-            placeholder="이메일"
-            hideIcon={true}
-            isPrivateCheckbox={true}
-          />
-          <S.CheckboxContainer>
-            <S.CheckboxLabel>
-              <Checkbox checked={!emailIsPublic} onChange={handleEmailCheckbox} />
-              비공개
-            </S.CheckboxLabel>
-          </S.CheckboxContainer>
-        </S.InputWrapper>
-        <S.InputWrapper>
-          <Input
-            value={phoneNum || ''}
-            onChange={(e) => setPhoneNum(e.target.value || null)}
-            placeholder="전화번호"
-            hideIcon={true}
-            isPrivateCheckbox={true}
-          />
-          <S.CheckboxContainer>
-            <S.CheckboxLabel>
-              <Checkbox checked={!phoneNumIsPublic} onChange={handlePhoneNumCheckbox} />
-              비공개
-            </S.CheckboxLabel>
-          </S.CheckboxContainer>
-        </S.InputWrapper>
+        <CheckboxInput
+          inputValue={email || ''}
+          isChecked={emailIsPublic}
+          inputPlaceholder="이메일"
+          onInputChange={setEmail}
+          onCheckboxChange={setEmailIsPublic}
+        />
+        <CheckboxInput
+          inputValue={phoneNum || ''}
+          isChecked={phoneNumIsPublic}
+          inputPlaceholder="전화번호"
+          onInputChange={setPhoneNum}
+          onCheckboxChange={setPhoneNumIsPublic}
+        />
       </S.InputsContainer>
     </S.SectionContainer>
   );
