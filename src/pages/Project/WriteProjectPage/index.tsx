@@ -17,6 +17,11 @@ interface SiteLink {
   [key: string]: string;
 }
 
+interface ImageItem {
+  url: string | null; // 기존 이미지 URL
+  file: File | null; // 새로 추가된 파일
+}
+
 export const WriteProjectPage = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
@@ -25,7 +30,8 @@ export const WriteProjectPage = () => {
   const [description, setDescription] = useState<string>('');
   const [skill, setSkill] = useState<string>('');
   const [links, setLinks] = useState<SiteLink>({});
-  const [uploadImages, setUploadImages] = useState<File[]>([]);
+  const [images, setImages] = useState<string[]>([]); // 기존 이미지
+  const [imagesState, setImagesState] = useState<ImageItem[]>([]);
   const [errors, setErrors] = useState<Record<string, boolean>>({
     title: false,
     description: false,
@@ -52,7 +58,7 @@ export const WriteProjectPage = () => {
           setSubCategory(data.sub_field);
           setSkill(data.skills || '');
           setLinks(data.links || []);
-          setUploadImages([]); // 이미지는 새로 업로드해야 하므로 초기화
+          setImages(data.project_img || []);
         } catch (error) {
           console.error(error);
         }
@@ -73,9 +79,9 @@ export const WriteProjectPage = () => {
     formData.append('links', JSON.stringify(links));
     const isPublic = isPrivate ? 'false' : 'true';
     formData.append('is_public', isPublic);
-    for (let i = 0; i < uploadImages.length; i++) {
-      formData.append('project_img', uploadImages[i]);
-    }
+    imagesState
+      .filter((item) => !item.url && item.file)
+      .forEach((item) => formData.append('project_img', item.file as File));
 
     try {
       const response = await instance.post('/pofolo/projects/create/', formData, {
@@ -95,7 +101,7 @@ export const WriteProjectPage = () => {
   const editProject = async () => {
     try {
       const data = {
-        is_public: !isPrivate,
+        is_public: isPrivate ? 'false' : 'true',
         title: title,
         description: description,
         major_field: mainCategory,
@@ -105,6 +111,44 @@ export const WriteProjectPage = () => {
       };
 
       const response = await instance.patch(`pofolo/projects/${projectId}/`, data);
+
+      const patchFormData = new FormData();
+      // 삭제된 이미지 처리
+      const removedIndices = images
+        .map((url, index) => index)
+        .filter((index) => !imagesState.some((item) => item.url === images[index]));
+
+      if (removedIndices.length > 0) {
+        patchFormData.append('delete', JSON.stringify(removedIndices));
+      }
+
+      // 교체된 이미지 처리
+      imagesState
+        .map((item, index) => ({ item, index }))
+        .filter(({ item }) => item.url && item.file)
+        .forEach(({ item, index }) => patchFormData.append(`replace[${index}]`, item.file as File));
+
+      await instance.patch(`pofolo/projects/${response.data.id}/images/`, patchFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      // 새로운 이미지 처리
+      const postFormData = new FormData();
+      const newImages = imagesState.filter((item) => !item.url && item.file);
+
+      if (newImages.length > 0) {
+        newImages.forEach((item) => postFormData.append('images', item.file as File));
+        console.log(newImages);
+
+        await instance.post(`pofolo/projects/${response.data.id}/images/`, postFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      }
+
       setPendingAction(() => () => {
         navigate(`/project/${response.data.id}`);
       });
@@ -151,7 +195,7 @@ export const WriteProjectPage = () => {
       description.trim() ||
       skill.trim() ||
       Object.keys(links).length > 0 ||
-      (uploadImages && Array.from(uploadImages.entries()).length > 0) ||
+      imagesState.some((item) => item.url || item.file) ||
       mainCategory ||
       subCategory
     );
@@ -230,7 +274,7 @@ export const WriteProjectPage = () => {
       <S.Layout>
         <S.PortFolioLayout>
           <HeaderSection
-            headerText="새 프로젝트"
+            headerText={isEditMode ? '프로젝트 수정' : '새 프로젝트'}
             isPrivate={isPrivate}
             setIsPrivate={setIsPrivate}
             handleUploadClick={handleUploadClick}
@@ -260,7 +304,7 @@ export const WriteProjectPage = () => {
             />
             <SkillSection skill={skill} setSkill={setSkill} />
             <LinkSection links={links} setLinks={setLinks} />
-            <ImageSection uploadImages={uploadImages} setUploadImages={setUploadImages} />
+            <ImageSection images={images} setImagesState={setImagesState} />
           </S.FormContainer>
         </S.PortFolioLayout>
       </S.Layout>
