@@ -38,8 +38,8 @@ export const WritePortfolioPage = () => {
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [pendingAction, setPendingAction] = useState<null | (() => void)>(null); // 실행할 함수 임시 저장
   const navigate = useNavigate();
-  const { portfolioId } = useParams();
-  const isEditMode = !!portfolioId;
+  const { portfolio_id } = useParams();
+  const isEditMode = !!portfolio_id;
   const { isPC } = useResponsive();
 
   // 포트폴리오 불러오기
@@ -47,7 +47,7 @@ export const WritePortfolioPage = () => {
     if (isEditMode) {
       const fetchPortfolio = async () => {
         try {
-          const response = await instance.get(`pofolo/portfolios/${portfolioId}/`);
+          const response = await instance.get(`pofolo/portfolios/${portfolio_id}/`);
           setIsPrivate(!response.data.is_public);
           setTitle(response.data.title);
           setName(response.data.username);
@@ -64,7 +64,7 @@ export const WritePortfolioPage = () => {
 
       fetchPortfolio();
     }
-  }, [isEditMode, portfolioId]);
+  }, [isEditMode, portfolio_id]);
 
   // 포트폴리오 업로드
   const uploadPortfolio = async () => {
@@ -105,7 +105,7 @@ export const WritePortfolioPage = () => {
         related_projects: projects,
       };
 
-      const response = await instance.patch(`pofolo/portfolios/${portfolioId}/`, data);
+      const response = await instance.patch(`pofolo/portfolios/${portfolio_id}/`, data);
       setPendingAction(() => () => {
         navigate(`/portfolio/${response.data.id}`);
       });
