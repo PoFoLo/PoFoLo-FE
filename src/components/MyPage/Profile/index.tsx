@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
 import * as S from '@/components/MyPage/Profile/styles';
-import defaultProfileSrc from '@/assets/webps/MyPage/defaultProfile.webp';
+import defaultProfileImgSrc from '@/assets/webps/MyPage/defaultProfileImg.webp';
 import offerIconSrc from '@/assets/webps/MyPage/offerIcon.webp';
 import emailIconSrc from '@/assets/webps/MyPage/emailIcon.webp';
 import phoneIconSrc from '@/assets/webps/MyPage/phoneIcon.webp';
@@ -58,7 +58,7 @@ const Profile = () => {
               </S.LinkBtnContainer>
             </S.LinkBtnsContainer>
           </S.ProfileInfoContainer>
-          <S.ProfilePic src={defaultProfileSrc} alt="defaultProfile" />
+          <S.ProfilePic src={defaultProfileImgSrc} alt="defaultProfile" />
         </S.ProfileContainer>
         {visibleContact === 'email' && (
           <S.EmailContactContainer>
@@ -84,7 +84,7 @@ const Profile = () => {
   return (
     <S.ProfileLayout>
       <S.ProfileContainer>
-        <S.ProfilePic src={defaultProfileSrc} alt="defaultProfile" />
+        <S.ProfilePic src={defaultProfileImgSrc} alt="defaultProfile" />
         <S.ProfileInfoContainer>
           <S.NameAndBadgesContainer>
             <S.Name>홍길동</S.Name>
