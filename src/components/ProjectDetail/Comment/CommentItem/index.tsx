@@ -19,10 +19,14 @@ interface CommentItemProps {
   onReplyPost: (commentId: number) => void;
   onReplyChange: (e: React.ChangeEvent<HTMLTextAreaElement>, commentId: number) => void;
   replyContent: string;
+  onDelete: (commentId: number, isReply: boolean, parentId?: number) => void;
 }
 
 export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
-  ({ comment, replyClicked, onReplyClick, onReplyPost, onReplyChange, replyContent }, ref) => {
+  (
+    { comment, replyClicked, onReplyClick, onReplyPost, onReplyChange, replyContent, onDelete },
+    ref
+  ) => {
     const [writerInfo, setWriterInfo] = useState<{
       nickname: string;
       profileImg: string;
@@ -30,6 +34,7 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
       nickname: '',
       profileImg: profileIcon,
     });
+    const userId = localStorage.getItem('user_id');
     const { isPC } = useResponsive();
     const nav = useNavigate();
     const replyRefs = useRef<(HTMLLIElement | null)[]>([]);
@@ -117,11 +122,22 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
               </S.CommentInfo>
               <S.CommentContent>{comment.text}</S.CommentContent>
             </div>
-            <img
-              src={replyClicked === comment.id ? replyBlue : replyGray}
-              alt="reply"
-              onClick={() => handleReplyClick(comment.id)}
-            />
+            <div className="menu-wrapper">
+              <img
+                src={replyClicked === comment.id ? replyBlue : replyGray}
+                alt="reply"
+                onClick={() => handleReplyClick(comment.id)}
+              />
+              {Number(userId) === comment.writer && (
+                <Button
+                  size={isPC ? 'small' : 'small2'}
+                  type="obscure"
+                  onClick={() => onDelete(comment.id, false)}
+                >
+                  삭제
+                </Button>
+              )}
+            </div>
           </S.CommentContentWrapper>
         </S.CommentItemWrapper>
 
@@ -156,19 +172,30 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
         {comment.replies.map((reply, index) => (
           <li key={reply.id} ref={(el) => (replyRefs.current[index] = el)}>
             <S.ReplyWrapper>
-              <img
-                onClick={() => nav('/mypage')}
-                className="reply-line"
-                src={replyLine}
-                alt="reply line"
-              />
-              <div className="reply-info-wrapper">
-                <S.CommentInfo>
-                  <p onClick={() => nav('/mypage')}>{writerInfo.nickname}</p>
-                  <span>{formatCommentDate(reply.commented_at)}</span>
-                </S.CommentInfo>
-                <S.CommentContent>{reply.text}</S.CommentContent>
+              <div className="comment-info-wrapper">
+                <img
+                  onClick={() => nav('/mypage')}
+                  className="reply-line"
+                  src={replyLine}
+                  alt="reply line"
+                />
+                <div className="reply-info-wrapper">
+                  <S.CommentInfo>
+                    <p onClick={() => nav('/mypage')}>{writerInfo.nickname}</p>
+                    <span>{formatCommentDate(reply.commented_at)}</span>
+                  </S.CommentInfo>
+                  <S.CommentContent>{reply.text}</S.CommentContent>
+                </div>
               </div>
+              {Number(userId) === comment.writer && (
+                <Button
+                  size={isPC ? 'small' : 'small2'}
+                  type="obscure"
+                  onClick={() => onDelete(reply.id, true, comment.id)}
+                >
+                  삭제
+                </Button>
+              )}
             </S.ReplyWrapper>
           </li>
         ))}

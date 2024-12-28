@@ -19,10 +19,17 @@ export const Comment = ({ updateCommentCount }: CommentProps) => {
   const newCommentRef = useRef<HTMLLIElement | null>(null); // 새 댓글 참조
   const { project_id } = useParams<{ project_id: string }>(); // URL 파라미터에서 project_id 가져오기
 
+  const handleSortedComments = (fetchedComments: CommentItemDto[]) => {
+    // 서버 정렬 - 최신 댓글이 가장 아래에 있음 -> 프론트에서 댓글 정렬 맞추기
+    return [...fetchedComments].sort(
+      (a, b) => new Date(b.commented_at).getTime() - new Date(a.commented_at).getTime()
+    );
+  };
   const fetchComments = async () => {
     try {
       const response = await instance.get(`/pofolo/projects/${project_id}/comments/`);
-      setComments(response.data); // 댓글 목록 설정
+      const sortedComments = handleSortedComments(response.data);
+      setComments(sortedComments);
     } catch (error) {
       console.error('댓글 목록 가져오기 오류:', error);
     }
@@ -70,6 +77,28 @@ export const Comment = ({ updateCommentCount }: CommentProps) => {
     }
   };
 
+  const handleDeleteComment = async (commentId: number, isReply: boolean, parentId?: number) => {
+    try {
+      await instance.delete(`/pofolo/projects/comments/${commentId}/`);
+
+      if (isReply && parentId) {
+        // 답글 삭제
+        setComments((prev) =>
+          prev.map((comment) =>
+            comment.id === parentId
+              ? { ...comment, replies: comment.replies.filter((reply) => reply.id !== commentId) }
+              : comment
+          )
+        );
+      } else {
+        // 댓글 삭제
+        setComments((prev) => prev.filter((comment) => comment.id !== commentId));
+      }
+    } catch (error) {
+      console.error('댓글 삭제 실패:', error);
+    }
+  };
+
   const handleReplyClick = (id: number) => setReplyClicked((prev) => (prev === id ? null : id));
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -114,6 +143,7 @@ export const Comment = ({ updateCommentCount }: CommentProps) => {
             onReplyChange={handleReplyChange}
             replyContent={replyContent}
             newCommentRef={newCommentRef} // 최신 댓글에 대한 ref 전달
+            onDelete={handleDeleteComment}
           />
         )}
       </S.CommentContainer>
