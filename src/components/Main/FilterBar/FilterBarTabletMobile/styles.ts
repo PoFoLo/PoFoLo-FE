@@ -64,8 +64,10 @@ export const Overlay = styled.div`
 `;
 
 export const FilterContainerTabletMobile = styled.div`
-  padding: 0.6rem 0.9rem 0.6rem 0.4rem;
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 0.5rem 0.6rem 0.5rem;
+  gap: 0.75rem; // I should have given it flex property to use gap.
   border-radius: 0.6rem;
   border: 0.075rem solid ${(props) => props.theme.colors.gray10};
   background: #fff;
@@ -77,7 +79,9 @@ export const FilterContainerTabletMobile = styled.div`
 `;
 
 export const SortContainerTabletMobile = styled.div`
-  padding: 0.6rem 0.9rem 0.6rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 0.5rem 0.6rem 0.5rem;
   gap: 0.75rem;
   border-radius: 0.6rem;
   border: 0.075rem solid ${(props) => props.theme.colors.gray10};
@@ -97,9 +101,10 @@ export const FilterOrSortButtonTabletMobile = styled.div<{ isSelected?: boolean 
   font-weight: ${(props) => (props.isSelected ? '600' : '400')};
   line-height: 150%;
   letter-spacing: 0.006rem;
-  width: 5.65rem;
+
   height: 1.8rem;
-  padding-left: 0.5rem;
+  padding-left: 0.4rem;
+  padding-right: 1.5rem;
   cursor: pointer;
 
   &:hover {
