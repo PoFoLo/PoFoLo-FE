@@ -28,6 +28,7 @@ const Navbar = ({
       {(isPhone || isTab) && <NavbarMobile isLoggedIn={isLoggedIn} onGoBackClick={onGoBackClick} />}
       {isPC && (
         <NavbarPC
+          isLoggedIn={isLoggedIn} // PC에는 로그인 상태에 따라 로그인 or 로그아웃 버튼 렌더링 구별이 아직 없군.
           onGoBackClick={onGoBackClick}
           onAboutClick={onAboutClick}
           onHomeClick={onHomeClick}

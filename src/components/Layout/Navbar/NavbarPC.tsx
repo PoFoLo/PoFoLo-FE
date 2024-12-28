@@ -7,13 +7,20 @@ import navbarMyPageSrc from '@/assets/webps/Common/navbarMyPage.webp';
 import logoutIconSrc from '@/assets/webps/Common/logoutIcon.webp';
 
 interface NavbarProps {
+  isLoggedIn: boolean;
   onGoBackClick?: () => void;
   onAboutClick?: () => void;
   onHomeClick?: () => void;
   onMyPageClick?: () => void;
 }
 
-const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: NavbarProps) => {
+const NavbarPC = ({
+  isLoggedIn,
+  onGoBackClick,
+  onAboutClick,
+  onHomeClick,
+  onMyPageClick,
+}: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -68,7 +75,11 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: N
             onClick={handleGoBackClick}
           />
         ) : (
-          <S.NavbarLeftLogo src={navbarLogoFullSrc} alt="Logo" onClick={() => handleNavigate('home')} />
+          <S.NavbarLeftLogo
+            src={navbarLogoFullSrc}
+            alt="Logo"
+            onClick={() => handleNavigate('home')}
+          />
         )}
 
         <S.NavbarRightContainer>

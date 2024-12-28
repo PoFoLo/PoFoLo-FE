@@ -39,14 +39,16 @@ export const NavbarBody = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      max-width: 32rem;
       height: 2.8rem;
+      margin: 0 2rem;
+      width: calc(100% - 4rem);
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
-      max-width: 79.4rem;
       height: 2.8rem;
+      margin: 0 2rem;
+      width: calc(100% - 4rem);
     `)}
 `;
 

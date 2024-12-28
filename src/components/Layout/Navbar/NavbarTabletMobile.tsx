@@ -100,7 +100,7 @@ const NavbarTabletMobile = ({ isLoggedIn, onGoBackClick }: NavbarMobileProps) =>
               </S.NavbarDetailPageButtonTabletMobile>
             </S.NavbarDetailPageButtonContainerTabletMobile>
             <S.NavbarDetailPageButtonContainerTabletMobile>
-              <S.NavbarDetailPageButtonTabletMobile onClick={() => handleNavigate('projects')}>
+              <S.NavbarDetailPageButtonTabletMobile onClick={() => handleNavigate('home')}>
                 모든 프로젝트
               </S.NavbarDetailPageButtonTabletMobile>
             </S.NavbarDetailPageButtonContainerTabletMobile>

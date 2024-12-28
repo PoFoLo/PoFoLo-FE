@@ -1,14 +1,16 @@
 import React from 'react';
-import Navbar from '@/components/Layout/Navbar/Navbar';
+import Navbar from '@/components/Layout/Navbar/index';
 import CardList from '@/components/Main/CardList';
 import FloatingBtn from '@/components/Main/FloatingBtn';
 import * as S from './styles';
 import ResponsiveFilterBar from '@/components/Main/FilterBar';
 
 export const MainPage: React.FC = () => {
+  const isLoggedIn = true;
+
   return (
     <S.MainContainer>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} />
       <ResponsiveFilterBar />
       <CardList />
       <S.FloatingBtnLayout>
