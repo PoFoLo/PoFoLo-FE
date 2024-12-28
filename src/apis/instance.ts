@@ -9,7 +9,7 @@ export const instance = axios.create({
 
 // Request Interceptor - 토큰 추가
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access');
+  const token = localStorage.getItem('access_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -29,18 +29,18 @@ instance.interceptors.response.use(
     ) {
       originalRequest._retry = true;
 
-      const refreshToken = localStorage.getItem('refresh');
+      const refreshToken = localStorage.getItem('refresh_token');
       if (refreshToken) {
         try {
           // 토큰 갱신 요청
-          const { data } = await axios.post('/pofolo/users/token/refresh', {
+          const { data } = await instance.post('/pofolo/users/token/refresh', {
             refresh: refreshToken,
           });
 
           const newAccessToken = data.access;
 
           // 새로운 access 토큰 저장
-          localStorage.setItem('access', newAccessToken);
+          localStorage.setItem('access_token', newAccessToken);
 
           // 갱신된 토큰으로 헤더 업데이트 후 재요청
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
@@ -48,8 +48,10 @@ instance.interceptors.response.use(
         } catch (refreshError) {
           console.error('토큰 갱신 실패:', refreshError);
           // 갱신 실패 시 로그아웃 처리
-          localStorage.removeItem('access');
-          localStorage.removeItem('refresh');
+          // 갱신 실패 시 로그아웃 처리
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          localStorage.removeItem('user_id');
           window.location.href = '/';
         }
       }

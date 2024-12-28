@@ -7,7 +7,7 @@ export const NavContainer = styled.div`
   height: 6.4rem;
   justify-content: center;
   position: fixed;
-  z-index: 10;
+  z-index: 20;
   background-color: white;
   padding: 0 6.4rem;
 
