@@ -27,7 +27,7 @@ interface Profile {
   introduction: string | null;
   links: string[];
   availability: string[];
-  profile_img: string | null;
+  profile_img_url: string | null;
 }
 
 interface ModalProps {
@@ -206,7 +206,7 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
             </S.ModalHeaderContainer>
             <S.ProfileContainer>
               <ProfileImageSection
-                profileImg={profileData.profile_img}
+                profileImg={profileData.profile_img_url}
                 setImageFile={setImageFile}
                 setIsImageDeleted={setIsImageDeleted}
               />
