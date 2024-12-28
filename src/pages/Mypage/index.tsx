@@ -7,10 +7,11 @@ export const Mypage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 프로필 데이터 로드
+  const userId = localStorage.getItem('user_id');
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await instance.get('pofolo/users/profile/1/');
+        const response = await instance.get(`pofolo/users/profile/${userId}/`);
         setProfileData(response.data.profile);
       } catch (error) {
         console.error(error);
