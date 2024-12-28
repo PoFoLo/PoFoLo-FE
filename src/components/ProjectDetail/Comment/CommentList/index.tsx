@@ -11,6 +11,7 @@ interface CommentListProps {
   onReplyChange: (e: React.ChangeEvent<HTMLTextAreaElement>, commentId: number) => void;
   replyContent: { [key: number]: string };
   newCommentRef: React.RefObject<HTMLLIElement>;
+  onDelete: (commentId: number, isReply: boolean, parentId?: number) => void;
 }
 
 export const CommentList: React.FC<CommentListProps> = ({
@@ -21,6 +22,7 @@ export const CommentList: React.FC<CommentListProps> = ({
   onReplyChange,
   replyContent,
   newCommentRef, // 최신 댓글에 대한 ref
+  onDelete,
 }) => {
   return (
     <S.CommentList>
@@ -34,6 +36,7 @@ export const CommentList: React.FC<CommentListProps> = ({
           onReplyChange={onReplyChange}
           replyContent={replyContent[comment.id] || ''}
           ref={index === 0 ? newCommentRef : null} // 첫 번째 댓글에만 newCommentRef
+          onDelete={onDelete} 
         />
       ))}
     </S.CommentList>
