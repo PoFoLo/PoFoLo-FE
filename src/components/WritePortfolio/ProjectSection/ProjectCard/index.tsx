@@ -2,6 +2,7 @@ import * as S from '@/components/WritePortfolio/ProjectSection/ProjectCard/style
 import projectLikeFilled from '@/assets/webps/Common/projectLikeFilled.webp';
 import projectCommentFilled from '@/assets/webps/Common/projectCommentFilled.webp';
 import imageDelete from '@/assets/webps/Common/imageDelete.webp';
+import defaultProject from '@/assets/svgs/Common/defaultProject.svg';
 
 interface ProjectCardProps {
   project: {
@@ -21,7 +22,7 @@ const ProjectCard = ({ project, handleRemoveProject }: ProjectCardProps) => {
       <S.HoverImageContainer>
         <S.HoverBtn $backgroundImage={imageDelete} onClick={() => handleRemoveProject(id)} />
       </S.HoverImageContainer>
-      <S.ProjectImage src={thumbnail || 'https://placehold.co/600x400?text=project'} />
+      <S.ProjectImage src={thumbnail || defaultProject} />
       <S.ProjectInfoContainer>
         <S.ProjectTitle>{title}</S.ProjectTitle>
         <S.LikeCommentContainer>

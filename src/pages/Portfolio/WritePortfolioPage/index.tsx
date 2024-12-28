@@ -10,7 +10,7 @@ import ProjectSection from '@/components/WritePortfolio/ProjectSection';
 import Navbar from '@/components/Layout/Navbar/Navbar';
 import Modal from '@/components/Common/Modal';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useResponsive } from '@/hooks/useResponsive';
 import { instance } from '@/apis/instance';
 
@@ -38,7 +38,33 @@ export const WritePortfolioPage = () => {
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState<boolean>(false);
   const [pendingAction, setPendingAction] = useState<null | (() => void)>(null); // 실행할 함수 임시 저장
   const navigate = useNavigate();
+  const { portfolioId } = useParams();
+  const isEditMode = !!portfolioId;
   const { isPC } = useResponsive();
+
+  // 포트폴리오 불러오기
+  useEffect(() => {
+    if (isEditMode) {
+      const fetchPortfolio = async () => {
+        try {
+          const response = await instance.get(`pofolo/portfolios/${portfolioId}/`);
+          setIsPrivate(!response.data.is_public);
+          setTitle(response.data.title);
+          setName(response.data.username);
+          setMainCategory(response.data.major_field);
+          setSubCategory(response.data.sub_field);
+          setDescription(response.data.description);
+          setSkill(response.data.skills);
+          setCareer(response.data.experiences);
+          setProjects(response.data.related_projects);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchPortfolio();
+    }
+  }, [isEditMode, portfolioId]);
 
   // 포트폴리오 업로드
   const uploadPortfolio = async () => {
@@ -58,6 +84,30 @@ export const WritePortfolioPage = () => {
       const response = await instance.post('pofolo/portfolios/create/', data);
       setPendingAction(() => () => {
         navigate(`/portfolio/${response.data.id}`); // navigate 함수를 저장했다가 '포트폴리오 보기' 클릭 시 넘어감
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 포트폴리오 수정
+  const editPortfolio = async () => {
+    try {
+      const data = {
+        is_public: !isPrivate,
+        title: title,
+        username: name,
+        major_field: mainCategory,
+        sub_field: subCategory,
+        description: description,
+        skills: skill,
+        experiences: career,
+        related_projects: projects,
+      };
+
+      const response = await instance.patch(`pofolo/portfolios/${portfolioId}/`, data);
+      setPendingAction(() => () => {
+        navigate(`/portfolio/${response.data.id}`);
       });
     } catch (error) {
       console.error(error);
@@ -94,7 +144,11 @@ export const WritePortfolioPage = () => {
     validateFields();
 
     if (btnActive) {
-      await uploadPortfolio();
+      if (isEditMode) {
+        await editPortfolio();
+      } else {
+        await uploadPortfolio();
+      }
       setIsCompleteModalOpen(true);
     }
   };
@@ -180,7 +234,7 @@ export const WritePortfolioPage = () => {
       <S.Layout>
         <S.PortFolioLayout>
           <HeaderSection
-            headerText="새 포트폴리오"
+            headerText={isEditMode ? '포트폴리오 수정' : '새 포트폴리오'}
             isPrivate={isPrivate}
             setIsPrivate={setIsPrivate}
             handleUploadClick={handleUploadClick}
@@ -245,7 +299,7 @@ export const WritePortfolioPage = () => {
         isOpen={isCompleteModalOpen}
         setIsOpen={setIsCompleteModalOpen}
         icon="checked"
-        mainText="포트폴리오가 완성되었어요!"
+        mainText={isEditMode ? '포트폴리오가 수정되었어요!' : '포트폴리오가 완성되었어요!'}
         LBtnText="닫기"
         LBtnOnClick={() => navigate('/mypage')} // 닫기를 누르면 이전 페이지(마이페이지)로 이동
         RBtnText="포트폴리오 보기"
