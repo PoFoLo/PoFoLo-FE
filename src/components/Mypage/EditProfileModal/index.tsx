@@ -11,6 +11,8 @@ import ProfileLinkSection from '@/components/Mypage/EditProfileModal/ProfileLink
 import AvailabilitySection from '@/components/Mypage/EditProfileModal/AvailabilitySection';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
+import { useNavigate } from 'react-router-dom';
+import { instance } from '@/apis/instance';
 
 interface Profile {
   id: number;
@@ -25,7 +27,7 @@ interface Profile {
   introduction: string | null;
   links: string[];
   availability: string[];
-  profile_img: string | null;
+  profile_img_url: string | null;
 }
 
 interface ModalProps {
@@ -35,8 +37,8 @@ interface ModalProps {
 }
 
 const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps) => {
-  const [nickname, setNickname] = useState<string>(profileData.nickname);
-  const [education, setEducation] = useState<string>(profileData.education);
+  const [nickname, setNickname] = useState<string>(profileData.nickname || '');
+  const [education, setEducation] = useState<string>(profileData.education || '');
   const [educationIsPublic, setEducationIsPublic] = useState<boolean>(
     profileData.education_is_public
   );
@@ -47,19 +49,22 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
   const [email, setEmail] = useState<string | null>(profileData.email);
   const [emailIsPublic, setEmailIsPublic] = useState<boolean>(profileData.email_is_public);
   const [introduction, setIntroduction] = useState<string | null>(profileData.introduction);
-  const [links, setLinks] = useState<string[]>(profileData.links);
-  const [availability, setAvailability] = useState<string[]>(profileData.availability);
-  const [imageFile, setImageFile] = useState<File | null>(null); // 프로필 이미지 변경 시 이미지 파일
+  const [links, setLinks] = useState<string[]>(profileData.links || []);
+  const [availability, setAvailability] = useState<string[]>(profileData.availability || []);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isImageDeleted, setIsImageDeleted] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, boolean>>({
     nickname: false,
     education: false,
     introduction: false,
   });
 
-  const [isAnimating, setIsAnimating] = useState(false); // 애니메이션 작동 여부
-  const [upwardDirection, setUpwardDirection] = useState(false); // 애니메이션 이동 방향
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [upwardDirection, setUpwardDirection] = useState(false);
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(true);
   const modalRef = useRef<HTMLDivElement>(null);
   const { isPC } = useResponsive();
+  const navigate = useNavigate();
 
   // 모달 열릴 때 애니메이션 제어
   useEffect(() => {
@@ -81,9 +86,11 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
       setUpwardDirection(false);
       setTimeout(() => {
         setIsOpen(false);
-      }, 400); // 애니메이션 종료 후 모달 닫기
+        navigate(0); // 모달 닫힐 때 새로고침, 변경 사항 마이페이지에서 반영되게
+      }, 500); // 애니메이션 종료 후 모달 닫기
     } else {
       setIsOpen(false);
+      navigate(0);
     }
   };
 
@@ -106,7 +113,6 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
     },
     [isPC]
   );
-
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
@@ -119,7 +125,7 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
   // 필수 입력 항목 유효성 검사 -> 에러 설정
   const validateFields = () => {
     setErrors({
-      nickname: !nickname.trim(),
+      nickname: !nickname.trim() || !isDuplicateChecked || errors.nickname,
       education: !education.trim(),
       introduction: introduction !== null && introduction.length > 50,
     });
@@ -128,29 +134,48 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
   // 조건을 만족하면 저장 버튼 활성화
   const btnActive =
     nickname.trim().length > 0 &&
+    isDuplicateChecked &&
+    !errors.nickname &&
     education.trim().length > 0 &&
     (!introduction || introduction.length <= 50);
 
   // 저장 버튼을 누르면 유효성 검사 실시, 버튼이 활성화 되어있는 경우 저장 처리 로직
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     validateFields();
 
-    // trim 해서 보내기
     if (btnActive) {
-      const data = {
-        nickname,
-        education,
-        educationIsPublic,
-        phoneNum,
-        phoneNumIsPublic,
-        email,
-        emailIsPublic,
-        introduction,
-        links,
-        availability,
+      const newProfile = {
+        nickname: nickname.trim(),
+        education: education,
+        education_is_public: educationIsPublic,
+        phone_num: phoneNum,
+        phone_num_is_public: phoneNumIsPublic,
+        email: email,
+        email_is_public: emailIsPublic,
+        introduction: introduction,
+        links: links,
+        availability: availability,
       };
-      console.log('저장', data);
-      // 프로필 이미지 처리
+
+      try {
+        // 이미지 수정
+        if (imageFile) {
+          const formData = new FormData();
+          formData.append('profile_img', imageFile);
+          await instance.post('pofolo/users/profile-img-upload/', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          });
+        }
+        // 이미지 삭제
+        else if (isImageDeleted) {
+          await instance.delete(`pofolo/users/profile/image/${profileData.id}/`);
+        }
+        // 프로필 수정
+        await instance.patch(`pofolo/users/profile/${profileData.id}/`, newProfile);
+        handleClose();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -181,8 +206,9 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
             </S.ModalHeaderContainer>
             <S.ProfileContainer>
               <ProfileImageSection
-                profileImg={profileData.profile_img}
+                profileImg={profileData.profile_img_url}
                 setImageFile={setImageFile}
+                setIsImageDeleted={setIsImageDeleted}
               />
               <S.ProfileFormContainer>
                 <NicknameSection
@@ -190,6 +216,8 @@ const EditProfileModal = ({ isOpen = false, setIsOpen, profileData }: ModalProps
                   setNickname={setNickname}
                   error={errors.nickname}
                   setErrors={setErrors}
+                  isDuplicateChecked={isDuplicateChecked}
+                  setIsDuplicateChecked={setIsDuplicateChecked}
                 />
                 <EducationSection
                   education={education}
