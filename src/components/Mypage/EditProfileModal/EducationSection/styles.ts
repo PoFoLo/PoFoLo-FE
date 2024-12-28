@@ -1,22 +1,8 @@
 import styled, { css } from 'styled-components';
 
-export const InputsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 1.6rem;
-  min-width: 0rem;
-
-  ${(props) =>
-    props.theme.media.pc(css`
-      flex-direction: row;
-    `)}
-`;
-
 export const InputWrapper = styled.div`
-  position: relative;
-  min-width: 0;
   width: 100%;
+  position: relative;
 `;
 
 export const CheckboxLabel = styled.label`
@@ -37,7 +23,7 @@ export const CheckboxLabel = styled.label`
 export const CheckboxContainer = styled.div`
   display: flex;
   position: absolute;
-  top: 0.9rem;
+  top: 1rem;
   right: 1.2rem;
 
   ${(props) =>
