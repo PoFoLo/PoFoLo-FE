@@ -31,8 +31,9 @@ const Input = ({
   const [isFocused, setIsFocused] = useState(false);
 
   // 아이콘 표시 상태 결정
-  const showIconState =
-    !hideIcon && isDuplicateChecked && (error || (!isFocused && !!value.trim()));
+  const showIconState = isDuplicated
+    ? !hideIcon && isDuplicateChecked && (error || (!isFocused && !!value.trim()))
+    : !hideIcon && (error || (!isFocused && !!value.trim()));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
