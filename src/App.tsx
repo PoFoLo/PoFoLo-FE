@@ -27,9 +27,9 @@ function App() {
         <Route path="/kakao/callback" element={<OAuthLoading />} />
         <Route path="/join" element={<JoinPage />} />
         <Route path="/home" element={<MainPage />} />
-        <Route path="/project/:projectId" element={<ProjectDetailPage />} />
+        <Route path="/project/:project_id" element={<ProjectDetailPage />} />
         <Route path="/project/write" element={<WriteProjectPage />} />
-        <Route path="/portfolio/:portfolioId" element={<PortfolioDetailPage />} />
+        <Route path="/portfolio/:portfolio_id" element={<PortfolioDetailPage />} />
         <Route path="/portfolio/write" element={<WritePortfolioPage />} />
         <Route path="/portfolio/edit/:portfolioId" element={<WritePortfolioPage />} />
         <Route path="/mypage" element={<Mypage />} />

@@ -183,6 +183,13 @@ export const CommentContentWrapper = styled.div`
     gap: 0.4rem;
   }
 
+  .menu-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
   img {
     width: 2rem;
     height: 2rem;
@@ -252,9 +259,17 @@ export const ReplySection = styled.div`
 `;
 
 export const ReplyWrapper = styled.div`
-  margin: 0.8rem 0 0 0.6rem;
+  margin-top: 0.8rem;
+  width: 100%;
   display: flex;
-  gap: 0.4rem;
+  justify-content: space-between;
+  align-items: center;
+
+  .comment-info-wrapper {
+    margin-left: 0.6rem;
+    display: flex;
+    gap: 0.4rem;
+  }
 
   .reply-line {
     width: 3.2rem;

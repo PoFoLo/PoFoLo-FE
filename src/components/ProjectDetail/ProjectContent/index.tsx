@@ -1,46 +1,174 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import { useResponsive } from '@/hooks/useResponsive';
+import { instance } from '@/apis/instance';
+import { ProjectData } from '@/components/ProjectDetail/ProjectContent/dto';
 import * as S from '@/components/ProjectDetail/ProjectContent/styles';
 import * as C from '@/components/Common/Detail/styles';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
 import linkIcon from '@/assets/webps/Common/link.webp';
-import projectImg1 from '@/assets/webps/ProjectDetail/projectImg1.webp';
-import projectImg2 from '@/assets/webps/ProjectDetail/projectImg2.webp';
-import projectImg3 from '@/assets/webps/ProjectDetail/projectImg3.webp';
 import like from '@/assets/svgs/ProjectDetail/like.svg';
 import likeRed from '@/assets/svgs/ProjectDetail/likeRed.svg';
 import comment from '@/assets/svgs/ProjectDetail/comment.svg';
+import projectDefault from '@/assets/webps/Common/projectDefault.webp';
+import Button from '@/components/Common/Button';
 
 interface ProjectContentProps {
   onCommentClick: () => void;
   commentCount: number; // 댓글 개수 prop 추가
 }
 
-const links = [
-  { title: 'BEGIN AGAIN 82小红书...', url: 'behance.net/' },
-  { title: '홍길동의 외부링크 - Sitename', url: 'linkname.link' },
-  { title: 'BEGIN AGAIN 82小红书...', url: 'behance.net/' },
-  { title: '홍길동의 외부링크 - Sitename', url: 'linkname.link' },
-  { title: 'BEGIN AGAIN 82小红书...', url: 'behance.net/' },
-  { title: '홍길동의 외부링크 - Sitename', url: 'linkname.link' },
-];
-
 export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, commentCount }) => {
+  const [projectData, setProjectData] = useState<ProjectData | null>(null);
+  const [writerProfile, setWriterProfile] = useState<{
+    nickname: string;
+    education: string;
+    profileImg: string;
+  }>({
+    nickname: '',
+    education: '',
+    profileImg: profileIcon, // 기본 이미지 초기화
+  });
   const [isFixed, setIsFixed] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(10);
   const { isPC } = useResponsive();
+  const { project_id } = useParams<{ project_id: string }>(); // URL 파라미터에서 project_id 가져오기
   const nav = useNavigate();
-  const images = [projectImg1, projectImg2, projectImg3];
   const projectContainerRef = useRef<HTMLDivElement | null>(null);
   const floatingButtonRef = useRef<HTMLDivElement | null>(null);
 
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
-    setLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
+  const fetchProjectData = async () => {
+    try {
+      const response = await instance.get(`/pofolo/projects/${project_id}/`);
+      const data = response.data;
+
+      // links 객체를 배열로 변환
+      const formattedLinks = Object.entries(data.links).map(([title, url]) => ({
+        title,
+        url,
+      }));
+
+      setProjectData({
+        ...data,
+        links: formattedLinks,
+      });
+      setLikeCount(data.liked_count);
+    } catch (error) {
+      console.error('프로젝트 데이터를 가져오는 중 오류 발생:', error);
+      nav('/'); // 오류 발생 시 홈으로 이동
+    }
   };
+
+  const fetchLikeStatus = async () => {
+    try {
+      const response = await instance.get('/pofolo/projects/liked/');
+      const likedProjects = response.data; // 내가 좋아요 누른 프로젝트 ID 리스트
+
+      if (
+        project_id &&
+        likedProjects.some((project: { id: number }) => project.id === Number(project_id))
+      ) {
+        setIsLiked(true); // 현재 프로젝트에 좋아요 누른 상태로 설정
+      } else {
+        setIsLiked(false); // 좋아요를 누르지 않은 상태로 설정
+      }
+    } catch (error) {
+      console.error('좋아요 상태를 가져오는 중 오류 발생:', error);
+      setIsLiked(false); // 오류 발생 시 기본 상태로 초기화
+    }
+  };
+
+  const handleLikeClick = async () => {
+    try {
+      // 서버에 요청 보내기 전에 좋아요 상태 및 좋아요 수 즉시 반영
+      setIsLiked((prevIsLiked) => {
+        setLikeCount((prevCount) => (prevIsLiked ? prevCount - 1 : prevCount + 1));
+        return !prevIsLiked;
+      });
+
+      const response = await instance.post(`/pofolo/projects/${project_id}/like/`);
+
+      if (response.data.message === 'Like added') {
+        setIsLiked(true);
+      } else if (response.data.message === 'Like removed') {
+        setIsLiked(false);
+      }
+
+      // 서버에서 최신 데이터를 가져와 동기화
+      const updatedData = await instance.get(`/pofolo/projects/${project_id}/`);
+      setLikeCount(updatedData.data.liked_count);
+    } catch (error) {
+      console.error('좋아요 처리 중 오류 발생:', error);
+
+      // 서버 요청 실패 시 상태 복구
+      setIsLiked((prevIsLiked) => {
+        setLikeCount((prevCount) => (prevIsLiked ? prevCount + 1 : prevCount - 1));
+        return !prevIsLiked;
+      });
+    }
+  };
+
+  const fetchWriterProfile = async (user_id: number) => {
+    try {
+      const response = await instance.get(`/pofolo/users/profile/${user_id}/`);
+      const { nickname, education, profile_img } = response.data.profile;
+
+      setWriterProfile({
+        nickname,
+        education,
+        profileImg: profile_img || profileIcon, // 기본 이미지 대체
+      });
+    } catch (error) {
+      console.error('작성자 프로필 조회 중 오류 발생:', error);
+      setWriterProfile({
+        nickname: '',
+        education: '',
+        profileImg: profileIcon, // 기본 이미지
+      });
+    }
+  };
+
+  const handleDeleteProject = async (projectId: string, nav: (path: string) => void) => {
+    const confirmDelete = window.confirm('프로젝트를 삭제하시겠습니까?');
+    if (confirmDelete) {
+      try {
+        await instance.delete(`/pofolo/projects/${projectId}/`);
+        nav('/home'); // 삭제 성공 시 홈으로 이동
+      } catch (error) {
+        console.error('프로젝트 삭제 중 오류 발생:', error);
+        alert('프로젝트를 삭제하는 데 실패했습니다.');
+      }
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchProjectData(); // 프로젝트 데이터 가져오기
+        await fetchLikeStatus();
+      } catch (error) {
+        console.error('프로젝트 데이터 가져오기 실패:', error);
+      }
+    };
+
+    fetchData();
+  }, [project_id]);
+
+  useEffect(() => {
+    const fetchWriterData = async () => {
+      if (projectData?.writer) {
+        try {
+          await fetchWriterProfile(projectData.writer); // 작성자 프로필 가져오기
+        } catch (error) {
+          console.error('작성자 프로필 가져오기 실패:', error);
+        }
+      }
+    };
+
+    fetchWriterData();
+  }, [projectData]); // projectData가 변경될 때 작성자 정보를 가져옴
 
   // 플로팅 버튼 고정
   useEffect(() => {
@@ -64,69 +192,122 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  if (!projectData) return <p>로딩 중...</p>;
+
   return (
     <>
       <C.ImgContainer>
         <ScrollContainer className="scroll-container" horizontal>
-          {images.map((imgSrc, index) => (
-            <C.ImageWrapper key={index}>
-              <img src={imgSrc} alt={`image-${index}`} />
-            </C.ImageWrapper>
-          ))}
+          {(projectData.project_img.length > 0 ? projectData.project_img : [projectDefault]).map(
+            (imgSrc, index) => (
+              <C.ImageWrapper key={index}>
+                <img src={imgSrc} alt={`image-${index}`} />
+              </C.ImageWrapper>
+            )
+          )}
         </ScrollContainer>
       </C.ImgContainer>
       <C.Container ref={projectContainerRef}>
         <C.TopInfo>
           <C.ProfileInfo>
-            <img onClick={() => nav('/mypage')} src={profileIcon} alt="profile icon" />
+            <img onClick={() => nav('/mypage')} src={writerProfile.profileImg} alt="profile icon" />
             <C.ProfileContent>
               <p onClick={() => nav('/mypage')} className="nickname">
-                홍길동
+                {writerProfile.nickname}
               </p>
-              <p className="school">홍익대학교 컴퓨터공학과</p>
+              <p className="school">{writerProfile.education}</p>
             </C.ProfileContent>
           </C.ProfileInfo>
-          <C.Date>2024년 12월 30일</C.Date>
+
+          <S.RightWrapper>
+            <C.Date>
+              {new Date(projectData.created_at).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </C.Date>
+            {isPC && Number(localStorage.getItem('user_id')) === projectData.writer && (
+              <div className="menu-wrapper">
+                <Button
+                  size="small"
+                  type="obscure"
+                  onClick={() => handleDeleteProject(project_id as string, nav)}
+                >
+                  삭제
+                </Button>
+                <Button size="small" type="sub" onClick={() => nav(`/project/edit/${project_id}`)}>
+                  편집
+                </Button>
+              </div>
+            )}
+          </S.RightWrapper>
         </C.TopInfo>
 
         <C.BodyText>
-          <S.Title>BEGIN AGAIN 82小红书日</S.Title>
-          <S.FieldButton>
-            <span>프론트엔드</span>
+          <div className="top-bar">
+            <S.Title>{projectData.title}</S.Title>
+
+            <S.RightWrapper>
+              {!isPC && Number(localStorage.getItem('user_id')) === projectData.writer && (
+                <div className="menu-wrapper">
+                  <Button
+                    size="small2"
+                    type="obscure"
+                    onClick={() => handleDeleteProject(project_id as string, nav)}
+                  >
+                    삭제
+                  </Button>
+                  <Button
+                    size="small2"
+                    type="sub"
+                    onClick={() => nav(`/project/edit/${project_id}`)}
+                  >
+                    편집
+                  </Button>
+                </div>
+              )}
+            </S.RightWrapper>
+          </div>
+
+          <S.FieldButton $majorField={projectData.major_field}>
+            <span>{projectData.sub_field}</span>
           </S.FieldButton>
 
           <C.Article>
             <h2>소개</h2>
-            <span>
-              {`In 2024, Xiaohongshu celebrated its 11th anniversary. Over the past decade, the platform has brought together many life-loving, sincere, and friendly REDers.
-Thanks to these vibrant individuals, we can find like-minded people, gradually forming a community, a city, and various beautiful spaces to gather. Together, we face challenges, share joy, and grow.
-For this 11th anniversary, our theme is “BEGIN AGAIN.” We hope everyone can start anew, discovering and exploring more life inspirations, and together, embrace a brighter future.
-This design is based on the theme “BEGIN AGAIN,” showcasing a variety of letter styles and vibrant colors. Additionally, the summer elements of ‘82’ are personified, symbolizing constant forward movement. The blend of fun and symbolism signifies the continuous evolution and progress of Xiaohongshu.`}
-            </span>
+            <span>{projectData.description}</span>
           </C.Article>
 
           <C.Article>
             <h2>주요 스킬</h2>
-            <span>Photoshop, Illustrator, Figma</span>
+            <span>{projectData.skills}</span>
           </C.Article>
 
-          <C.Article>
-            <h2>링크</h2>
+          {projectData.links.length > 0 && (
+            <C.Article>
+              <h2>링크</h2>
 
-            <S.LinkList>
-              <ScrollContainer className="scroll-container" horizontal>
-                {links.map((link, index) => (
-                  <S.LinkContainer key={index}>
-                    <img src={linkIcon} alt="link icon" />
-                    <S.LinkBox>
-                      <p className="link-title">{link.title}</p>
-                      <p className="web-address">{link.url}</p>
-                    </S.LinkBox>
-                  </S.LinkContainer>
-                ))}
-              </ScrollContainer>
-            </S.LinkList>
-          </C.Article>
+              <S.LinkList>
+                <ScrollContainer className="scroll-container" horizontal>
+                  {projectData.links.map((link, index) => (
+                    <S.LinkContainer
+                      key={index}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img src={linkIcon} alt="link icon" />
+                      <S.LinkBox>
+                        <p className="link-title">{link.title}</p>
+                        <p className="web-address"> {link.url} </p>
+                      </S.LinkBox>
+                    </S.LinkContainer>
+                  ))}
+                </ScrollContainer>
+              </S.LinkList>
+            </C.Article>
+          )}
         </C.BodyText>
 
         {/* 플로팅 버튼 */}
@@ -138,11 +319,11 @@ This design is based on the theme “BEGIN AGAIN,” showcasing a variety of let
             $likeCount={likeCount}
           >
             <img src={isLiked ? likeRed : like} alt="like" className={isLiked ? 'liked' : ''} />
-            <span>{likeCount}</span>
+            <span>{projectData.liked_count}</span>
           </S.LikeButton>
           <S.CommentButton onClick={onCommentClick} $isPC={isPC} $commentCount={commentCount}>
             <img src={comment} alt="comment" />
-            <span>{commentCount}</span>
+            <span>{projectData.comment_count}</span>
           </S.CommentButton>
         </S.FloatingButtonWrapper>
       </C.Container>

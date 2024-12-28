@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import Card from '@/components/Main/CardList/Card/index';
-import * as S from '@/components/Main/CardList/styles';
+import React from 'react';
+import Card from './Card';
+import * as S from './styles';
 
 interface CardData {
   imageUrl: string;
@@ -10,43 +10,19 @@ interface CardData {
   comments: number;
 }
 
-interface CardListProps {
-  initialCards: CardData[]; // 초기 카드 데이터
-  loadMore: () => Promise<CardData[]>; // 더 많은 카드를 불러오는 함수
-}
-
-const CardList: React.FC<CardListProps> = ({ initialCards, loadMore }) => {
-  const [cards, setCards] = useState<CardData[]>(initialCards);
-  const [loading, setLoading] = useState(false);
-  const observer = useRef<IntersectionObserver | null>(null);
-  const loadMoreRef = useRef<HTMLDivElement>(null);
-
-  const handleObserver = useCallback(
-    async (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
-      if (target.isIntersecting && !loading) {
-        setLoading(true);
-        const newCards = await loadMore();
-        setCards((prevCards) => [...prevCards, ...newCards]);
-        setLoading(false);
-      }
-    },
-    [loading, loadMore]
-  );
-
-  useEffect(() => {
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(handleObserver, {
-      rootMargin: '50px',
-      threshold: 1.0,
-    });
-    if (loadMoreRef.current) observer.current.observe(loadMoreRef.current);
-  }, [handleObserver]);
+const CardList: React.FC = () => {
+  const dummyCards: CardData[] = Array.from({ length: 12 }, (_, index) => ({
+    imageUrl: `/path/to/image${index + 1}.webp`,
+    memberName: `Member ${index + 1}`,
+    projectName: `Project ${index + 1}`,
+    likes: Math.floor(Math.random() * 100),
+    comments: Math.floor(Math.random() * 50),
+  }));
 
   return (
-    <>
+    <S.CardListContainer>
       <S.CardList>
-        {cards.map((card, index) => (
+        {dummyCards.map((card, index) => (
           <Card
             key={index}
             imageUrl={card.imageUrl}
@@ -57,9 +33,7 @@ const CardList: React.FC<CardListProps> = ({ initialCards, loadMore }) => {
           />
         ))}
       </S.CardList>
-      <div ref={loadMoreRef} style={{ height: '2rem' }}></div>
-      {loading && <p>Loading...</p>}
-    </>
+    </S.CardListContainer>
   );
 };
 
