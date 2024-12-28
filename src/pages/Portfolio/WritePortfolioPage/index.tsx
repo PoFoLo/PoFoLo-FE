@@ -55,7 +55,7 @@ export const WritePortfolioPage = () => {
           setSubCategory(response.data.sub_field);
           setDescription(response.data.description);
           setSkill(response.data.skills);
-          setCareer(response.data.experiences);
+          setCareer(response.data.experiences.join(', '));
           setProjects(response.data.related_projects);
         } catch (error) {
           console.error(error);
@@ -77,7 +77,10 @@ export const WritePortfolioPage = () => {
         sub_field: subCategory,
         description: description,
         skills: skill,
-        experiences: career,
+        experiences: career
+          .split(',')
+          .map((item) => item.trim())
+          .filter((item) => item !== ''),
         related_projects: projects,
       };
 
@@ -101,7 +104,10 @@ export const WritePortfolioPage = () => {
         sub_field: subCategory,
         description: description,
         skills: skill,
-        experiences: career,
+        experiences: career
+          .split(',')
+          .map((item) => item.trim())
+          .filter((item) => item !== ''),
         related_projects: projects,
       };
 
