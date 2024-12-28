@@ -8,6 +8,7 @@ import { ProjectDetailPage } from '@/pages/Project/ProjectDetailPage';
 import { WriteProjectPage } from '@/pages/Project/WriteProjectPage';
 import { WritePortfolioPage } from '@/pages/Portfolio/WritePortfolioPage';
 import { PortfolioDetailPage } from '@/pages/Portfolio/PortfolioDetailPage';
+import { Mypage } from '@/pages/Mypage';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/project/write" element={<WriteProjectPage />} />
         <Route path="/portfolio/:portfolioId" element={<PortfolioDetailPage />} />
         <Route path="/portfolio/write" element={<WritePortfolioPage />} />
+        <Route path="/mypage" element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   );

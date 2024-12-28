@@ -11,6 +11,10 @@ interface CategorySectionProps {
   setSubcategory: React.Dispatch<React.SetStateAction<string>>;
   error: boolean;
   setErrors: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  showTitle?: boolean;
+  direction?: 'row' | 'column';
+  onCategoryToggle?: () => void;
+  onSubCategoryToggle?: () => void;
 }
 
 const CategorySection = ({
@@ -20,6 +24,10 @@ const CategorySection = ({
   setSubcategory,
   error = false,
   setErrors,
+  showTitle = true,
+  direction,
+  onCategoryToggle,
+  onSubCategoryToggle,
 }: CategorySectionProps) => {
   const categories = [
     {
@@ -46,6 +54,22 @@ const CategorySection = ({
 
   const categoryRef = useRef<HTMLDivElement>(null);
   const subCategoryRef = useRef<HTMLDivElement>(null);
+
+  const handleCategoryClick = () => {
+    setIsCategoryOpen((prev) => !prev);
+    if (onCategoryToggle) {
+      onCategoryToggle();
+    }
+  };
+
+  const handleSubCategoryClick = () => {
+    if (mainCategory) {
+      setIsSubCategoryOpen((prev) => !prev);
+      if (onSubCategoryToggle) {
+        onSubCategoryToggle();
+      }
+    }
+  };
 
   // 드롭다운 영역 외부 클릭했을 때 드롭다운 닫히게
   const handleClickOutside = useCallback((event: MouseEvent) => {
@@ -79,39 +103,36 @@ const CategorySection = ({
 
   return (
     <S.SectionContainer>
-      <S.SectionTitle>분야</S.SectionTitle>
+      {showTitle && <S.SectionTitle>분야</S.SectionTitle>}
       <S.SelectFieldContainer>
-        <S.DropdownContainer>
+        <S.DropdownsContainer direction={direction || 'row'}>
           {/* 대분류 드롭다운 */}
-          <S.DropdownHeader ref={categoryRef} onClick={() => setIsCategoryOpen(!isCategoryOpen)}>
+          <S.DropdownHeader ref={categoryRef} onClick={handleCategoryClick}>
             <S.SelectedText $isSelected={!!mainCategory && !isCategoryOpen}>
               {isCategoryOpen ? '대분류' : mainCategory || '대분류'}
             </S.SelectedText>
-            <S.IconContainer
-              $backgroundImage={isCategoryOpen ? upArrow : mainCategory ? blueDownArrow : downArrow}
-            />
+            <S.IconContainer $backgroundImage={mainCategory ? blueDownArrow : downArrow} />
             {isCategoryOpen && (
-              <S.OptionList>
-                {categories.map((category, index) => (
-                  <S.Option
-                    key={index}
-                    $isSelectedValue={category.label === mainCategory}
-                    onClick={() => handleCategoryChange(category.label)}
-                  >
-                    {category.label}
-                  </S.Option>
-                ))}
-              </S.OptionList>
+              <S.OptionContainer>
+                <S.OptionList>
+                  <S.FirstOption>대분류</S.FirstOption>
+                  {categories.map((category, index) => (
+                    <S.Option
+                      key={index}
+                      $isSelectedValue={category.label === mainCategory}
+                      onClick={() => handleCategoryChange(category.label)}
+                    >
+                      {category.label}
+                    </S.Option>
+                  ))}
+                </S.OptionList>
+                <S.IconContainer $backgroundImage={upArrow} />
+              </S.OptionContainer>
             )}
           </S.DropdownHeader>
 
           {/* 소분류 드롭다운 */}
-          <S.DropdownHeader
-            ref={subCategoryRef}
-            onClick={() => {
-              if (mainCategory) setIsSubCategoryOpen(!isSubCategoryOpen);
-            }}
-          >
+          <S.DropdownHeader ref={subCategoryRef} onClick={handleSubCategoryClick}>
             <S.SelectedText $isSelected={!!subCategory && !isSubCategoryOpen}>
               {isSubCategoryOpen ? '소분류' : subCategory || '소분류'}
             </S.SelectedText>
@@ -121,20 +142,24 @@ const CategorySection = ({
               }
             />
             {isSubCategoryOpen && selectedCategory && (
-              <S.OptionList>
-                {selectedCategory.subcategories.map((sub, index) => (
-                  <S.Option
-                    key={index}
-                    $isSelectedValue={sub === subCategory}
-                    onClick={() => handleSubCategoryChange(sub)}
-                  >
-                    {sub}
-                  </S.Option>
-                ))}
-              </S.OptionList>
+              <S.OptionContainer>
+                <S.OptionList>
+                  <S.FirstOption>소분류</S.FirstOption>
+                  {selectedCategory.subcategories.map((sub, index) => (
+                    <S.Option
+                      key={index}
+                      $isSelectedValue={sub === subCategory}
+                      onClick={() => handleSubCategoryChange(sub)}
+                    >
+                      {sub}
+                    </S.Option>
+                  ))}
+                </S.OptionList>
+                <S.IconContainer $backgroundImage={upArrow} />
+              </S.OptionContainer>
             )}
           </S.DropdownHeader>
-        </S.DropdownContainer>
+        </S.DropdownsContainer>
         {error && <S.ErrorMessage>필수 선택 항목입니다.</S.ErrorMessage>}
       </S.SelectFieldContainer>
     </S.SectionContainer>

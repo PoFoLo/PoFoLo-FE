@@ -1,14 +1,20 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ProjectImage = styled.img`
-  width: 31rem;
-  height: 17.4rem;
+  height: 11.4rem;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   margin: 0 auto;
-  border-radius: 1.2rem 1.2rem 0rem 0rem;
+  border-radius: 0.8rem;
   border-top: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-right: 0.1rem solid ${(props) => props.theme.colors.gray20};
   border-left: 0.1rem solid ${(props) => props.theme.colors.gray20};
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      width: 31rem;
+      height: 17.4rem;
+    `)}
 `;
 
 export const HoverImageContainer = styled.div`
@@ -19,41 +25,53 @@ export const HoverImageContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 17.4rem;
+  height: 11.4rem;
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 1.2rem 1.2rem 0rem 0rem;
+  border-radius: 0.8rem;
   z-index: 1;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      height: 17.4rem;
+    `)}
 `;
 
 export const HoverBtn = styled.button<{ $backgroundImage: string }>`
-  width: 6.4rem;
-  height: 9.6rem;
+  width: 4.8rem;
+  height: 7.2rem;
   background-image: url(${(props) => props.$backgroundImage});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      width: 6.4rem;
+      height: 9.6rem;
+    `)}
 `;
 
 export const ProjectInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 6.6rem;
-  padding: 0.8rem 1.2rem 1rem 1.2rem;
-  border-radius: 0rem 0rem 1.2rem 1.2rem;
-  border-bottom: 0.1rem solid ${(props) => props.theme.colors.gray20};
-  border-right: 0.1rem solid ${(props) => props.theme.colors.gray20};
-  border-left: 0.1rem solid ${(props) => props.theme.colors.gray20};
+  margin-top: 1.2rem;
 `;
 
 export const ProjectTitle = styled.p`
-  ${(props) => props.theme.fonts.caption2};
-  margin-left: 0.2rem;
+  ${(props) => props.theme.fonts.caption3};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  ${(props) =>
+    props.theme.media.pc(
+      () => `
+	  ${props.theme.fonts.caption1};
+  `
+    )}
 `;
 
 export const LikeCommentContainer = styled.div`
@@ -79,7 +97,7 @@ export const CountText = styled.p`
 export const ProjectCard = styled.div`
   display: flex;
   flex-direction: column;
-  width: 31rem;
+  width: calc(11.4rem * (16 / 9));
   position: relative;
   cursor: pointer;
 
@@ -91,4 +109,9 @@ export const ProjectCard = styled.div`
     opacity: 0.5;
     transition: opacity 0.2s ease-in-out;
   }
+
+  ${(props) =>
+    props.theme.media.pc(css`
+      width: 31rem;
+    `)}
 `;
