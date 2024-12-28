@@ -1,7 +1,17 @@
 import styled, { css } from 'styled-components';
 
+export const RightWrapper = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+
+  .menu-wrapper {
+    display: flex;
+    gap: 0.8rem;
+  }
+`;
+
 export const Title = styled.h2`
-  margin-top: 1.6rem;
   color: black;
   ${(props) => props.theme.fonts.headline4};
 

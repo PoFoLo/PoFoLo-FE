@@ -12,6 +12,7 @@ import like from '@/assets/svgs/ProjectDetail/like.svg';
 import likeRed from '@/assets/svgs/ProjectDetail/likeRed.svg';
 import comment from '@/assets/svgs/ProjectDetail/comment.svg';
 import projectDefault from '@/assets/webps/Common/projectDefault.webp';
+import Button from '@/components/Common/Button';
 
 interface ProjectContentProps {
   onCommentClick: () => void;
@@ -129,6 +130,19 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
     }
   };
 
+  const handleDeleteProject = async (projectId: string, nav: (path: string) => void) => {
+    const confirmDelete = window.confirm('프로젝트를 삭제하시겠습니까?');
+    if (confirmDelete) {
+      try {
+        await instance.delete(`/pofolo/projects/${projectId}/`);
+        nav('/home'); // 삭제 성공 시 홈으로 이동
+      } catch (error) {
+        console.error('프로젝트 삭제 중 오류 발생:', error);
+        alert('프로젝트를 삭제하는 데 실패했습니다.');
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -205,17 +219,57 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
             </C.ProfileContent>
           </C.ProfileInfo>
 
-          <C.Date>
-            {new Date(projectData.created_at).toLocaleDateString('ko-KR', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </C.Date>
+          <S.RightWrapper>
+            <C.Date>
+              {new Date(projectData.created_at).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </C.Date>
+            {isPC && Number(localStorage.getItem('user_id')) === projectData.writer && (
+              <div className="menu-wrapper">
+                <Button
+                  size="small"
+                  type="obscure"
+                  onClick={() => handleDeleteProject(project_id as string, nav)}
+                >
+                  삭제
+                </Button>
+                <Button size="small" type="sub" onClick={() => nav(`/project/edit/${project_id}`)}>
+                  편집
+                </Button>
+              </div>
+            )}
+          </S.RightWrapper>
         </C.TopInfo>
 
         <C.BodyText>
-          <S.Title>{projectData.title}</S.Title>
+          <div className="top-bar">
+            <S.Title>{projectData.title}</S.Title>
+
+            <S.RightWrapper>
+              {!isPC && Number(localStorage.getItem('user_id')) === projectData.writer && (
+                <div className="menu-wrapper">
+                  <Button
+                    size="small2"
+                    type="obscure"
+                    onClick={() => handleDeleteProject(project_id as string, nav)}
+                  >
+                    삭제
+                  </Button>
+                  <Button
+                    size="small2"
+                    type="sub"
+                    onClick={() => nav(`/project/edit/${project_id}`)}
+                  >
+                    편집
+                  </Button>
+                </div>
+              )}
+            </S.RightWrapper>
+          </div>
+
           <S.FieldButton $majorField={projectData.major_field}>
             <span>{projectData.sub_field}</span>
           </S.FieldButton>
