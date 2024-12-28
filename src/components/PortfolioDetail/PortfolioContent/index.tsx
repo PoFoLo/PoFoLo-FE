@@ -1,43 +1,137 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import { useResponsive } from '@/hooks/useResponsive';
+import { instance } from '@/apis/instance';
+import { PortfolioData, RelatedProject } from '@/components/PortfolioDetail/PortfolioContent/dto';
 import Button from '@/components/Common/Button';
 import * as S from '@/components/PortfolioDetail/PortfolioContent/styles';
 import * as C from '@/components/Common/Detail/styles';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
 import linkGray from '@/assets/webps/Common/link.webp';
 import linkBlue from '@/assets/webps/PortfolioDetail/linkBlue.webp';
-import projectImg1 from '@/assets/webps/ProjectDetail/projectImg1.webp';
-import projectImg2 from '@/assets/webps/ProjectDetail/projectImg2.webp';
-import projectImg3 from '@/assets/webps/ProjectDetail/projectImg3.webp';
+import projectDefault from '@/assets/webps/Common/projectDefault.webp';
 
 export const PortfolioContent = () => {
+  const userId = localStorage.getItem('user_id');
+  const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null);
+  const [relatedProjects, setRelatedProjects] = useState<RelatedProject[]>([]);
+  const [writerInfo, setWriterInfo] = useState({
+    id: 0,
+    nickname: '',
+    education: '',
+    profileImg: profileIcon,
+  });
   const [isCopied, setIsCopied] = useState(false);
   const { isPC, isTab, isPhone } = useResponsive();
+  const { portfolio_id } = useParams<{ portfolio_id: string }>();
   const nav = useNavigate();
-  const images = [
-    { src: projectImg1, writer: '홍길동', title: '첫 번째 프로젝트' },
-    { src: projectImg2, writer: '김철수', title: '두 번째 프로젝트' },
-    { src: projectImg3, writer: '이영희', title: '세 번째 프로젝트' },
-  ];
+
+  useEffect(() => {
+    const fetchPortfolioData = async () => {
+      try {
+        const response = await instance.get(`/pofolo/portfolios/${portfolio_id}/`);
+        setPortfolioData(response.data);
+      } catch (error) {
+        console.error('포트폴리오 데이터를 가져오는 중 오류 발생:', error);
+        nav(-1);
+      }
+    };
+
+    fetchPortfolioData();
+  }, [portfolio_id, nav]);
+
+  useEffect(() => {
+    const fetchRelatedProjects = async () => {
+      if (!portfolioData?.related_projects) return;
+
+      try {
+        const fetchedProjects = await Promise.all(
+          portfolioData.related_projects.map(async (projectId: number) => {
+            const response = await instance.get(`/pofolo/projects/${projectId}/`);
+            const projectData = response.data;
+            return {
+              id: projectData.id,
+              writer: projectData.writer,
+              title: projectData.title,
+              project_img: projectData.project_img || projectDefault,
+            };
+          })
+        );
+        setRelatedProjects(fetchedProjects);
+      } catch (error) {
+        console.error('관련 프로젝트 데이터를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchRelatedProjects();
+  }, [portfolioData]);
+
+  useEffect(() => {
+    const fetchWriterInfo = async () => {
+      if (!portfolioData?.writer) return;
+
+      try {
+        const response = await instance.get(`/pofolo/users/profile/${portfolioData.writer}/`);
+        const { id, nickname, education, profile_img } = response.data.profile;
+        console.log('작성자 정보:', response.data.profile);
+        setWriterInfo({
+          id,
+          nickname,
+          education,
+          profileImg: profile_img || profileIcon, // 프로필 이미지가 없으면 기본 이미지
+        });
+      } catch (error) {
+        console.error('작성자 정보 가져오기 실패:', error);
+      }
+    };
+
+    if (portfolioData) fetchWriterInfo();
+  }, [portfolioData]);
 
   const handleLinkCopy = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 3000);
+    if (portfolioData?.invite_url) {
+      navigator.clipboard.writeText(portfolioData.invite_url);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 3000);
+    }
   };
+
+  const handleDeletePortfolio = async () => {
+    if (!portfolioData) return;
+
+    const confirmDelete = window.confirm('정말로 이 포트폴리오를 삭제하시겠습니까?');
+    if (confirmDelete) {
+      try {
+        await instance.delete(`/pofolo/portfolios/${portfolioData.id}/`);
+        nav(`/mypage/${userId}`);
+      } catch (error) {
+        console.error('포트폴리오 삭제 중 오류 발생:', error);
+        alert('포트폴리오 삭제에 실패했습니다.');
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log('Portfolio Data:', portfolioData);
+  }, [portfolioData]);
+
+  useEffect(() => {
+    console.log('Writer Info:', writerInfo);
+  }, [writerInfo]);
+
+  if (!portfolioData) return <p>로딩 중...</p>;
 
   return (
     <>
       <C.ImgContainer>
         <ScrollContainer className="scroll-container" horizontal>
-          {images.map((project, index) => (
-            <C.ImageWrapper key={index} onClick={() => nav('/project/:projectId')}>
-              <img key={index} src={project.src} alt={`image-${index}`} />
+          {relatedProjects.map((project) => (
+            <C.ImageWrapper key={project.id} onClick={() => nav(`/project/${project.id}`)}>
+              <img src={project.project_img[0] || projectDefault} alt={`project-${project.id}`} />
               <S.ImageOverlay>
                 <S.OverlayText>
-                  <p className="writer">{project.writer}</p>
+                  <p className="writer">{writerInfo.nickname}</p>
                   <p className="title">{project.title}</p>
                 </S.OverlayText>
               </S.ImageOverlay>
@@ -48,22 +142,36 @@ export const PortfolioContent = () => {
       <C.Container>
         <C.TopInfo>
           <C.ProfileInfo>
-            <img onClick={() => nav('/mypage')} src={profileIcon} alt="profile icon" />
+            <img
+              onClick={() => nav(`/mypage/${writerInfo.id}`)}
+              src={writerInfo.profileImg}
+              alt="profile icon"
+            />
             <C.ProfileContent>
               <p onClick={() => nav('/mypage')} className="nickname">
-                홍길동
+                {writerInfo.nickname}
               </p>
-              <p className="school">홍익대학교 컴퓨터공학과</p>
+              <p className="school">{writerInfo.education}</p>
             </C.ProfileContent>
           </C.ProfileInfo>
           <S.RightWrapper>
-            <C.Date>2024년 12월 30일</C.Date>
-            {isPC && (
+            <C.Date>
+              {new Date(portfolioData.created_at).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </C.Date>
+            {isPC && Number(userId) === portfolioData.writer && (
               <div className="button">
-                <Button size="small" type="obscure">
+                <Button size="small" type="obscure" onClick={handleDeletePortfolio}>
                   삭제
                 </Button>
-                <Button size="small" type="sub">
+                <Button
+                  size="small"
+                  type="sub"
+                  onClick={() => nav(`/portfolio/edit/${portfolioData.id}`)}
+                >
                   편집
                 </Button>
               </div>
@@ -74,7 +182,7 @@ export const PortfolioContent = () => {
         <C.BodyText>
           <S.LeftWrapper>
             <div className="left-contents">
-              <S.Title>홍길동의 포트폴리오</S.Title>
+              <S.Title>{portfolioData.title}</S.Title>
               {!isPhone && (
                 <S.Link onClick={handleLinkCopy} $isCopied={isCopied}>
                   <img src={isCopied ? linkBlue : linkGray} alt="link" />
@@ -82,12 +190,16 @@ export const PortfolioContent = () => {
                 </S.Link>
               )}
             </div>
-            {isTab && (
+            {isTab && Number(userId) === portfolioData.writer && (
               <div className="button">
-                <Button size="small2" type="obscure">
+                <Button size="small2" type="obscure" onClick={handleDeletePortfolio}>
                   삭제
                 </Button>
-                <Button size="small2" type="sub">
+                <Button
+                  size="small2"
+                  type="sub"
+                  onClick={() => nav(`/portfolio/edit/${portfolioData.id}`)}
+                >
                   편집
                 </Button>
               </div>
@@ -99,35 +211,42 @@ export const PortfolioContent = () => {
                 <img src={isCopied ? linkBlue : linkGray} alt="link" />
                 <span>{isCopied ? '복사됨' : '링크 복사'}</span>
               </S.Link>
-              <div className="button">
-                <Button size="small2" type="obscure">
-                  삭제
-                </Button>
-                <Button size="small2" type="sub">
-                  편집
-                </Button>
-              </div>
+              {Number(userId) === portfolioData.writer && (
+                <div className="button">
+                  <Button size="small2" type="obscure" onClick={handleDeletePortfolio}>
+                    삭제
+                  </Button>
+                  <Button
+                    size="small2"
+                    type="sub"
+                    onClick={() => nav(`/portfolio/edit/${portfolioData.id}`)}
+                  >
+                    편집
+                  </Button>
+                </div>
+              )}
             </S.PhoneButtons>
           )}
 
           <C.Article>
             <h2>소개</h2>
-            <span>
-              {`인류는 수천 년에 걸쳐 풍부하고 다채로운 문화를 발전시켜 왔습니다. 언어, 예술, 전통, 신화 등은 각기 다른 문화권에서 독특하게 꽃피며 그들만의 정체성을 형성했습니다. 인간은 자신의 이야기를 남기고자 하는 열망을 가지고 있으며, 이러한 흔적들은 우리가 현재를 살아가며 과거를 이해하고 미래를 예측하는 데 중요한 역할을 합니다.`}
-            </span>
+            <span>{portfolioData.description}</span>
           </C.Article>
 
           <C.Article>
             <h2>경력</h2>
-            <ul>
-              <li>가 회사 인턴 (2022.7. - 2023.4.)</li>
-              <li>나 대학교 학회 (2021.7. - 2023.3.)</li>
-            </ul>
+            {portfolioData.experiences && portfolioData.experiences.length > 0 && (
+              <ul>
+                {portfolioData.experiences.map((experience, index) => (
+                  <li key={index}>{experience}</li>
+                ))}
+              </ul>
+            )}
           </C.Article>
 
           <C.Article>
             <h2>주요 스킬</h2>
-            <span>Photoshop, Illustrator, Fimga, Protopie</span>
+            <span>{portfolioData.skills}</span>
           </C.Article>
         </C.BodyText>
       </C.Container>
