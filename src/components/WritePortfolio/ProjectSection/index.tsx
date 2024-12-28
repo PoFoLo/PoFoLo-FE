@@ -3,9 +3,21 @@ import ProjectCard from '@/components/WritePortfolio/ProjectSection/ProjectCard'
 import ProjectModal from '@/components/WritePortfolio/ProjectSection/ProjectModal';
 import projectAddBtn from '@/assets/svgs/WritePortfolio/projectAddBtn.svg';
 import projectAddPCBtn from '@/assets/svgs/WritePortfolio/projectAddPCBtn.svg';
-import { mockProjects } from './mockData'; // 임시 데이터
 import { useState, useEffect, useRef } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
+import { instance } from '@/apis/instance';
+
+interface Project {
+  id: number;
+  writer: number;
+  title: string;
+  major_field: string;
+  sub_field: string;
+  liked_count: number;
+  comment_count: number;
+  thumbnail: string | null;
+  created_at: string;
+}
 
 interface ProjectSectionProps {
   projects: number[];
@@ -15,10 +27,25 @@ interface ProjectSectionProps {
 }
 
 const ProjectSection = ({ projects, setProjects, setErrors, error }: ProjectSectionProps) => {
+  const [projectList, setProjectList] = useState<Project[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const previousProjectCount = useRef(0);
   const { isPC } = useResponsive();
+
+  // 내가 작성한 프로젝트 불러오기
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await instance.get<Project[]>('pofolo/projects/myproject/');
+        setProjectList(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   // 프로젝트 선택 되면 에러 false
   useEffect(() => {
@@ -39,7 +66,9 @@ const ProjectSection = ({ projects, setProjects, setErrors, error }: ProjectSect
   }, [projects]);
 
   // 선택된 프로젝트
-  const selectedData = mockProjects.filter((project) => projects.includes(project.id));
+  const selectedData = projects
+    .map((projectId) => projectList.find((project) => project.id === projectId))
+    .filter((project): project is Project => !!project);
 
   // 선택된 프로젝트 삭제
   const handleRemoveProject = (id: number) => {
@@ -70,7 +99,7 @@ const ProjectSection = ({ projects, setProjects, setErrors, error }: ProjectSect
       <ProjectModal
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
-        projectList={mockProjects}
+        projectList={projectList}
         selectedIds={projects}
         setSelectedIds={setProjects}
       />

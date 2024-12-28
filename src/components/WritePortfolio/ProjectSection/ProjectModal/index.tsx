@@ -11,7 +11,7 @@ interface Project {
   title: string;
   liked_count: number;
   comment_count: number;
-  thumbnail: string;
+  thumbnail: string | null;
 }
 
 interface ModalProps {
@@ -81,6 +81,7 @@ const ProjectModal = ({
   const handleConfirmSelection = () => {
     if (modalSelectedIds.length !== 0) {
       setSelectedIds(modalSelectedIds);
+      console.log(selectedIds);
       handleClose();
     }
   };
