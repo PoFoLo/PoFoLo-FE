@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
-import { useMediaQuery } from 'react-responsive';
 
 import navbarLogoTabletMobileSrc from '@/assets/webps/Common/navbarLogoTabletMobile.webp';
 import navbarGoBackSrc from '@/assets/webps/Common/navbarGoBack.webp';
@@ -16,8 +15,6 @@ interface NavbarMobileProps {
 const NavbarTabletMobile = ({ isLoggedIn, onGoBackClick }: NavbarMobileProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1199 });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 햄버거 메뉴 상태 관리
 

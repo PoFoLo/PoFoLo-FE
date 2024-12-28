@@ -1,6 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
-import { useMediaQuery } from 'react-responsive';
 
 import navbarLogoFullSrc from '@/assets/webps/Common/navbarLogoFull.webp';
 import navbarGoBackSrc from '@/assets/webps/Common/navbarGoBack.webp';
@@ -17,8 +16,6 @@ interface NavbarProps {
 const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1199 });
 
   const handleNavigate = (page: -1 | '' | 'home' | 'mypage' | 'login') => {
     if (page === -1) navigate(-1);
