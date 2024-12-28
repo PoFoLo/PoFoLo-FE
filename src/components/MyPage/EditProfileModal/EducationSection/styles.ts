@@ -33,4 +33,4 @@ export const CheckboxContainer = styled.div`
     `)}
 `;
 
-export * from '@/components/Mypage/EditProfileModal/styles';
+export * from '@/components/MyPage/EditProfileModal/styles';

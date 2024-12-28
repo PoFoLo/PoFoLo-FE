@@ -1,7 +1,7 @@
-import * as S from '@/components/Mypage/EditProfileModal/ProfileImageSection/styles';
+import * as S from '@/components/MyPage/EditProfileModal/ProfileImageSection/styles';
 import imageChange from '@/assets/webps/Common/imageChange.webp';
 import imageDelete from '@/assets/webps/Common/imageDelete.webp';
-import defaultProfile from '@/assets/svgs/Mypage/defaultProfile.svg';
+import defaultProfile from '@/assets/svgs/MyPage/defaultProfile.svg';
 import { useState, useRef } from 'react';
 
 interface ImageSectionProps {

@@ -1,4 +1,4 @@
-import * as S from '@/components/Mypage/EditProfileModal/NicknameSection/styles';
+import * as S from '@/components/MyPage/EditProfileModal/NicknameSection/styles';
 import Input from '@/components/Common/Input';
 import Button from '@/components/Common/Button';
 import { instance } from '@/apis/instance';

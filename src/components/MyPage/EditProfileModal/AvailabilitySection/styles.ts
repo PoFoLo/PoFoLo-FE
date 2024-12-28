@@ -56,4 +56,4 @@ export const GreyLine = styled.div`
   background: #e4e4e6;
 `;
 
-export * from '@/components/Mypage/EditProfileModal/styles';
+export * from '@/components/MyPage/EditProfileModal/styles';

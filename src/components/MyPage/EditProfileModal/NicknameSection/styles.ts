@@ -16,4 +16,4 @@ export const DuplicationBtn = styled.div`
     `)}
 `;
 
-export * from '@/components/Mypage/EditProfileModal/styles';
+export * from '@/components/MyPage/EditProfileModal/styles';

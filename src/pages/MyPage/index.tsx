@@ -1,8 +1,8 @@
-import EditProfileModal from '@/components/Mypage/EditProfileModal';
+import EditProfileModal from '@/components/MyPage/EditProfileModal';
 import { useState, useEffect } from 'react';
 import { instance } from '@/apis/instance';
 
-export const Mypage = () => {
+export const MyPage = () => {
   const [profileData, setProfileData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,4 +41,4 @@ export const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default MyPage;

@@ -1,4 +1,4 @@
-import * as S from '@/components/Mypage/EditProfileModal/EducationSection/styles';
+import * as S from '@/components/MyPage/EditProfileModal/EducationSection/styles';
 import Input from '@/components/Common/Input';
 import Checkbox from '@/components/Common/CheckBox';
 

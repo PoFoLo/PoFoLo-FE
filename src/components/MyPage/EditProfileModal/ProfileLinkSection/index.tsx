@@ -1,4 +1,4 @@
-import * as S from '@/components/Mypage/EditProfileModal/ProfileLinkSection/styles';
+import * as S from '@/components/MyPage/EditProfileModal/ProfileLinkSection/styles';
 import { useState } from 'react';
 import linkIcon from '@/assets/webps/Common/link.webp';
 import linkDeleteIcon from '@/assets/webps/Common/linkDelete.webp';

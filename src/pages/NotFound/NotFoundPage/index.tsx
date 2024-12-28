@@ -1,3 +1,3 @@
 export const NotFoundPage = () => {
-  return <>잘못된 페이지입니다.</>;
+  return <div>잘못된 페이지입니다.</div>;
 };

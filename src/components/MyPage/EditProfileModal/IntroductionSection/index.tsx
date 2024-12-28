@@ -1,4 +1,4 @@
-import * as S from '@/components/Mypage/EditProfileModal/styles';
+import * as S from '@/components/MyPage/EditProfileModal/styles';
 import Input from '@/components/Common/Input';
 
 interface IntroductionSectionProps {

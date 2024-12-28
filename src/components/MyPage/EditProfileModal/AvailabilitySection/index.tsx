@@ -1,4 +1,4 @@
-import * as S from '@/components/Mypage/EditProfileModal/AvailabilitySection/styles';
+import * as S from '@/components/MyPage/EditProfileModal/AvailabilitySection/styles';
 import Checkbox from '@/components/Common/CheckBox';
 import { useResponsive } from '@/hooks/useResponsive';
 

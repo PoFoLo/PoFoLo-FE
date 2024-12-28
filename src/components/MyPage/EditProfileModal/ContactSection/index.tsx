@@ -1,4 +1,4 @@
-import * as S from '@/components/Mypage/EditProfileModal/ContactSection/styles';
+import * as S from '@/components/MyPage/EditProfileModal/ContactSection/styles';
 import Input from '@/components/Common/Input';
 import Checkbox from '@/components/Common/CheckBox';
 

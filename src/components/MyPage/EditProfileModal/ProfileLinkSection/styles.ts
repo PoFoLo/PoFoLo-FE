@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
-export { SectionTitle } from '@/components/Mypage/EditProfileModal/styles';
-export { SectionContainer } from '@/components/Mypage/EditProfileModal/styles';
+export { SectionTitle } from '@/components/MyPage/EditProfileModal/styles';
+export { SectionContainer } from '@/components/MyPage/EditProfileModal/styles';
 
 export const LinkInputContainer = styled.div`
   display: flex;
