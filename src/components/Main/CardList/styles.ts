@@ -29,7 +29,7 @@ export const CardList = styled.div`
   ${(props) =>
     props.theme.media.ph(css`
       grid-template-columns: 1fr;
-      margin: 0rem 2.4rem 0rem 2rem;
+      margin: 0rem 2rem 0rem 2rem;
       width: calc(100% - 4rem);
       flex: 1 0 0;
     `)}

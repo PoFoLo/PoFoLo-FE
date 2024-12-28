@@ -2,17 +2,21 @@ import styled, { css } from 'styled-components';
 
 export const FilterBarContainerTabletMobile = styled.div`
   width: 100%;
-  height: 6.2rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: white;
-  padding: 1.6rem 0 1.6rem 0;
-  margin-top: 5.6rem;
+  margin: 7.2rem 0 1.6rem 0;
 
   ${(props) =>
     props.theme.media.ph(css`
-      padding: 1.6rem 0 2rem 0;
+      margin: 7.2rem 0 2rem 0;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      margin: 7.2rem 0 1.6rem 0;
     `)}
 `;
 
