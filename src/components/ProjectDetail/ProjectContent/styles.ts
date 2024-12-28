@@ -1,7 +1,17 @@
 import styled, { css } from 'styled-components';
 
+export const RightWrapper = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+
+  .menu-wrapper {
+    display: flex;
+    gap: 0.8rem;
+  }
+`;
+
 export const Title = styled.h2`
-  margin-top: 1.6rem;
   color: black;
   ${(props) => props.theme.fonts.headline4};
 
@@ -13,12 +23,17 @@ export const Title = styled.h2`
     )}
 `;
 
-export const FieldButton = styled.div`
+export const FieldButton = styled.div<{ $majorField: string }>`
   margin: 0.8rem 0 0.4rem;
   width: max-content;
   padding: 0.3rem 0.9rem;
   border-radius: 0.6rem;
-  background-color: ${(props) => props.theme.colors.green10};
+  background-color: ${(props) =>
+    props.$majorField === '기획'
+      ? props.theme.colors.purple10
+      : props.$majorField === '디자인'
+        ? props.theme.colors.coral10
+        : props.theme.colors.green10};
 
   ${(props) =>
     props.theme.media.pc(css`
@@ -27,7 +42,12 @@ export const FieldButton = styled.div`
     `)}
 
   span {
-    color: ${(props) => props.theme.colors.green50};
+    color: ${(props) =>
+      props.$majorField === '기획'
+        ? props.theme.colors.purple50
+        : props.$majorField === '디자인'
+          ? props.theme.colors.coral50
+          : props.theme.colors.green50};
     font-family: 'Pretendard', sans-serif;
     font-size: 1.2rem;
     font-style: normal;
@@ -54,8 +74,8 @@ export const LinkList = styled.div`
   }
 `;
 
-export const LinkContainer = styled.div`
-  width: 25.1rem;
+export const LinkContainer = styled.a`
+  max-width: 25.1rem;
   height: 5.3rem;
   padding: 0.4rem 1.2rem;
   display: flex;
@@ -77,7 +97,7 @@ export const LinkContainer = styled.div`
 
   ${(props) =>
     props.theme.media.pc(css`
-      width: 28rem;
+      max-width: 28rem;
       height: 5.6rem;
 
       & + & {
@@ -91,7 +111,7 @@ export const LinkContainer = styled.div`
     `)}
 
   .link-title {
-    width: 20rem;
+    max-width: 20rem;
     color: ${(props) => props.theme.colors.gray90};
     ${(props) => props.theme.fonts.caption3};
     white-space: nowrap;
@@ -107,7 +127,7 @@ export const LinkContainer = styled.div`
   }
 
   .web-address {
-    width: 20rem;
+    max-width: 20rem;
     color: ${(props) => props.theme.colors.gray70};
     ${(props) => props.theme.fonts.caption4};
     white-space: nowrap;

@@ -119,8 +119,13 @@ export const JoinPage = () => {
 
         const response = await instance.post('/pofolo/users/register/', requestData);
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log(response.data.message); // 성공 메시지
+          const { access, refresh, user_id } = response.data;
+          localStorage.setItem('access_token', access);
+          localStorage.setItem('refresh_token', refresh);
+          localStorage.setItem('user_id', user_id.toString());
+
           nav('/home'); // /home 페이지로 이동
         }
       } catch (error) {

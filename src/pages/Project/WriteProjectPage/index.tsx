@@ -42,15 +42,15 @@ export const WriteProjectPage = () => {
   const [pendingAction, setPendingAction] = useState<null | (() => void)>(null); // 실행할 함수 임시 저장
   const navigate = useNavigate();
   const { isPC } = useResponsive();
-  const { projectId } = useParams();
-  const isEditMode = !!projectId; // projectId가 있으면 수정 모드
+  const { project_id } = useParams();
+  const isEditMode = !!project_id; // projectId가 있으면 수정 모드
 
   // 수정모드일때 프로젝트 불러오기
   useEffect(() => {
     if (isEditMode) {
       const fetchProject = async () => {
         try {
-          const response = await instance.get(`/pofolo/projects/${projectId}/`);
+          const response = await instance.get(`/pofolo/projects/${project_id}/`);
           const data = response.data;
           setTitle(data.title);
           setDescription(data.description);
@@ -66,7 +66,7 @@ export const WriteProjectPage = () => {
 
       fetchProject();
     }
-  }, [isEditMode, projectId]);
+  }, [isEditMode, project_id]);
 
   // 프로젝트 업로드
   const uploadProject = async () => {
@@ -110,7 +110,7 @@ export const WriteProjectPage = () => {
         links: links,
       };
 
-      const response = await instance.patch(`pofolo/projects/${projectId}/`, data);
+      const response = await instance.patch(`pofolo/projects/${project_id}/`, data);
 
       const patchFormData = new FormData();
       // 삭제된 이미지 처리

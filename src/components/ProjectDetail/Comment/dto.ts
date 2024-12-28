@@ -1,14 +1,14 @@
 export interface ReplyItemDto {
   id: number;
-  nickname: string;
-  content: string;
-  createdAt: Date;
+  writer: number;
+  text: string;
+  commented_at: string;
 }
 
 export interface CommentItemDto {
   id: number;
-  nickname: string;
-  content: string;
-  createdAt: Date;
+  writer: number;
+  text: string;
+  commented_at: string;
   replies: ReplyItemDto[]; // 답글 목록
 }
