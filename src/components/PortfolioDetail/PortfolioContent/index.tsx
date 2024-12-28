@@ -2,18 +2,26 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import { useResponsive } from '@/hooks/useResponsive';
+import { instance } from '@/apis/instance';
+import { PortfolioData, RelatedProject } from '@/components/PortfolioDetail/PortfolioContent/dto';
 import Button from '@/components/Common/Button';
 import * as S from '@/components/PortfolioDetail/PortfolioContent/styles';
 import * as C from '@/components/Common/Detail/styles';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
 import linkGray from '@/assets/webps/Common/link.webp';
 import linkBlue from '@/assets/webps/PortfolioDetail/linkBlue.webp';
-import { PortfolioData } from '@/components/PortfolioDetail/PortfolioContent/dto';
-import { instance } from '@/apis/instance';
+import projectDefault from '@/assets/webps/Common/projectDefault.webp';
 
 export const PortfolioContent = () => {
   const userId = localStorage.getItem('user_id');
   const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null);
+  const [relatedProjects, setRelatedProjects] = useState<RelatedProject[]>([]);
+  const [writerInfo, setWriterInfo] = useState({
+    id: 0,
+    nickname: '',
+    education: '',
+    profileImg: profileIcon,
+  });
   const [isCopied, setIsCopied] = useState(false);
   const { isPC, isTab, isPhone } = useResponsive();
   const { portfolio_id } = useParams<{ portfolio_id: string }>();
@@ -33,6 +41,54 @@ export const PortfolioContent = () => {
     fetchPortfolioData();
   }, [portfolio_id, nav]);
 
+  useEffect(() => {
+    const fetchRelatedProjects = async () => {
+      if (!portfolioData?.related_projects) return;
+
+      try {
+        const fetchedProjects = await Promise.all(
+          portfolioData.related_projects.map(async (projectId: number) => {
+            const response = await instance.get(`/pofolo/projects/${projectId}/`);
+            const projectData = response.data;
+            return {
+              id: projectData.id,
+              writer: projectData.writer,
+              title: projectData.title,
+              project_img: projectData.project_img || projectDefault,
+            };
+          })
+        );
+        setRelatedProjects(fetchedProjects);
+      } catch (error) {
+        console.error('관련 프로젝트 데이터를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchRelatedProjects();
+  }, [portfolioData]);
+
+  useEffect(() => {
+    const fetchWriterInfo = async () => {
+      if (!portfolioData?.writer) return;
+
+      try {
+        const response = await instance.get(`/pofolo/users/profile/${portfolioData.writer}/`);
+        const { id, nickname, education, profile_img } = response.data.profile;
+        console.log('작성자 정보:', response.data.profile);
+        setWriterInfo({
+          id,
+          nickname,
+          education,
+          profileImg: profile_img || profileIcon, // 프로필 이미지가 없으면 기본 이미지
+        });
+      } catch (error) {
+        console.error('작성자 정보 가져오기 실패:', error);
+      }
+    };
+
+    if (portfolioData) fetchWriterInfo();
+  }, [portfolioData]);
+
   const handleLinkCopy = () => {
     if (portfolioData?.invite_url) {
       navigator.clipboard.writeText(portfolioData.invite_url);
@@ -41,9 +97,9 @@ export const PortfolioContent = () => {
     }
   };
 
-  if (!portfolioData) return <p>로딩 중...</p>;
-
   const handleDeletePortfolio = async () => {
+    if (!portfolioData) return;
+
     const confirmDelete = window.confirm('정말로 이 포트폴리오를 삭제하시겠습니까?');
     if (confirmDelete) {
       try {
@@ -55,17 +111,28 @@ export const PortfolioContent = () => {
       }
     }
   };
+
+  useEffect(() => {
+    console.log('Portfolio Data:', portfolioData);
+  }, [portfolioData]);
+
+  useEffect(() => {
+    console.log('Writer Info:', writerInfo);
+  }, [writerInfo]);
+
+  if (!portfolioData) return <p>로딩 중...</p>;
+
   return (
     <>
       <C.ImgContainer>
         <ScrollContainer className="scroll-container" horizontal>
-          {portfolioData.related_projects.map((projectId, index) => (
-            <C.ImageWrapper key={index} onClick={() => nav(`/project/${projectId}`)}>
-              <img src={`/images/project-${projectId}.jpg`} alt={`project-${projectId}`} />
+          {relatedProjects.map((project) => (
+            <C.ImageWrapper key={project.id} onClick={() => nav(`/project/${project.id}`)}>
+              <img src={project.project_img[0] || projectDefault} alt={`project-${project.id}`} />
               <S.ImageOverlay>
                 <S.OverlayText>
-                  <p className="writer">작성잘ㄹ</p>
-                  <p className="title">제목</p>
+                  <p className="writer">{writerInfo.nickname}</p>
+                  <p className="title">{project.title}</p>
                 </S.OverlayText>
               </S.ImageOverlay>
             </C.ImageWrapper>
@@ -75,12 +142,16 @@ export const PortfolioContent = () => {
       <C.Container>
         <C.TopInfo>
           <C.ProfileInfo>
-            <img onClick={() => nav('/mypage')} src={profileIcon} alt="profile icon" />
+            <img
+              onClick={() => nav(`/mypage/${writerInfo.id}`)}
+              src={writerInfo.profileImg}
+              alt="profile icon"
+            />
             <C.ProfileContent>
               <p onClick={() => nav('/mypage')} className="nickname">
-                홍길동
+                {writerInfo.nickname}
               </p>
-              <p className="school">홍익대학교 컴퓨터공학과</p>
+              <p className="school">{writerInfo.education}</p>
             </C.ProfileContent>
           </C.ProfileInfo>
           <S.RightWrapper>
@@ -164,10 +235,13 @@ export const PortfolioContent = () => {
 
           <C.Article>
             <h2>경력</h2>
-            <ul>
-              <li>가 회사 인턴 (2022.7. - 2023.4.)</li>
-              <li>나 대학교 학회 (2021.7. - 2023.3.)</li>
-            </ul>
+            {portfolioData.experiences && portfolioData.experiences.length > 0 && (
+              <ul>
+                {portfolioData.experiences.map((experience, index) => (
+                  <li key={index}>{experience}</li>
+                ))}
+              </ul>
+            )}
           </C.Article>
 
           <C.Article>
