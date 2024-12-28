@@ -31,7 +31,7 @@ function App() {
         <Route path="/project/write" element={<WriteProjectPage />} />
         <Route path="/portfolio/:portfolio_id" element={<PortfolioDetailPage />} />
         <Route path="/portfolio/write" element={<WritePortfolioPage />} />
-        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/mypage/:user_id" element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   );
