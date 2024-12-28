@@ -5,7 +5,7 @@ import * as S from '@/components/MyPage/MyPageFilterDetail/styles';
 import uploadMyPageSrc from '@/assets/webps/MyPage/uploadMyPage.webp';
 
 interface MyPageFilterDetailProps {
-  activeTab: 'all' | 'portfolio';
+  activeTab: 'allProjects' | 'portfolio';
 }
 
 const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) => {

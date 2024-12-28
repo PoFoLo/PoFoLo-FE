@@ -5,7 +5,7 @@ import * as P from '@/components/MyPage/MyPageCardList/MyPageCard/styles';
 import defaultPortfolioThumbnailSrc from '@/assets/webps/MyPage/defaultPortfolioThumbnail.webp';
 
 interface MyPageCardListProps {
-  activeTab: 'all' | 'portfolio';
+  activeTab: 'allProjects' | 'portfolio';
 }
 
 const MyPageCardList: React.FC<MyPageCardListProps> = ({ activeTab }) => {

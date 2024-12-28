@@ -2,23 +2,26 @@ import styled, { css } from 'styled-components';
 
 export const FilterBarContainerTabletMobile = styled.div`
   width: 100%;
-  height: 6.2rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: white;
-  padding: 1.6rem 0 1.6rem 0;
-  margin-top: 5.6rem;
+  margin: 7.2rem 0 1.6rem 0;
 
   ${(props) =>
     props.theme.media.ph(css`
-      padding: 1.6rem 0 2rem 0;
+      margin: 7.2rem 0 2rem 0;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      margin: 7.2rem 0 1.6rem 0;
     `)}
 `;
 
 export const FilterBarBodyTabletMobile = styled.div`
   width: 100%;
-  max-width: 79.4rem;
   height: 3rem;
   @media (max-width: 1440px) {
     margin: 0 6.4rem;
@@ -31,7 +34,16 @@ export const FilterBarBodyTabletMobile = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      max-width: 32rem;
+      gap: 1rem;
+      margin: 0rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      gap: 1rem;
+      margin: 0rem 2rem 0rem 2rem;
+      width: calc(100% - 4rem);
     `)}
 `;
 
@@ -52,15 +64,32 @@ export const Overlay = styled.div`
 `;
 
 export const FilterContainerTabletMobile = styled.div`
-  padding: 0.6rem 2.85rem 0.6rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 0.5rem 0.6rem 0.5rem;
+  gap: 0.75rem; // I should have given it flex property to use gap.
+  border-radius: 0.6rem;
+  border: 0.075rem solid ${(props) => props.theme.colors.gray10};
+  background: #fff;
+  box-shadow: 0rem 0rem 1.2rem 0rem rgba(0, 0, 0, 0.05);
+  position: absolute;
+  top: 11rem;
+  left: 2rem;
+  z-index: 40;
+`;
+
+export const SortContainerTabletMobile = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 0.5rem 0.6rem 0.5rem;
   gap: 0.75rem;
   border-radius: 0.6rem;
   border: 0.075rem solid ${(props) => props.theme.colors.gray10};
   background: #fff;
   box-shadow: 0rem 0rem 1.2rem 0rem rgba(0, 0, 0, 0.05);
   position: absolute;
-  top: 12rem;
-  left: 6.2rem;
+  top: 11rem;
+  right: 2rem;
   z-index: 40;
 `;
 
@@ -72,23 +101,14 @@ export const FilterOrSortButtonTabletMobile = styled.div<{ isSelected?: boolean 
   font-weight: ${(props) => (props.isSelected ? '600' : '400')};
   line-height: 150%;
   letter-spacing: 0.006rem;
+
   height: 1.8rem;
+  padding-left: 0.4rem;
+  padding-right: 1.5rem;
   cursor: pointer;
 
   &:hover {
-    color: ${(props) => props.theme.colors.blue30};
+    border-radius: 0.6rem;
+    background-color: ${(props) => props.theme.colors.gray10};
   }
-`;
-
-export const SortContainerTabletMobile = styled.div`
-  padding: 0.6rem 2.85rem 0.6rem 0.9rem;
-  gap: 0.75rem;
-  border-radius: 0.6rem;
-  border: 0.075rem solid ${(props) => props.theme.colors.gray10};
-  background: #fff;
-  box-shadow: 0rem 0rem 1.2rem 0rem rgba(0, 0, 0, 0.05);
-  position: absolute;
-  top: 12rem;
-  right: 6.2rem;
-  z-index: 40;
 `;

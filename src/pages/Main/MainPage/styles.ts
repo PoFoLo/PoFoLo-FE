@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const MainContainer = styled.div`
   display: flex;
@@ -30,6 +30,20 @@ export const FloatingBtnContainer = styled.div`
   @media (max-width: 1440px) {
     right: 6.4rem;
   }
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 3.6rem;
+      right: calc(50% - 5rem);
+      bottom: 2rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 3.6rem;
+      right: 2rem;
+      bottom: 2rem;
+    `)}
 `;
 
 export const FloatingBtnBody = styled.div`

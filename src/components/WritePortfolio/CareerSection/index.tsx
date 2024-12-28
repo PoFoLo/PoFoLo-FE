@@ -26,7 +26,7 @@ const CareerSection = ({ career, setCareer, setErrors, error }: CareerSectionPro
         error={error}
         errorMessage="필수 입력 항목입니다."
         rows={1}
-        placeholder="경력을 자유롭게 입력해주세요"
+        placeholder="경력을 입력해주세요 (쉼표로 구분)"
       />
     </S.SectionContainer>
   );

@@ -15,13 +15,15 @@ export const OAuthLoading = () => {
 
     if (code) {
       try {
-        const response = await instance.post('/pofolo/users/login', { code });
+        const response = await instance.post('/pofolo/users/login/', { code });
 
-        const { access_token, kakao_id } = response.data;
+        const { access, refresh, kakao_id, user_id } = response.data;
 
-        if (access_token) {
+        if (access) {
           // 기존 회원: 토큰 저장 -> /home 으로 이동
-          localStorage.setItem('access_token', access_token);
+          localStorage.setItem('access_token', access);
+          localStorage.setItem('refresh_token', refresh);
+          localStorage.setItem('user_id', user_id.toString());
           nav('/home');
         } else if (kakao_id) {
           // 신규 회원: /join 으로 이동

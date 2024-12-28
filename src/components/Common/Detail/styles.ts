@@ -161,6 +161,12 @@ export const Date = styled.span`
 
 export const BodyText = styled.section`
   padding: 0 0.4rem;
+  margin-top: 1.6rem;
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 export const Article = styled.article`
