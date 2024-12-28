@@ -36,6 +36,32 @@ export const ProjectName = styled.div`
   height: 3rem;
   text-align: left;
   margin-top: 1.2rem;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      color: #000;
+      font-family: 'Pretendard';
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%; /* 22.5px */
+      letter-spacing: 0.038px;
+
+      height: 2.3rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      color: #000;
+      font-family: 'Pretendard';
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%; /* 22.5px */
+      letter-spacing: 0.038px;
+
+      height: 2.3rem;
+    `)}
 `;
 
 export const ReactionContainer = styled.div`
@@ -45,6 +71,20 @@ export const ReactionContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   gap: 0.375rem;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      height: 1.95rem;
+      padding-top: 0.15rem;
+      gap: 0.281rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 1.95rem;
+      padding-top: 0.15rem;
+      gap: 0.281rem;
+    `)}
 `;
 
 export const ReactionIcon = styled.img`
@@ -54,6 +94,22 @@ export const ReactionIcon = styled.img`
   display: flex;
   align-items: center;
   margin-right: 0.188rem;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      width: 1.8rem;
+      height: 1.8rem;
+
+      margin-right: 0.141rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      width: 1.8rem;
+      height: 1.8rem;
+
+      margin-right: 0.141rem;
+    `)}
 `;
 
 export const ReactionLetter = styled.span`
@@ -64,6 +120,34 @@ export const ReactionLetter = styled.span`
   display: flex;
   align-items: center;
   margin-right: 0.4rem;
+
+  ${(props) =>
+    props.theme.media.ph(css`
+      color: rgba(0, 0, 0, 0.5);
+      font-family: 'Pretendard';
+      font-size: 1.05rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 140%; /* 14.7px */
+      letter-spacing: 0.0026rem;
+
+      height: 1.5rem;
+      margin-right: 0.3rem;
+    `)}
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      color: rgba(0, 0, 0, 0.5);
+      font-family: 'Pretendard';
+      font-size: 1.05rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 140%; /* 14.7px */
+      letter-spacing: 0.0026rem;
+
+      height: 1.5rem;
+      margin-right: 0.3rem;
+    `)}
 `;
 
 export const PortfolioCard = styled.div`

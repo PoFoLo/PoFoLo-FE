@@ -40,14 +40,16 @@ const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) =>
     navigate('/project/write');
   };
 
+  const handleCreate = () => {
+    navigate('/portfolio/write');
+  };
+
   // '포트폴리오' 탭
   if (activeTab === 'portfolio') {
     return (
       <S.FilterPortfolioColorContainer>
         <S.FilterPortfolioContainer>
-          <S.CreatePortfolioBtnContainer>
-            <S.CreatePortfolioBtnLetter>만들기</S.CreatePortfolioBtnLetter>
-          </S.CreatePortfolioBtnContainer>
+          <S.uploadButton src={uploadMyPageSrc} alt="uploadButton" onClick={handleCreate} />
         </S.FilterPortfolioContainer>
       </S.FilterPortfolioColorContainer>
     );
