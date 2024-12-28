@@ -11,6 +11,7 @@ import { PortfolioDetailPage } from '@/pages/Portfolio/PortfolioDetailPage';
 import { Mypage } from '@/pages/Mypage';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { NotFoundPage } from '@/pages/NotFound/NotFoundPage';
 
 function App() {
   useEffect(() => {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/portfolio/:portfolio_id" element={<PortfolioDetailPage />} />
         <Route path="/portfolio/write" element={<WritePortfolioPage />} />
         <Route path="/mypage/:user_id" element={<Mypage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
