@@ -6,12 +6,20 @@ import imageDelete from '@/assets/webps/Common/imageDelete.webp';
 import { useState, useRef, useEffect } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
 
-interface ImageSectionProps {
-  images: File[];
-  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+interface ImageItem {
+  url: string | null; // 기존 이미지 URL
+  file: File | null; // 새로 추가된 파일
 }
 
-const ImageSection = ({ images, setImages }: ImageSectionProps) => {
+interface ImageSectionProps {
+  images: string[]; // 기존 이미지
+  setImagesState: React.Dispatch<React.SetStateAction<ImageItem[]>>;
+}
+
+const ImageSection = ({ images, setImagesState }: ImageSectionProps) => {
+  const [imagesState, setLocalImagesState] = useState<ImageItem[]>(
+    images.map((url) => ({ url, file: null }))
+  );
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [replaceIndex, setReplaceIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -19,32 +27,48 @@ const ImageSection = ({ images, setImages }: ImageSectionProps) => {
   const previousImageCount = useRef(0);
   const { isPC } = useResponsive();
 
-  // 이미지 파일 업로드 & 교체
+  // 기존 이미지가 있는 경우 로드
+  useEffect(() => {
+    const initialImagesState = images.map((url) => ({ url, file: null }));
+    setLocalImagesState(initialImagesState);
+    setImagePreviews(images);
+  }, [images]);
+
+  // 상위 컴포넌트에 상태 동기화
+  useEffect(() => {
+    setImagesState(imagesState);
+  }, [imagesState, setImagesState]);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-
     if (replaceIndex !== null && files.length > 0) {
       // 특정 인덱스의 이미지를 교체
-      const updatedFiles = [...images];
       const newFile = files[0];
-      updatedFiles[replaceIndex] = newFile;
+      setLocalImagesState((prev) =>
+        prev.map((item, index) =>
+          index === replaceIndex ? { url: item.url, file: newFile } : item
+        )
+      );
 
       const reader = new FileReader();
       reader.onloadend = () => {
         if (reader.result) {
-          const updatedPreviews = [...imagePreviews];
-          updatedPreviews[replaceIndex] = reader.result as string;
-          setImagePreviews(updatedPreviews);
+          setImagePreviews((prev) => {
+            const updatedPreviews = [...prev];
+            updatedPreviews[replaceIndex] = reader.result as string;
+            return updatedPreviews;
+          });
         }
       };
       reader.readAsDataURL(newFile);
 
-      setImages(updatedFiles);
       setReplaceIndex(null); // 교체 후 초기화
     } else {
       // 새로 추가된 파일 처리
-      const newFiles = [...images, ...files].slice(0, 10);
-      newFiles.slice(images.length).forEach((file) => {
+      const newImages = files.map((file) => ({ url: null, file }));
+      setLocalImagesState((prev) => [...prev, ...newImages].slice(0, 10));
+
+      files.forEach((file) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           if (reader.result) {
@@ -53,18 +77,14 @@ const ImageSection = ({ images, setImages }: ImageSectionProps) => {
         };
         reader.readAsDataURL(file);
       });
-
-      setImages(newFiles);
     }
-
-    e.target.value = ''; // 사진 input 초기화
+    e.target.value = '';
   };
 
   // 이미지 삭제
   const handleRemoveImage = (index: number) => {
-    const updatedFiles = images.filter((_, i) => i !== index);
+    setLocalImagesState((prev) => prev.filter((_, i) => i !== index));
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
-    setImages(updatedFiles);
   };
 
   // Change 버튼 클릭 시 인덱스 설정 후 input 클릭하여 파일 선택 창 열기
@@ -100,7 +120,7 @@ const ImageSection = ({ images, setImages }: ImageSectionProps) => {
             <S.StyledImg src={preview} alt={`사진${index}`} />
           </S.ImageContainer>
         ))}
-        {images.length < 10 && (
+        {imagesState.length < 10 && (
           <>
             <S.UploadBtn
               $backgroundImage={isPC ? imageUploadPCBtn : imageUploadBtn}

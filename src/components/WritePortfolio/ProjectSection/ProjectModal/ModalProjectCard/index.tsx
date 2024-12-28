@@ -1,6 +1,7 @@
 import * as S from '@/components/WritePortfolio/ProjectSection/ProjectModal/ModalProjectCard/styles';
 import projectLikeFilled from '@/assets/webps/Common/projectLikeFilled.webp';
 import projectCommentFilled from '@/assets/webps/Common/projectCommentFilled.webp';
+import defaultProject from '@/assets/svgs/Common/defaultProject.svg';
 import Checkbox from '@/components/Common/CheckBox';
 
 interface ModalProjectCardProps {
@@ -9,7 +10,7 @@ interface ModalProjectCardProps {
     title: string;
     liked_count: number;
     comment_count: number;
-    thumbnail: string;
+    thumbnail: string | null;
   };
   isChecked: boolean;
   onCheckboxChange: (id: number, checked: boolean) => void;
@@ -26,7 +27,7 @@ const ModalProjectCard = ({ project, isChecked, onCheckboxChange }: ModalProject
       <S.CheckboxContainer>
         <Checkbox id={`checkbox-${id}`} checked={isChecked} onChange={handleCheckboxClick} />
       </S.CheckboxContainer>
-      <S.ProjectImage src={thumbnail} />
+      <S.ProjectImage src={thumbnail || defaultProject} />
       <S.ProjectInfoContainer>
         <S.ProjectTitle>{title}</S.ProjectTitle>
         <S.LikeCommentContainer>

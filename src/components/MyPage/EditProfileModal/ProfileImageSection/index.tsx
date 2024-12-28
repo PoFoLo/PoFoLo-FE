@@ -1,14 +1,20 @@
 import * as S from '@/components/MyPage/EditProfileModal/ProfileImageSection/styles';
 import imageChange from '@/assets/webps/Common/imageChange.webp';
 import imageDelete from '@/assets/webps/Common/imageDelete.webp';
+import defaultProfile from '@/assets/svgs/MyPage/defaultProfile.svg';
 import { useState, useRef } from 'react';
 
 interface ImageSectionProps {
   profileImg: string | null;
   setImageFile: React.Dispatch<React.SetStateAction<File | null>>;
+  setIsImageDeleted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ProfileImageSection = ({ profileImg, setImageFile }: ImageSectionProps) => {
+const ProfileImageSection = ({
+  profileImg,
+  setImageFile,
+  setIsImageDeleted: setIsImageDelete,
+}: ImageSectionProps) => {
   const [imagePreview, setImagePreview] = useState<string | null>(profileImg);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -24,6 +30,7 @@ const ProfileImageSection = ({ profileImg, setImageFile }: ImageSectionProps) =>
       };
       reader.readAsDataURL(file);
     }
+    setIsImageDelete(false);
   };
 
   const triggerFileInput = () => {
@@ -36,6 +43,7 @@ const ProfileImageSection = ({ profileImg, setImageFile }: ImageSectionProps) =>
     if (inputRef.current) {
       inputRef.current.value = ''; // 파일 업로드 input 값 초기화
     }
+    setIsImageDelete(true);
   };
 
   return (
@@ -44,7 +52,7 @@ const ProfileImageSection = ({ profileImg, setImageFile }: ImageSectionProps) =>
         <S.HoverBtn $backgroundImage={imageChange} onClick={triggerFileInput} />
         <S.HoverBtn $backgroundImage={imageDelete} onClick={handleDeleteImage} />
       </S.HoverImageContainer>
-      <S.ImagePreview src={imagePreview || 'https://via.placeholder.com/150'} />
+      <S.ImagePreview src={imagePreview || defaultProfile} />
       <S.UploadInput type="file" accept="image/*" onChange={handleImageUpload} ref={inputRef} />
     </S.ImageContainer>
   );

@@ -20,6 +20,10 @@ export const LinkInputContainer = styled.div`
       padding: 1.2rem;
       min-height: 5.6rem;
     `)}
+
+  &:focus-within {
+    border-color: ${(props) => props.theme.colors.blue50};
+  }
 `;
 
 export const Link = styled.div`
