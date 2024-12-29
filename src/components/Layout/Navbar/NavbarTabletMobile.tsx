@@ -104,11 +104,13 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
                 <S.NavbarLoginButton onClick={() => setIsModalOpen(true)}>
                   로그인
                 </S.NavbarLoginButton>
-                <S.NavbarHamburgerButtonTabletMobile
-                  src={navbarHamburgerSrc}
-                  alt="hamburgerButton"
-                  onClick={toggleMenu}
-                />
+                {isLoggedIn && (
+                  <S.NavbarHamburgerButtonTabletMobile
+                    src={navbarHamburgerSrc}
+                    alt="hamburgerButton"
+                    onClick={toggleMenu}
+                  />
+                )}
               </S.NavbarRightContainerTabletMobile>
             </>
           )}

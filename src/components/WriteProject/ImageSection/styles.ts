@@ -75,6 +75,7 @@ export const UploadBtn = styled.label<{ $backgroundImage: string }>`
   min-height: 18rem;
   background-image: url(${(props) => props.$backgroundImage});
   cursor: pointer;
+  background-size: contain;
 
   ${(props) =>
     props.theme.media.pc(css`
