@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { instance } from '@/apis/instance';
 import { useResponsive } from '@/hooks/useResponsive';
-import Navbar from '@/components/Layout/Navbar/NavbarPC';
+import Navbar from '@/components/Layout/Navbar';
 import Button from '@/components/Common/Button';
 import Input from '@/components/Common/Input';
 import Checkbox from '@/components/Common/CheckBox';
