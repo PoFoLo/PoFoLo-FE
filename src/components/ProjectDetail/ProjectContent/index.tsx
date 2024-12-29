@@ -22,10 +22,12 @@ interface ProjectContentProps {
 export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, commentCount }) => {
   const [projectData, setProjectData] = useState<ProjectData | null>(null);
   const [writerProfile, setWriterProfile] = useState<{
+    id: number;
     nickname: string;
     education: string;
     profileImg: string;
   }>({
+    id: 0,
     nickname: '',
     education: '',
     profileImg: profileIcon, // 기본 이미지 초기화
@@ -113,9 +115,10 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
   const fetchWriterProfile = async (user_id: number) => {
     try {
       const response = await instance.get(`/pofolo/users/profile/${user_id}/`);
-      const { nickname, education, profile_img } = response.data.profile;
+      const { id, nickname, education, profile_img } = response.data.profile;
 
       setWriterProfile({
+        id,
         nickname,
         education,
         profileImg: profile_img || profileIcon, // 기본 이미지 대체
@@ -123,6 +126,7 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
     } catch (error) {
       console.error('작성자 프로필 조회 중 오류 발생:', error);
       setWriterProfile({
+        id: 0,
         nickname: '',
         education: '',
         profileImg: profileIcon, // 기본 이미지
@@ -210,9 +214,13 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
       <C.Container ref={projectContainerRef}>
         <C.TopInfo>
           <C.ProfileInfo>
-            <img onClick={() => nav('/mypage')} src={writerProfile.profileImg} alt="profile icon" />
+            <img
+              onClick={() => nav(`/mypage/${writerProfile.id}`)}
+              src={writerProfile.profileImg}
+              alt="profile icon"
+            />
             <C.ProfileContent>
-              <p onClick={() => nav('/mypage')} className="nickname">
+              <p onClick={() => nav(`/mypage/${writerProfile.id}`)} className="nickname">
                 {writerProfile.nickname}
               </p>
               <p className="school">{writerProfile.education}</p>

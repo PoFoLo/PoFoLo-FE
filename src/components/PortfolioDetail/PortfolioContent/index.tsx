@@ -24,22 +24,33 @@ export const PortfolioContent = () => {
   });
   const [isCopied, setIsCopied] = useState(false);
   const { isPC, isTab, isPhone } = useResponsive();
-  const { portfolio_id } = useParams<{ portfolio_id: string }>();
+  const { portfolio_id, uuid } = useParams<{ portfolio_id?: string; uuid?: string }>();
   const nav = useNavigate();
+  const isInvitePage = location.pathname.includes(`/invite/${uuid}`);
 
   useEffect(() => {
     const fetchPortfolioData = async () => {
       try {
-        const response = await instance.get(`/pofolo/portfolios/${portfolio_id}/`);
+        let response;
+
+        if (isInvitePage && uuid) {
+          // 초대 페이지일 경우
+          response = await instance.get(`/pofolo/portfolios/invite/${uuid}/`);
+        } else if (portfolio_id) {
+          // 일반 포트폴리오 페이지
+          response = await instance.get(`/pofolo/portfolios/${portfolio_id}/`);
+        } else {
+          throw new Error('잘못된 페이지 요청');
+        }
+
         setPortfolioData(response.data);
       } catch (error) {
         console.error('포트폴리오 데이터를 가져오는 중 오류 발생:', error);
-        nav(-1);
       }
     };
 
     fetchPortfolioData();
-  }, [portfolio_id, nav]);
+  }, [portfolio_id, nav, isInvitePage]);
 
   useEffect(() => {
     const fetchRelatedProjects = async () => {
@@ -91,7 +102,9 @@ export const PortfolioContent = () => {
 
   const handleLinkCopy = () => {
     if (portfolioData?.invite_url) {
-      navigator.clipboard.writeText(portfolioData.invite_url);
+      navigator.clipboard.writeText(
+        `http://localhost:3000/portfolio/invite/${portfolioData.invite_url}` // to do : 배포 이후 수정
+      );
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 3000);
     }
@@ -148,8 +161,8 @@ export const PortfolioContent = () => {
               alt="profile icon"
             />
             <C.ProfileContent>
-              <p onClick={() => nav('/mypage')} className="nickname">
-                {writerInfo.nickname}
+              <p onClick={() => nav(`/mypage/${writerInfo.id}`)} className="nickname">
+                {portfolioData.username}
               </p>
               <p className="school">{writerInfo.education}</p>
             </C.ProfileContent>
@@ -162,7 +175,7 @@ export const PortfolioContent = () => {
                 day: 'numeric',
               })}
             </C.Date>
-            {isPC && Number(userId) === portfolioData.writer && (
+            {!isInvitePage && isPC && Number(userId) === portfolioData.writer && (
               <div className="button">
                 <Button size="small" type="obscure" onClick={handleDeletePortfolio}>
                   삭제
@@ -183,14 +196,14 @@ export const PortfolioContent = () => {
           <S.LeftWrapper>
             <div className="left-contents">
               <S.Title>{portfolioData.title}</S.Title>
-              {!isPhone && (
+              {!isInvitePage && !isPhone && (
                 <S.Link onClick={handleLinkCopy} $isCopied={isCopied}>
                   <img src={isCopied ? linkBlue : linkGray} alt="link" />
                   <span>{isCopied ? '복사됨' : '링크 복사'}</span>
                 </S.Link>
               )}
             </div>
-            {isTab && Number(userId) === portfolioData.writer && (
+            {!isInvitePage && isTab && Number(userId) === portfolioData.writer && (
               <div className="button">
                 <Button size="small2" type="obscure" onClick={handleDeletePortfolio}>
                   삭제
@@ -205,7 +218,7 @@ export const PortfolioContent = () => {
               </div>
             )}
           </S.LeftWrapper>
-          {isPhone && (
+          {!isInvitePage && isPhone && (
             <S.PhoneButtons>
               <S.Link onClick={handleLinkCopy} $isCopied={isCopied}>
                 <img src={isCopied ? linkBlue : linkGray} alt="link" />
