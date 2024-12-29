@@ -41,6 +41,23 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
   const projectContainerRef = useRef<HTMLDivElement | null>(null);
   const floatingButtonRef = useRef<HTMLDivElement | null>(null);
 
+  const fetchLikeStatus = async () => {
+    try {
+      // 좋아요한 프로젝트 리스트 가져오기
+      const likedResponse = await instance.get('/pofolo/projects/liked/');
+      const likedProjects = likedResponse.data.map((project: { id: number }) => project.id);
+
+      // 현재 프로젝트의 좋아요 상태 확인
+      setIsLiked(likedProjects.includes(Number(project_id)));
+
+      // 현재 프로젝트의 좋아요 수 가져오기
+      const projectResponse = await instance.get(`/pofolo/projects/${project_id}/`);
+      setLikeCount(projectResponse.data.liked_count);
+    } catch (error) {
+      console.error('좋아요 상태 또는 카운트 가져오기 실패:', error);
+    }
+  };
+
   const fetchProjectData = async () => {
     try {
       const response = await instance.get(`/pofolo/projects/${project_id}/`);
@@ -63,14 +80,16 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
   };
 
   const handleLikeToggle = async () => {
-    setIsLiked((prev) => !prev);
-    setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
-
     try {
+      // UI에서 즉시 반영
+      setIsLiked((prev) => !prev);
+      setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+
+      // 서버로 좋아요 토글 요청
       await instance.post(`/pofolo/projects/${project_id}/like/`);
     } catch (error) {
-      console.error('좋아요 토글 중 오류 발생:', error);
-      // 실패 시 UI 상태 복구
+      console.error('좋아요 토글 실패:', error);
+      // 실패 시 이전 상태 복구
       setIsLiked((prev) => !prev);
       setLikeCount((prev) => (isLiked ? prev + 1 : prev - 1));
     }
@@ -136,6 +155,10 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
 
     fetchWriterData();
   }, [projectData]); // projectData가 변경될 때 작성자 정보를 가져옴
+
+  useEffect(() => {
+    fetchLikeStatus();
+  }, [project_id]);
 
   // 플로팅 버튼 고정
   useEffect(() => {
