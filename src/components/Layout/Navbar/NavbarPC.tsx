@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
+import { instance } from '@/apis/instance';
 
 import navbarLogoFullSrc from '@/assets/webps/Common/navbarLogoFull.webp';
 import navbarGoBackSrc from '@/assets/webps/Common/navbarGoBack.webp';
@@ -12,7 +14,32 @@ interface NavbarProps {
   onHomeClick?: () => void;
 }
 
-const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick }: NavbarProps) => {
+const NavbarPC = ({ onGoBackClick }: NavbarProps) => {
+  const [profilePic, setProfilePic] = useState<string>('');
+
+  const fetchUserProfile = async () => {
+    const userId = localStorage.getItem('user_id');
+    if (!userId) {
+      console.error('로컬 스토리지에서 user_id를 찾을 수 없습니다.');
+      return;
+    }
+
+    try {
+      const response = await instance.get(`/pofolo/users/profile/${userId}/`);
+      const profile = response.data.profile;
+
+      if (profile && profile.profile_img_url) {
+        setProfilePic(profile.profile_img_url);
+      }
+    } catch (error) {
+      console.error('프로필 API 호출 실패:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserProfile(); // 페이지 로드 시 프로필 데이터를 가져옴
+  }, []);
+
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = !!localStorage.getItem('access_token');
@@ -100,7 +127,10 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick }: NavbarProps) => 
           )}
           {isLoggedIn ? (
             <S.NavbarMyPageButton onClick={handleMyPageClick}>
-              <S.NavbarMyPageImg src={navbarMyPageSrc} alt="myPageButton" />
+              <S.NavbarMyPageImg
+                src={profilePic !== null ? profilePic : navbarMyPageSrc} // 조건부 렌더링
+                alt="myPageButton"
+              />
             </S.NavbarMyPageButton>
           ) : (
             <></>

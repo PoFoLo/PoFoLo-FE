@@ -35,6 +35,7 @@ const MainPage: React.FC = () => {
       if (profile && profile.main_field) {
         setSelectedCategory(profile.main_field); // main_field를 selectedCategory로 설정
       }
+
     } catch (error) {
       console.error('프로필 API 호출 실패:', error);
     }
