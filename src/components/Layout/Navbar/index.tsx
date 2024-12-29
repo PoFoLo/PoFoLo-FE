@@ -9,11 +9,7 @@ interface ResponsiveNavbarProps {
   onMyPageClick?: () => void;
 }
 
-const Navbar = ({
-  onGoBackClick,
-  onAboutClick,
-  onHomeClick,
-}: ResponsiveNavbarProps) => {
+const Navbar = ({ onGoBackClick, onAboutClick, onHomeClick }: ResponsiveNavbarProps) => {
   const { isPC } = useResponsive();
 
   return (
