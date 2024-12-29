@@ -1,25 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SearchBar from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/SearchBar';
 import filterIconTabletMobileSrc from '@/assets/webps/Main/filterIconTabletMobile.webp';
 import sortIconTabletMobileSrc from '@/assets/webps/Main/sortIconTabletMobile.webp';
 import * as S from './styles';
 
-const FilterBarTabletMobile: React.FC = () => {
-  const [isFilterOpen, setIsFilterOpen] = useState(false); // 필터 열림 여부
-  const [showDetails, setShowDetails] = useState(false); // 세부 필터 표시 여부
-  const [selectedCategory, setSelectedCategory] = useState<string>('기획'); // 기본 카테고리
-  const [selectedDetail, setSelectedDetail] = useState<string>('전체'); // 기본 디테일
-  const [isSortOpen, setIsSortOpen] = useState(false); // 정렬 메뉴 열림 여부
-  const [selectedSortOption, setSelectedSortOption] = useState<string>('최신순'); // 기본 정렬 옵션
+interface Props {
+  filterOptions: Record<string, string[]>; // 필터 데이터
+  selectedCategory: string; // 선택된 카테고리
+  setSelectedCategory: (category: string) => void; // 카테고리 변경 함수
+  selectedDetail: string; // 선택된 세부 필터
+  setSelectedDetail: (detail: string) => void; // 세부 필터 변경 함수
+  selectedSortOption: string; // 선택된 정렬 옵션
+  setSelectedSortOption: (option: string) => void; // 정렬 옵션 변경 함수
+  cards: any[]; // 추가: 렌더링 중인 카드 데이터
+  onSearch: (filteredCards: any[]) => void; // 추가: 검색 결과 콜백
+}
 
-  const sortOptions = ['최신순', '인기순'];
-  const options = ['기획', '개발', '디자인'];
+const FilterBarTabletMobile: React.FC<Props> = ({
+  filterOptions,
+  selectedCategory,
+  setSelectedCategory,
+  selectedDetail,
+  setSelectedDetail,
+  selectedSortOption,
+  setSelectedSortOption,
+  cards,
+  onSearch,
+}) => {
+  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+  const [showDetails, setShowDetails] = React.useState(false);
+  const [isSortOpen, setIsSortOpen] = React.useState(false);
 
-  const detailsMap: Record<string, string[]> = {
-    기획: ['전체', '서비스기획', '상품기획', '마케팅', '광고', '기타'],
-    개발: ['전체', '프론트엔드', '백엔드', '데이터분석', '임베디드', '게임', '인공지능', '기타'],
-    디자인: ['전체', 'UX/UI', '제품', '패션', '인테리어', '기타'],
-  };
+  const categories = Object.keys(filterOptions); // 카테고리 목록 추출
+  const options = filterOptions[selectedCategory || '기획']; // 현재 선택된 카테고리의 세부 옵션 추출
 
   const handleFilterClick = () => {
     setIsFilterOpen((prev) => !prev);
@@ -28,15 +41,15 @@ const FilterBarTabletMobile: React.FC = () => {
   };
 
   const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category); // 선택된 카테고리 업데이트
-    setSelectedDetail('전체'); // 디테일 기본값으로 초기화
+    setSelectedCategory(category); // 상위 상태 변경
+    setSelectedDetail('전체'); // 기본값 초기화
     setIsFilterOpen(false); // 필터 메뉴 닫기
-    setShowDetails(true); // 디테일 메뉴 열기
+    setShowDetails(true); // 세부 필터 메뉴 열기
   };
 
   const handleLine2Click = (label: string) => {
-    setSelectedDetail(label); // 선택된 디테일 업데이트
-    setShowDetails(false); // 디테일 메뉴 닫기
+    setSelectedDetail(label); // 세부 필터 업데이트
+    setShowDetails(false); // 메뉴 닫기
   };
 
   const handleSortClick = () => {
@@ -46,8 +59,8 @@ const FilterBarTabletMobile: React.FC = () => {
   };
 
   const handleSortOptionClick = (option: string) => {
-    setSelectedSortOption(option); // 선택된 정렬 옵션 업데이트
-    setIsSortOpen(false); // 정렬 메뉴 닫기
+    setSelectedSortOption(option); // 상위 상태 변경
+    setIsSortOpen(false);
   };
 
   return (
@@ -69,7 +82,7 @@ const FilterBarTabletMobile: React.FC = () => {
             alt="Filter Icon"
             onClick={handleFilterClick}
           />
-          <SearchBar />
+          <SearchBar cards={cards} onSearch={onSearch} />
           <S.FilterOrSortIconTabletMobile
             src={sortIconTabletMobileSrc}
             alt="Sort Icon"
@@ -80,28 +93,28 @@ const FilterBarTabletMobile: React.FC = () => {
         {/* 필터 메뉴 */}
         {isFilterOpen && (
           <S.FilterContainerTabletMobile>
-            {options.map((option) => (
+            {categories.map((category) => (
               <S.FilterOrSortButtonTabletMobile
-                key={option}
-                onClick={() => handleCategorySelect(option)}
-                isSelected={selectedCategory === option}
+                key={category}
+                onClick={() => handleCategorySelect(category)}
+                isSelected={selectedCategory === category}
               >
-                {option}
+                {category}
               </S.FilterOrSortButtonTabletMobile>
             ))}
           </S.FilterContainerTabletMobile>
         )}
 
-        {/* 디테일 메뉴 */}
-        {showDetails && selectedCategory && (
+        {/* 세부 필터 메뉴 */}
+        {showDetails && (
           <S.FilterContainerTabletMobile>
-            {detailsMap[selectedCategory].map((label) => (
+            {options.map((option) => (
               <S.FilterOrSortButtonTabletMobile
-                key={label}
-                onClick={() => handleLine2Click(label)}
-                isSelected={selectedDetail === label}
+                key={option}
+                onClick={() => handleLine2Click(option)}
+                isSelected={selectedDetail === option}
               >
-                {label}
+                {option}
               </S.FilterOrSortButtonTabletMobile>
             ))}
           </S.FilterContainerTabletMobile>
@@ -110,7 +123,7 @@ const FilterBarTabletMobile: React.FC = () => {
         {/* 정렬 메뉴 */}
         {isSortOpen && (
           <S.SortContainerTabletMobile>
-            {sortOptions.map((option) => (
+            {['최신순', '인기순'].map((option) => (
               <S.FilterOrSortButtonTabletMobile
                 key={option}
                 onClick={() => handleSortOptionClick(option)}

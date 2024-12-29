@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import * as S from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/SortDropdown/styles';
-
 import sortCaretSrc from '@/assets/webps/Main/sortCaret.webp';
 
-const SortDropdown: React.FC = () => {
-  const options = ['최신순', '인기순'];
-  const onSelect = (option: string) => {
-    console.log('Selected option:', option);
-  };
+interface Props {
+  sortOption: string; // 현재 선택된 정렬 옵션
+  setSortOption: (option: string) => void; // 정렬 옵션을 설정하는 함수
+}
 
+const SortDropdown: React.FC<Props> = ({ sortOption, setSortOption }) => {
+  const options = ['최신순', '인기순'];
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   const handleSelect = (option: string) => {
-    setSelectedOption(option);
-    onSelect(option);
+    setSortOption(option); // 부모 컴포넌트로 정렬 옵션 전달
     setIsOpen(false);
   };
 
@@ -24,7 +22,7 @@ const SortDropdown: React.FC = () => {
     <S.SortDropdownContainer>
       <S.DropdownContainer>
         <S.SelectedContainer onClick={toggleMenu}>
-          <S.SelectedLetter>{selectedOption || '최신순'}</S.SelectedLetter>
+          <S.SelectedLetter>{sortOption}</S.SelectedLetter>
           <S.SelectedCaret
             src={sortCaretSrc}
             style={{
@@ -38,25 +36,20 @@ const SortDropdown: React.FC = () => {
             <S.MenuLetterContainer>
               {options.map((option, index) => (
                 <>
-                  {selectedOption === option ? (
-                    <S.Active
-                      key={index}
-                      onClick={() => handleSelect(option)}
-                      className={selectedOption === option ? 'active' : 'inactive'}
-                    >
+                  {sortOption === option ? (
+                    <S.Active key={index} onClick={() => handleSelect(option)} className="active">
                       {option}
                     </S.Active>
                   ) : (
                     <S.Inactive
                       key={index}
                       onClick={() => handleSelect(option)}
-                      className={selectedOption === option ? 'active' : 'inactive'}
+                      className="inactive"
                     >
                       {option}
                     </S.Inactive>
                   )}
                 </>
-                // </li>
               ))}
             </S.MenuLetterContainer>
           </S.MenuContainer>

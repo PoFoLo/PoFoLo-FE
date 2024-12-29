@@ -5,17 +5,16 @@ import inactiveIconSrc from '@/assets/webps/Main/inactiveIcon.webp';
 import inactiveIconHoverSrc from '@/assets/webps/Main/inactiveIconHover.webp';
 import activeIconSrc from '@/assets/webps/Main/activeIcon.webp';
 
-const SearchBar: React.FC = () => {
+interface Props {
+  cards: any[]; // 렌더링 중인 카드 데이터
+  onSearch: (filteredCards: any[]) => void; // 필터링된 데이터를 상위 컴포넌트로 전달
+}
+
+const SearchBar: React.FC<Props> = ({ cards, onSearch }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [data, setData] = useState([
-    { id: 1, title: 'React Tutorial' },
-    { id: 2, title: 'Vue.js Guide' },
-    { id: 3, title: 'Angular Basics' },
-    { id: 4, title: 'Svelte Introduction' },
-  ]);
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(cards);
   const activeContainerRef = useRef<HTMLDivElement>(null);
   const [isError, setIsError] = useState(false);
 
@@ -29,8 +28,14 @@ const SearchBar: React.FC = () => {
     setInputValue(value);
 
     // 필터링 로직
-    const filtered = data.filter((item) => item.title.toLowerCase().includes(value.toLowerCase()));
-    setFilteredData(filtered);
+    const filtered = cards.filter(
+      (card) =>
+        card.writer_name.toLowerCase().includes(value.toLowerCase()) ||
+        card.title.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setFilteredData(filtered); // 로컬 상태 업데이트
+    onSearch(filtered); // 상위로 전달
   };
 
   const handleIconClick = () => {
