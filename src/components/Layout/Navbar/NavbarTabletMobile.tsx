@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
 
@@ -8,13 +8,13 @@ import navbarHamburgerSrc from '@/assets/webps/Common/navbarHamburger.webp';
 import logoutIconSrc from '@/assets/webps/Common/logoutIcon.webp';
 
 interface NavbarMobileProps {
-  isLoggedIn: boolean;
   onGoBackClick?: () => void;
 }
 
-const NavbarTabletMobile = ({ isLoggedIn, onGoBackClick }: NavbarMobileProps) => {
+const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isLoggedIn = !!localStorage.getItem('access_token');
 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 햄버거 메뉴 상태 관리
 

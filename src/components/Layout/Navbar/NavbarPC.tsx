@@ -7,22 +7,18 @@ import navbarMyPageSrc from '@/assets/webps/Common/navbarMyPage.webp';
 import logoutIconSrc from '@/assets/webps/Common/logoutIcon.webp';
 
 interface NavbarProps {
-  isLoggedIn: boolean;
   onGoBackClick?: () => void;
   onAboutClick?: () => void;
   onHomeClick?: () => void;
   onMyPageClick?: () => void;
 }
 
-const NavbarPC = ({
-  isLoggedIn,
-  onGoBackClick,
-  onAboutClick,
-  onHomeClick,
-  onMyPageClick,
-}: NavbarProps) => {
+const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isLoggedIn = !!localStorage.getItem('access_token');
+
+  console.log(isLoggedIn); // 추후 삭제
 
   const handleNavigate = (page: -1 | '' | 'home' | 'mypage' | 'login') => {
     if (page === -1) navigate(-1);
