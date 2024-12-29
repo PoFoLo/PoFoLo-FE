@@ -12,7 +12,7 @@ interface NavbarProps {
   onHomeClick?: () => void;
 }
 
-const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick }: NavbarProps) => {
+const NavbarPC = ({ onGoBackClick }: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = !!localStorage.getItem('access_token');

@@ -13,7 +13,6 @@ const Navbar = ({
   onGoBackClick,
   onAboutClick,
   onHomeClick,
-  onMyPageClick,
 }: ResponsiveNavbarProps) => {
   const { isPC } = useResponsive();
 
