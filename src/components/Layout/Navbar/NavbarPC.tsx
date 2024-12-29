@@ -10,15 +10,12 @@ interface NavbarProps {
   onGoBackClick?: () => void;
   onAboutClick?: () => void;
   onHomeClick?: () => void;
-  onMyPageClick?: () => void;
 }
 
-const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: NavbarProps) => {
+const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick }: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = !!localStorage.getItem('access_token');
-
-  console.log(isLoggedIn); // 추후 삭제
 
   const handleNavigate = (page: -1 | '' | 'home' | 'mypage' | 'login') => {
     if (page === -1) navigate(-1);
@@ -38,44 +35,51 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: N
   };
 
   const handleAboutClick = () => {
-    if (onAboutClick) {
-      onAboutClick();
+    handleNavigate('');
+  };
+
+  const handleHomeClick = () => {
+    if (isLoggedIn) {
+      handleNavigate('home');
     } else {
       handleNavigate('');
     }
   };
 
-  const handleHomeClick = () => {
-    if (onHomeClick) {
-      onHomeClick();
-    } else {
-      handleNavigate('home');
-    }
+  const handleMyPageClick = () => {
+    navigate(`/mypage/${localStorage.getItem('user_id')}`);
   };
 
-  const handleMyPageClick = () => {
-    if (onMyPageClick) {
-      onMyPageClick();
-    } else {
-      handleNavigate('mypage');
-    }
+  const handleKakaoLogin = () => {
+    const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
+    const redirectUri = encodeURIComponent(import.meta.env.VITE_KAKAO_REDIRECT_URI);
+    const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+    window.location.href = kakaoLoginUrl;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+
+    handleNavigate('');
   };
 
   return (
     <S.NavbarContainer>
       <S.NavbarBody>
-        {isGoBackVisible ? (
-          <S.NavbarLeftGoBackButton
-            src={navbarGoBackSrc}
-            alt="GoBack"
-            onClick={handleGoBackClick}
-          />
+        {isLoggedIn ? (
+          isGoBackVisible ? (
+            <S.NavbarLeftGoBackButton
+              src={navbarGoBackSrc}
+              alt="GoBack"
+              onClick={handleGoBackClick}
+            />
+          ) : (
+            <S.NavbarLeftLogo src={navbarLogoFullSrc} alt="Logo" onClick={handleHomeClick} />
+          )
         ) : (
-          <S.NavbarLeftLogo
-            src={navbarLogoFullSrc}
-            alt="Logo"
-            onClick={() => handleNavigate('home')}
-          />
+          <div></div>
         )}
 
         <S.NavbarRightContainer>
@@ -86,19 +90,21 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: N
             모든 프로젝트
           </S.NavbarPageButton>
 
-          {location.pathname === '/mypage' ? (
-            <S.NavbarLogoutButtonContainer onClick={() => handleNavigate('home')}>
+          {isLoggedIn ? (
+            <S.NavbarLogoutButtonContainer onClick={handleLogout}>
               <S.NavbarLogoutButtonLetter>로그아웃</S.NavbarLogoutButtonLetter>
               <S.NavbarLogoutButtonIcon src={logoutIconSrc} alt="navbarLogoutImage" />
             </S.NavbarLogoutButtonContainer>
           ) : (
-            <S.NavbarLoginButton onClick={() => handleNavigate('login')}>
-              로그인
-            </S.NavbarLoginButton>
+            <S.NavbarLoginButton onClick={handleKakaoLogin}>로그인</S.NavbarLoginButton>
           )}
-          <S.NavbarMyPageButton onClick={handleMyPageClick}>
-            <S.NavbarMyPageImg src={navbarMyPageSrc} alt="myPageButton" />
-          </S.NavbarMyPageButton>
+          {isLoggedIn ? (
+            <S.NavbarMyPageButton onClick={handleMyPageClick}>
+              <S.NavbarMyPageImg src={navbarMyPageSrc} alt="myPageButton" />
+            </S.NavbarMyPageButton>
+          ) : (
+            <></>
+          )}
         </S.NavbarRightContainer>
       </S.NavbarBody>
     </S.NavbarContainer>

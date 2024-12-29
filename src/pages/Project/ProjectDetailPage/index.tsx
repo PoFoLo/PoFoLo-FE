@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Comment } from '@/components/ProjectDetail/Comment';
 import { ProjectContent } from '@/components/ProjectDetail/ProjectContent';
 import * as S from '@/pages/Project/ProjectDetailPage/styles';
-import Navbar from '@/components/Layout/Navbar/NavbarPC';
+import Navbar from '@/components/Layout/Navbar';
 import { instance } from '@/apis/instance';
 import { useParams } from 'react-router-dom';
 

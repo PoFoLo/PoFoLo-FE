@@ -195,7 +195,6 @@ export const NavbarDetailContainerTabletMobile = styled.div<{ isExtended: boolea
 
 export const NavbarDetailBodyTabletMobile = styled.div`
   width: 100%;
-  max-width: 79.4rem;
   height: 6rem;
   @media (max-width: 1440px) {
     margin: 0 6.4rem;
@@ -210,12 +209,14 @@ export const NavbarDetailBodyTabletMobile = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      max-width: 32rem;
+      margin: 0 2rem;
+      width: calc(100% - 4rem);
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
-      max-width: 79.4rem;
+      margin: 0 2rem;
+      width: calc(100% - 4rem);
     `)}
 `;
 
