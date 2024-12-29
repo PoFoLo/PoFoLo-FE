@@ -12,7 +12,7 @@ import nextBlue from '@/assets/webps/Login/nextBlue.webp';
 import nextWhite from '@/assets/webps/Login/nextWhite.webp';
 import leftBlue from '@/assets/svgs/Login/leftBlue.svg';
 
-export const JoinPage = () => {
+const JoinPage = () => {
   const nav = useNavigate();
   const location = useLocation();
   const categorySectionRef = useRef<HTMLDivElement>(null);
@@ -295,3 +295,5 @@ export const JoinPage = () => {
     </S.Layout>
   );
 };
+
+export default JoinPage;

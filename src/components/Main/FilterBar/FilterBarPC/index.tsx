@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import ControlPanel from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar';
 import ControlPanelDetail from '@/components/Main/FilterBar/FilterBarPC/SubFilterBar';
-import SortDropdown from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/SortDropdown';
-import CardList from '@/components/Main/CardList/index';
 import * as S from '@/components/Main/FilterBar/FilterBarPC/styles';
 
 interface Props {

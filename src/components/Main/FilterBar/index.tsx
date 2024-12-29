@@ -39,10 +39,6 @@ const ResponsiveFilterBar: React.FC<Props> = ({
     };
   }, []);
 
-  const handleSearch = (filteredCards: any[]) => {
-    console.log('검색된 카드:', filteredCards);
-  };
-
   return (
     <>
       {isDesktop ? (
