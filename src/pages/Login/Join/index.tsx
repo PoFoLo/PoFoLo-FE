@@ -12,7 +12,7 @@ import nextBlue from '@/assets/webps/Login/nextBlue.webp';
 import nextWhite from '@/assets/webps/Login/nextWhite.webp';
 import leftBlue from '@/assets/svgs/Login/leftBlue.svg';
 
-export const JoinPage = () => {
+const JoinPage = () => {
   const nav = useNavigate();
   const location = useLocation();
   const categorySectionRef = useRef<HTMLDivElement>(null);
@@ -114,9 +114,9 @@ export const JoinPage = () => {
           education: affiliation.trim(),
           education_is_public: !affiliationPrivate,
           main_field:
-            mainCategory === '기획' ? 'plan' : mainCategory === '디자인' ? 'design' : 'develop',
+            mainCategory === '기획' ? '기획' : mainCategory === '디자인' ? '디자인' : '개발',
         };
-
+        console.log('보내는 데이터:', requestData);
         const response = await instance.post('/pofolo/users/register/', requestData);
 
         if (response.status === 201) {
@@ -295,3 +295,5 @@ export const JoinPage = () => {
     </S.Layout>
   );
 };
+
+export default JoinPage;

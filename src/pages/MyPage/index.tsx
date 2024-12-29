@@ -30,3 +30,5 @@ export const MyPage = () => {
     </S.Layout>
   );
 };
+
+export default MyPage;

@@ -4,13 +4,15 @@ import { Motivation } from '@/components/About/Motivation';
 import * as S from '@/pages/About/AboutPage/styles';
 import { MockUp } from '@/components/About/MockUp';
 
-export const AboutPage = () => {
+const AboutPage = () => {
   return (
     <S.Layout>
-      <Navbar isLoggedIn={false}/>
+      <Navbar />
       <Title />
       <Motivation />
       <MockUp />
     </S.Layout>
   );
 };
+
+export default AboutPage;

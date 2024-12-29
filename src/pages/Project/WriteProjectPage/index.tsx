@@ -22,7 +22,7 @@ interface ImageItem {
   file: File | null; // 새로 추가된 파일
 }
 
-export const WriteProjectPage = () => {
+const WriteProjectPage = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [mainCategory, setMainCategory] = useState<string>('');
@@ -116,7 +116,7 @@ export const WriteProjectPage = () => {
       const patchFormData = new FormData();
       // 삭제된 이미지 처리
       const removedIndices = images
-        .map((url, index) => index)
+        .map((_, index) => index)
         .filter((index) => !imagesState.some((item) => item.url === images[index]));
 
       if (removedIndices.length > 0) {
@@ -337,3 +337,5 @@ export const WriteProjectPage = () => {
     </>
   );
 };
+
+export default WriteProjectPage;

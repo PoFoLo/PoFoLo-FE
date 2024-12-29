@@ -1,7 +1,6 @@
 import * as S from '@/components/Common/Modal/styles';
 import checked from '@/assets/webps/Common/modalChecked.webp';
 import warning from '@/assets/webps/Common/modalWarning.webp';
-import Button from '@/components/Common/Button';
 import { useEffect, useCallback, useRef } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
 
