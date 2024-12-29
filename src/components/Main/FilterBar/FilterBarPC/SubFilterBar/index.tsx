@@ -3,9 +3,9 @@ import * as S from '@/components/Main/FilterBar/FilterBarPC/SubFilterBar/styles'
 import FilterDetailsContainer from '@/components/Main/FilterBar/FilterBarPC/SubFilterBar/FilterDetail';
 
 interface Props {
-  options: string[];
-  selectedLine2: string; // 추가
-  setSelectedLine2: (label: string) => void; // 추가
+  options: string[]; // 상위에서 전달받은 필터 옵션
+  selectedLine2: string;
+  setSelectedLine2: (label: string) => void;
 }
 
 const SubFilterBar: React.FC<Props> = ({ options, selectedLine2, setSelectedLine2 }) => {
@@ -13,8 +13,8 @@ const SubFilterBar: React.FC<Props> = ({ options, selectedLine2, setSelectedLine
     <S.SubFilterBar>
       <FilterDetailsContainer
         options={options}
-        selectedLine2={selectedLine2} // 전달
-        setSelectedLine2={setSelectedLine2} // 전달
+        selectedLine2={selectedLine2}
+        setSelectedLine2={setSelectedLine2}
       />
     </S.SubFilterBar>
   );

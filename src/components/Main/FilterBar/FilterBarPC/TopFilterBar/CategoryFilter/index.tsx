@@ -4,9 +4,10 @@ import * as S from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/Categor
 interface Props {
   selectedCategory: string | null;
   setSelectedCategory: (category: string | null) => void;
+  categories: string[]; // 카테고리 목록을 상위에서 전달받음
 }
 
-const CategoryFilter: React.FC<Props> = ({ selectedCategory, setSelectedCategory }) => {
+const CategoryFilter: React.FC<Props> = ({ selectedCategory, setSelectedCategory, categories }) => {
   const handleCategoryClick = (label: string) => {
     if (selectedCategory !== label) {
       setSelectedCategory(label);
@@ -15,7 +16,7 @@ const CategoryFilter: React.FC<Props> = ({ selectedCategory, setSelectedCategory
 
   return (
     <S.filterLine1Container>
-      {['기획', '개발', '디자인'].map((label) => (
+      {categories.map((label) => (
         <S.filterLine1BtnContainer
           key={label}
           selected={selectedCategory === label}

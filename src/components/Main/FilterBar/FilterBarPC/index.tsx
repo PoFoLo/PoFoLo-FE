@@ -1,35 +1,50 @@
-import React, { useState } from 'react';
-import * as S from '@/components/Main/FilterBar/FilterBarPC/styles';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import ControlPanel from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar';
 import ControlPanelDetail from '@/components/Main/FilterBar/FilterBarPC/SubFilterBar';
+import SortDropdown from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/SortDropdown';
+import CardList from '@/components/Main/CardList/index';
+import * as S from '@/components/Main/FilterBar/FilterBarPC/styles';
 
-const ControlPanels: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>('기획');
-  const [selectedLine2, setSelectedLine2] = useState<string>('전체');
+interface Props {
+  filterOptions: Record<string, string[]>;
+  selectedCategory: string | null;
+  setSelectedCategory: (category: string | null) => void;
+  selectedLine2: string;
+  setSelectedLine2: (line2: string) => void;
+  sortOption: string;
+  setSortOption: (option: string) => void;
+  cards: any[]; // 추가: 렌더링 중인 카드 데이터
+  onSearch: (term: string) => void; // 추가: 검색 결과 콜백
+}
 
-  const optionsMap: Record<string, string[]> = {
-    기획: ['전체', '서비스기획', '상품기획', '마케팅', '광고', '기타'],
-    개발: ['전체', '프론트엔드', '백엔드', '데이터분석', '임베디드', '게임', '인공지능', '기타'],
-    디자인: ['전체', 'UX/UI', '제품', '패션', '인테리어', '기타'],
-  };
-
-  const handleCategoryChange = (category: string | null) => {
-    setSelectedCategory(category); // 상위 태그 업데이트
-    // 해당 상위 태그의 첫 번째 하위 옵션('전체')로 초기화
-    setSelectedLine2(category && optionsMap[category] ? optionsMap[category][0] : '전체');
-  };
-
+const ControlPanels: React.FC<Props> = ({
+  filterOptions,
+  selectedCategory,
+  setSelectedCategory,
+  selectedLine2,
+  setSelectedLine2,
+  sortOption,
+  setSortOption,
+  cards,
+  onSearch,
+}) => {
+  const categories = Object.keys(filterOptions); // 카테고리 목록 추출
+  const options = filterOptions[selectedCategory || '기획']; // 세부 필터 옵션 추출
   return (
     <S.ControlPanelContainer>
       <S.ControlPanelBody>
-        {/* Line1 */}
         <ControlPanel
           selectedCategory={selectedCategory}
-          setSelectedCategory={handleCategoryChange}
+          setSelectedCategory={setSelectedCategory}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+          categories={categories} // 카테고리 전달
+          cards={cards}
+          onSearch={onSearch}
         />
-        {/* Line2 */}
         <ControlPanelDetail
-          options={selectedCategory ? optionsMap[selectedCategory] : []}
+          options={options}
           selectedLine2={selectedLine2}
           setSelectedLine2={setSelectedLine2}
         />
