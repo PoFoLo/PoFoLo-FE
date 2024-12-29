@@ -27,13 +27,14 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
     { comment, replyClicked, onReplyClick, onReplyPost, onReplyChange, replyContent, onDelete },
     ref
   ) => {
-    const [writerInfo, setWriterInfo] = useState<{
-      nickname: string;
-      profileImg: string;
-    }>({
+    const [commentWriter, setCommentWriter] = useState({
+      id: comment.writer,
       nickname: '',
       profileImg: profileIcon,
     });
+    const [replyWriters, setReplyWriters] = useState<
+      { id: number; nickname: string; profileImg: string }[]
+    >([]);
     const userId = localStorage.getItem('user_id');
     const { isPC } = useResponsive();
     const nav = useNavigate();
@@ -56,23 +57,36 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
       }
     };
 
-    // 작성자 정보 가져오기
-    const fetchWriterInfo = async (userId: number) => {
+    const fetchWriterInfo = async (writerId: number) => {
       try {
-        const response = await instance.get(`/pofolo/users/profile/${userId}/`);
-        const { nickname, profile_img } = response.data.profile;
-
-        setWriterInfo({
-          nickname,
-          profileImg: profile_img || profileIcon, // 프로필 이미지가 없으면 기본 이미지 사용
-        });
+        const response = await instance.get(`/pofolo/users/profile/${writerId}/`);
+        return {
+          id: writerId,
+          nickname: response.data.profile.nickname || '알 수 없음',
+          profileImg: response.data.profile.profile_img || profileIcon,
+        };
       } catch (error) {
-        console.error('작성자 정보 가져오기 실패:', error);
-        setWriterInfo({
-          nickname: '',
+        console.error(`작성자 정보 가져오기 실패 (ID: ${writerId}):`, error);
+        return {
+          id: writerId,
+          nickname: '알 수 없음',
           profileImg: profileIcon,
-        });
+        }; // 기본값 반환
       }
+    };
+
+    const loadCommentWriter = async () => {
+      const writerInfo = await fetchWriterInfo(comment.writer);
+      if (writerInfo) {
+        setCommentWriter(writerInfo); // 반환값을 상태로 설정
+      }
+    };
+
+    const loadReplyWriters = async () => {
+      const writers = await Promise.all(
+        comment.replies.map(async (reply) => await fetchWriterInfo(reply.writer))
+      );
+      setReplyWriters(writers); // 배열 상태로 설정
     };
 
     // 답글 클릭 시 커서 자동 포커스
@@ -100,24 +114,23 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
     };
 
     useEffect(() => {
-      if (comment.writer) {
-        fetchWriterInfo(comment.writer); // 작성자 ID를 기반으로 정보 가져오기
-      }
-    }, [comment.writer]);
+      loadCommentWriter();
+      loadReplyWriters();
+    }, [comment.writer, comment.replies]);
 
     return (
       <S.CommentItem ref={ref}>
         <S.CommentItemWrapper>
           <img
-            onClick={() => nav('/mypage')}
+            onClick={() => nav(`/mypage/${commentWriter.id}`)}
             className="profile-icon"
-            src={writerInfo.profileImg}
+            src={commentWriter.profileImg}
             alt="profile icon"
           />
           <S.CommentContentWrapper>
             <div className="comment-info-wrapper">
               <S.CommentInfo>
-                <p onClick={() => nav('/mypage')}>{writerInfo.nickname}</p>
+                <p onClick={() => nav(`/mypage/${commentWriter.id}`)}>{commentWriter.nickname}</p>
                 <span>{formatCommentDate(comment.commented_at)}</span>
               </S.CommentInfo>
               <S.CommentContent>{comment.text}</S.CommentContent>
@@ -169,36 +182,43 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
         )}
 
         {/* 답글 목록 표시 */}
-        {comment.replies.map((reply, index) => (
-          <li key={reply.id} ref={(el) => (replyRefs.current[index] = el)}>
-            <S.ReplyWrapper>
-              <div className="comment-info-wrapper">
-                <img
-                  onClick={() => nav('/mypage')}
-                  className="reply-line"
-                  src={replyLine}
-                  alt="reply line"
-                />
-                <div className="reply-info-wrapper">
-                  <S.CommentInfo>
-                    <p onClick={() => nav('/mypage')}>{writerInfo.nickname}</p>
-                    <span>{formatCommentDate(reply.commented_at)}</span>
-                  </S.CommentInfo>
-                  <S.CommentContent>{reply.text}</S.CommentContent>
-                </div>
-              </div>
-              {Number(userId) === comment.writer && (
-                <Button
-                  size={isPC ? 'small' : 'small2'}
-                  type="obscure"
-                  onClick={() => onDelete(reply.id, true, comment.id)}
-                >
-                  삭제
-                </Button>
-              )}
-            </S.ReplyWrapper>
-          </li>
-        ))}
+        {comment.replies.length > 0 && (
+          <ul>
+            {comment.replies.map((reply, index) => {
+              const writer = replyWriters.find((w) => w.id === reply.writer);
+              return (
+                <li key={reply.id} ref={(el) => (replyRefs.current[index] = el)}>
+                  <S.ReplyWrapper>
+                    <div className="comment-info-wrapper">
+                      <img
+                        onClick={() => nav(`/mypage/${reply.writer}`)}
+                        className="reply-line"
+                        src={replyLine}
+                        alt="reply line"
+                      />
+                      <div className="reply-info-wrapper">
+                        <S.CommentInfo>
+                          <p onClick={() => nav(`/mypage/${reply.writer}`)}>{writer?.nickname}</p>
+                          <span>{formatCommentDate(reply.commented_at)}</span>
+                        </S.CommentInfo>
+                        <S.CommentContent>{reply.text}</S.CommentContent>
+                      </div>
+                    </div>
+                    {Number(userId) === reply.writer && (
+                      <Button
+                        size={isPC ? 'small' : 'small2'}
+                        type="obscure"
+                        onClick={() => onDelete(reply.id, true, comment.id)}
+                      >
+                        삭제
+                      </Button>
+                    )}
+                  </S.ReplyWrapper>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </S.CommentItem>
     );
   }
