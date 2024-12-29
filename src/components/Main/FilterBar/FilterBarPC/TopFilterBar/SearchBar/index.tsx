@@ -26,16 +26,7 @@ const SearchBar: React.FC<Props> = ({ cards, onSearch }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
-
-    // 필터링 로직
-    const filtered = cards.filter(
-      (card) =>
-        card.writer_name.toLowerCase().includes(value.toLowerCase()) ||
-        card.title.toLowerCase().includes(value.toLowerCase())
-    );
-
-    setFilteredData(filtered); // 로컬 상태 업데이트
-    onSearch(filtered); // 상위로 전달
+    onSearch(value); // 검색어를 부모(MainPage)로 전달
   };
 
   const handleIconClick = () => {

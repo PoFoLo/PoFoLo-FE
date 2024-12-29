@@ -11,7 +11,8 @@ interface Props {
   sortOption: string;
   setSortOption: (option: string) => void;
   cards: any[]; // 추가: 렌더링 중인 카드 데이터
-  onSearch: (filteredCards: any[]) => void; // 추가: 검색 결과 콜백
+  onSearch: (term: string) => void; // 검색어 문자열을 받는 형태로 수정
+ // 추가: 검색 결과 콜백
 }
 
 const ResponsiveFilterBar: React.FC<Props> = ({

@@ -18,6 +18,27 @@ export const MainPage: React.FC = () => {
   const [sortOption, setSortOption] = useState<string>('최신순');
   const [cards, setCards] = useState<any[]>([]);
   const [filteredCards, setFilteredCards] = useState<any[]>([]); // 추가된 상태 정의
+  const [searchTerm, setSearchTerm] = useState<string>(''); // 검색어 상태 추가
+
+  // 프로필 데이터를 가져오는 함수
+  const fetchUserProfile = async () => {
+    const userId = localStorage.getItem('user_id');
+    if (!userId) {
+      console.error('로컬 스토리지에서 user_id를 찾을 수 없습니다.');
+      return;
+    }
+
+    try {
+      const response = await instance.get(`/pofolo/users/profile/${userId}/`);
+      const profile = response.data.profile;
+
+      if (profile && profile.main_field) {
+        setSelectedCategory(profile.main_field); // main_field를 selectedCategory로 설정
+      }
+    } catch (error) {
+      console.error('프로필 API 호출 실패:', error);
+    }
+  };
 
   const fetchCards = async () => {
     if (!selectedCategory) return;
@@ -42,6 +63,15 @@ export const MainPage: React.FC = () => {
   };
 
   useEffect(() => {
+    fetchUserProfile(); // 페이지 로드 시 프로필 데이터를 가져옴
+  }, []);
+
+  const handleCategoryClick = (category: string | null) => {
+    setSelectedCategory(category); // 카테고리 변경
+    setSelectedLine2('전체'); // 디테일 필터 초기화
+  };
+
+  useEffect(() => {
     fetchCards();
   }, [selectedCategory, selectedLine2, sortOption]);
 
@@ -56,29 +86,30 @@ export const MainPage: React.FC = () => {
     return 0;
   });
 
-  useEffect(() => {
-    const filtered = sortedCards.filter(
-      (card) => selectedLine2 === '전체' || card.sub_field === selectedLine2
-    );
-    setFilteredCards(filtered); // 필터링된 카드 업데이트
-  }, [sortedCards, selectedLine2]);
-
-  // 검색 결과를 업데이트하는 핸들러
-  const handleSearch = (filtered: any[]) => {
-    setFilteredCards(filtered); // 검색 결과를 업데이트
+  // 검색 로직
+  const handleSearch = (term: string) => {
+    setSearchTerm(term); // 검색어 업데이트
+    const filtered = cards.filter((card) => card.title.toLowerCase().includes(term.toLowerCase()));
+    setFilteredCards(filtered); // 검색 결과 반영
   };
 
+  // 기존 필터와 검색 결과 통합
   useEffect(() => {
-    const filtered = sortedCards.filter(
-      (card) => selectedLine2 === '전체' || card.sub_field === selectedLine2
-    );
-    setFilteredCards(filtered); // 필터링된 카드 업데이트
-  }, [sortedCards, selectedLine2]);
+    let result = sortedCards; // 정렬된 카드 목록을 기준으로 시작
 
-  const handleCategoryClick = (category: string | null) => {
-    setSelectedCategory(category); // 카테고리 변경
-    setSelectedLine2('전체'); // 디테일 필터 초기화
-  };
+    // 1. 세부 필터(selectedLine2)가 '전체'가 아닌 경우, 필터링
+    if (selectedLine2 !== '전체') {
+      result = result.filter((card) => card.sub_field === selectedLine2);
+    }
+
+    // 2. 검색어(searchTerm)가 있는 경우, 추가 필터링
+    if (searchTerm) {
+      result = result.filter((card) => card.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+
+    // 3. 최종 결과를 상태로 업데이트
+    setFilteredCards(result);
+  }, [sortedCards, selectedLine2, searchTerm]);
 
   return (
     <S.MainContainer>
