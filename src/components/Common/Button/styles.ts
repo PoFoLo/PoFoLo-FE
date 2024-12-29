@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface StyledButtonProps {
-  $buttonSize: 'large' | 'medium' | 'small' | 'small2';
+  $buttonSize: 'large' | 'medium' | 'small' | 'small2' | 'verySmall';
   $buttonType: 'main' | 'sub' | 'inactive' | 'obscure';
 }
 
@@ -30,6 +30,17 @@ const buttonSizeStyles = {
     padding: 0.2rem 0.8rem;
     ${(props) => props.theme.fonts.caption4};
     border-radius: 0.8rem;
+  `,
+  verySmall: css`
+    height: 2.7rem;
+    padding: 0.6rem 1.2rem;
+    font-family: 'Pretendard';
+    font-size: 13.5px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+    letter-spacing: 0.034px;
+    border-radius: 4rem;
   `,
 };
 
