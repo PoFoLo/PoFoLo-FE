@@ -32,6 +32,7 @@ function App() {
         <Route path="/project/write" element={<WriteProjectPage />} />
         <Route path="/project/edit/:project_id" element={<WriteProjectPage />} />
         <Route path="/portfolio/:portfolio_id" element={<PortfolioDetailPage />} />
+        <Route path="/portfolio/invite/:uuid" element={<PortfolioDetailPage />} />
         <Route path="/portfolio/write" element={<WritePortfolioPage />} />
         <Route path="/portfolio/edit/:portfolio_id" element={<WritePortfolioPage />} />
         <Route path="/mypage/:user_id" element={<MyPage />} />
