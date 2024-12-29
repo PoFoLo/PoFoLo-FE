@@ -53,7 +53,19 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
 
-    handleNavigate('home');
+    handleNavigate('');
+  };
+
+  const handleHomeClick = () => {
+    if (isLoggedIn) {
+      handleNavigate('home');
+    } else {
+      handleNavigate('');
+    }
+  };
+
+  const handleMyPageClick = () => {
+    navigate(`/mypage/${localStorage.getItem('user_id')}`);
   };
 
   return (
@@ -79,7 +91,7 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
                 <S.NavbarLeftLogoTabletMobile
                   src={navbarLogoTabletMobileSrc}
                   alt="Logo"
-                  onClick={() => handleNavigate('home')}
+                  onClick={handleHomeClick}
                 />
                 <S.NavbarHamburgerButtonTabletMobile
                   src={navbarHamburgerSrc}
@@ -90,7 +102,11 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
             )
           ) : (
             <>
-              <S.NavbarLeftLogoTabletMobile src={navbarLogoTabletMobileSrc} alt="Logo" />
+              <S.NavbarLeftLogoTabletMobile
+                src={navbarLogoTabletMobileSrc}
+                alt="Logo"
+                onClick={handleHomeClick}
+              />
               <S.NavbarRightContainerTabletMobile>
                 <S.NavbarLoginButton onClick={handleKakaoLogin}>로그인</S.NavbarLoginButton>
                 <S.NavbarHamburgerButtonTabletMobile
@@ -113,14 +129,14 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
               </S.NavbarDetailPageButtonTabletMobile>
             </S.NavbarDetailPageButtonContainerTabletMobile>
             <S.NavbarDetailPageButtonContainerTabletMobile>
-              <S.NavbarDetailPageButtonTabletMobile onClick={() => handleNavigate('home')}>
+              <S.NavbarDetailPageButtonTabletMobile onClick={handleHomeClick}>
                 모든 프로젝트
               </S.NavbarDetailPageButtonTabletMobile>
             </S.NavbarDetailPageButtonContainerTabletMobile>
             {isLoggedIn && (
               <>
                 <S.NavbarDetailPageButtonContainerTabletMobile>
-                  <S.NavbarDetailPageButtonTabletMobile onClick={() => handleNavigate('mypage')}>
+                  <S.NavbarDetailPageButtonTabletMobile onClick={handleMyPageClick}>
                     마이페이지
                   </S.NavbarDetailPageButtonTabletMobile>
                   <S.NavbarLogoutButtonContainer onClick={handleLogout}>

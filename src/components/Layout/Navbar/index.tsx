@@ -25,7 +25,6 @@ const Navbar = ({
           onGoBackClick={onGoBackClick}
           onAboutClick={onAboutClick}
           onHomeClick={onHomeClick}
-          onMyPageClick={onMyPageClick}
         />
       )}
     </>

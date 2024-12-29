@@ -68,18 +68,18 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick }: NavbarProps) => 
   return (
     <S.NavbarContainer>
       <S.NavbarBody>
-        {isGoBackVisible ? (
-          <S.NavbarLeftGoBackButton
-            src={navbarGoBackSrc}
-            alt="GoBack"
-            onClick={handleGoBackClick}
-          />
+        {isLoggedIn ? (
+          isGoBackVisible ? (
+            <S.NavbarLeftGoBackButton
+              src={navbarGoBackSrc}
+              alt="GoBack"
+              onClick={handleGoBackClick}
+            />
+          ) : (
+            <S.NavbarLeftLogo src={navbarLogoFullSrc} alt="Logo" onClick={handleHomeClick} />
+          )
         ) : (
-          <S.NavbarLeftLogo
-            src={navbarLogoFullSrc}
-            alt="Logo"
-            onClick={handleHomeClick}
-          />
+          <div></div>
         )}
 
         <S.NavbarRightContainer>
@@ -98,9 +98,13 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick }: NavbarProps) => 
           ) : (
             <S.NavbarLoginButton onClick={handleKakaoLogin}>로그인</S.NavbarLoginButton>
           )}
-          <S.NavbarMyPageButton onClick={handleMyPageClick}>
-            <S.NavbarMyPageImg src={navbarMyPageSrc} alt="myPageButton" />
-          </S.NavbarMyPageButton>
+          {isLoggedIn ? (
+            <S.NavbarMyPageButton onClick={handleMyPageClick}>
+              <S.NavbarMyPageImg src={navbarMyPageSrc} alt="myPageButton" />
+            </S.NavbarMyPageButton>
+          ) : (
+            <></>
+          )}
         </S.NavbarRightContainer>
       </S.NavbarBody>
     </S.NavbarContainer>
