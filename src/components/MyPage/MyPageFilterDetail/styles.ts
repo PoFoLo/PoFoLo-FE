@@ -36,8 +36,7 @@ export const FilterAllProjectContainer = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      height: 7.9rem;
-      padding: 1.8rem 0rem 3.2rem 0rem;
+      padding: 0.4rem 0rem 3.2rem 0rem;
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
@@ -46,8 +45,7 @@ export const FilterAllProjectContainer = styled.div`
 
   ${(props) =>
     props.theme.media.tab(css`
-      height: 7.9rem;
-      padding: 1.8rem 0rem 3.2rem 0rem;
+      padding: 0.4rem 0rem 3.2rem 0rem;
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
@@ -197,8 +195,6 @@ export const FilterPortfolioContainer = styled.div`
     margin: 0 6.4rem;
     width: calc(100% - 11.2rem);
   }
-
-  height: 8.6rem;
   display: flex;
   align-items: center;
   padding: 1.4rem 0 3.6rem 0;
@@ -207,8 +203,7 @@ export const FilterPortfolioContainer = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      height: 7.9rem;
-      padding: 1.8rem 0rem 3.2rem 0rem;
+      padding: 0.4rem 0rem 3.2rem 0rem;
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
@@ -216,8 +211,7 @@ export const FilterPortfolioContainer = styled.div`
 
   ${(props) =>
     props.theme.media.tab(css`
-      height: 7.9rem;
-      padding: 1.8rem 0rem 3.2rem 0rem;
+      padding: 0.4rem 0rem 3.2rem 0rem;
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;

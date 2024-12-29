@@ -14,18 +14,18 @@ const TabNavigation = ({ activeTab, setActiveTab }: TabNavigationProps) => {
     return (
       <S.TabsContainer>
         <S.TabContainerTabletMobile
-          active={activeTab === 'allProjects'}
+          $active={activeTab === 'allProjects'}
           onClick={() => setActiveTab('allProjects')}
         >
-          <S.TabLetterTabletMobile active={activeTab === 'allProjects'}>
+          <S.TabLetterTabletMobile $active={activeTab === 'allProjects'}>
             모든 프로젝트
           </S.TabLetterTabletMobile>
         </S.TabContainerTabletMobile>
         <S.TabContainerTabletMobile
-          active={activeTab === 'portfolio'}
+          $active={activeTab === 'portfolio'}
           onClick={() => setActiveTab('portfolio')}
         >
-          <S.TabLetterTabletMobile active={activeTab === 'portfolio'}>
+          <S.TabLetterTabletMobile $active={activeTab === 'portfolio'}>
             포트폴리오
           </S.TabLetterTabletMobile>
         </S.TabContainerTabletMobile>
@@ -37,18 +37,18 @@ const TabNavigation = ({ activeTab, setActiveTab }: TabNavigationProps) => {
     <S.TabsLayout>
       <S.TabsContainer>
         <S.TabContainer
-          active={activeTab === 'allProjects'}
+          $active={activeTab === 'allProjects'}
           onClick={() => setActiveTab('allProjects')}
         >
-          <S.TabLetter active={activeTab === 'allProjects'}>모든 프로젝트</S.TabLetter>
-          <S.TabIcon active={activeTab === 'allProjects'} />
+          <S.TabLetter $active={activeTab === 'allProjects'}>모든 프로젝트</S.TabLetter>
+          <S.TabIcon $active={activeTab === 'allProjects'} />
         </S.TabContainer>
         <S.TabContainer
-          active={activeTab === 'portfolio'}
+          $active={activeTab === 'portfolio'}
           onClick={() => setActiveTab('portfolio')}
         >
-          <S.TabLetter active={activeTab === 'portfolio'}>포트폴리오</S.TabLetter>
-          <S.TabIcon active={activeTab === 'portfolio'} />
+          <S.TabLetter $active={activeTab === 'portfolio'}>포트폴리오</S.TabLetter>
+          <S.TabIcon $active={activeTab === 'portfolio'} />
         </S.TabContainer>
       </S.TabsContainer>
     </S.TabsLayout>
