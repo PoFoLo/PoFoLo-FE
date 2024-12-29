@@ -17,19 +17,12 @@ import Button from '@/components/Common/Button';
 interface ProjectContentProps {
   onCommentClick: () => void;
   commentCount: number;
-  likeCount: number;
-  isLiked: boolean;
-  onLikeToggle: () => Promise<void>;
 }
 
-export const ProjectContent: React.FC<ProjectContentProps> = ({
-  onCommentClick,
-  commentCount,
-  likeCount,
-  isLiked,
-  onLikeToggle,
-}) => {
+export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, commentCount }) => {
   const [projectData, setProjectData] = useState<ProjectData | null>(null);
+  const [likeCount, setLikeCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
   const [writerProfile, setWriterProfile] = useState<{
     id: number;
     nickname: string;
@@ -53,19 +46,33 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({
       const response = await instance.get(`/pofolo/projects/${project_id}/`);
       const data = response.data;
 
-      // links 객체를 배열로 변환
+      setProjectData(data);
+      setLikeCount(data.liked_count);
+      setIsLiked(data.is_liked);
+
       const formattedLinks = Object.entries(data.links).map(([title, url]) => ({
         title,
         url,
       }));
 
-      setProjectData({
-        ...data,
-        links: formattedLinks,
-      });
+      setProjectData({ ...data, links: formattedLinks });
     } catch (error) {
       console.error('프로젝트 데이터를 가져오는 중 오류 발생:', error);
-      nav('/'); // 오류 발생 시 홈으로 이동
+      nav('/');
+    }
+  };
+
+  const handleLikeToggle = async () => {
+    setIsLiked((prev) => !prev);
+    setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+
+    try {
+      await instance.post(`/pofolo/projects/${project_id}/like/`);
+    } catch (error) {
+      console.error('좋아요 토글 중 오류 발생:', error);
+      // 실패 시 UI 상태 복구
+      setIsLiked((prev) => !prev);
+      setLikeCount((prev) => (isLiked ? prev + 1 : prev - 1));
     }
   };
 
@@ -277,7 +284,7 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({
         {/* 플로팅 버튼 */}
         <S.FloatingButtonWrapper ref={floatingButtonRef} className={isFixed ? 'fixed' : 'absolute'}>
           <S.LikeButton
-            onClick={onLikeToggle}
+            onClick={handleLikeToggle}
             $isPC={isPC}
             $isLiked={isLiked}
             $likeCount={likeCount}
