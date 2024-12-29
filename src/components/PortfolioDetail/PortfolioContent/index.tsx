@@ -149,7 +149,7 @@ export const PortfolioContent = () => {
             />
             <C.ProfileContent>
               <p onClick={() => nav('/mypage')} className="nickname">
-                {writerInfo.nickname}
+                {portfolioData.username}
               </p>
               <p className="school">{writerInfo.education}</p>
             </C.ProfileContent>

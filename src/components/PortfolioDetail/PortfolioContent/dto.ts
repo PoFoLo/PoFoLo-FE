@@ -12,6 +12,7 @@ export interface PortfolioData {
   created_at: string;
   is_public: boolean;
   views: number;
+  username: string;
 }
 
 export interface RelatedProject {
