@@ -10,15 +10,12 @@ interface NavbarProps {
   onGoBackClick?: () => void;
   onAboutClick?: () => void;
   onHomeClick?: () => void;
-  onMyPageClick?: () => void;
 }
 
-const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: NavbarProps) => {
+const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick }: NavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = !!localStorage.getItem('access_token');
-
-  console.log(isLoggedIn); // 추후 삭제
 
   const handleNavigate = (page: -1 | '' | 'home' | 'mypage' | 'login') => {
     if (page === -1) navigate(-1);
@@ -38,27 +35,19 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: N
   };
 
   const handleAboutClick = () => {
-    if (onAboutClick) {
-      onAboutClick();
-    } else {
-      handleNavigate('');
-    }
+    handleNavigate('');
   };
 
   const handleHomeClick = () => {
-    if (onHomeClick) {
-      onHomeClick();
-    } else {
+    if (isLoggedIn) {
       handleNavigate('home');
+    } else {
+      handleNavigate('');
     }
   };
 
   const handleMyPageClick = () => {
-    if (onMyPageClick) {
-      onMyPageClick();
-    } else {
-      handleNavigate('');
-    }
+    navigate(`/mypage/${localStorage.getItem('user_id')}`);
   };
 
   const handleKakaoLogin = () => {
@@ -73,7 +62,7 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: N
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
 
-    handleNavigate('home');
+    handleNavigate('');
   };
 
   return (
@@ -89,7 +78,7 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: N
           <S.NavbarLeftLogo
             src={navbarLogoFullSrc}
             alt="Logo"
-            onClick={() => handleNavigate('home')}
+            onClick={handleHomeClick}
           />
         )}
 
