@@ -5,7 +5,7 @@ export const TabsLayout = styled.div`
   height: 8rem;
   display: flex;
   justify-content: center;
-  padding: 1.6rem 0 2.8rem 0;
+  padding: 1.6rem 0 1.6rem 0;
 
   background-color: ${(props) => props.theme.colors.gray5};
 

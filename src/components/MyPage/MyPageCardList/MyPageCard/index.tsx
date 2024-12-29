@@ -3,7 +3,6 @@ import * as S from './styles';
 
 import filledLikeSrc from '@/assets/webps/Main/likeFilled.webp';
 import filledCommentSrc from '@/assets/webps/Main/commentFilled.webp';
-import defaultProjectThumbnailSrc from '@/assets/webps/MyPage/defaultProjectThumbnail.webp';
 
 interface CardProps {
   imageUrl: string;
@@ -11,11 +10,11 @@ interface CardProps {
   likes: number;
   comments: number;
 }
-const Card: React.FC<CardProps> = ({ projectName, likes, comments }) => {
+const Card: React.FC<CardProps> = ({ imageUrl, projectName, likes, comments }) => {
   // imageUrl for later images which are real 삭제 안 돼요.
   return (
     <S.Card>
-      <S.CardImg src={defaultProjectThumbnailSrc} alt={projectName} />
+      <S.CardImg src={imageUrl} alt={projectName} />
       <S.ProjectName>{projectName}</S.ProjectName>
       <S.ReactionContainer>
         <S.ReactionIcon src={filledLikeSrc}></S.ReactionIcon>

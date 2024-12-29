@@ -1,41 +1,39 @@
 import styled, { css } from 'styled-components';
+import ScrollContainer from 'react-indiana-drag-scroll';
 
 export const ProfileLayout = styled.div`
   width: 100%;
   max-width: 131.2rem;
   background-color: #fff;
+  position: relative;
 
   @media (max-width: 1440px) {
-    margin: 12.8rem 6.4rem 0rem 6.4rem;
+    margin: 12.8rem 6.4rem 1.8rem 6.4rem;
     width: calc(100% - 12.8rem); // 얘는 11.2로 하니까 이상해지네. 원래대로 12.8이 옳네.
   }
 
-  margin: 12.8rem 0 0 0;
-  height: 18.4rem;
+  margin: 12.8rem 0 1.8rem 0;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  position: relative;
 
   ${(props) =>
     props.theme.media.ph(css`
-      height: 19.7rem;
-      margin: 8rem 2rem 0rem 2rem;
+      margin: 8rem 2rem 1.8rem 2rem;
       width: calc(100% - 4rem);
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
-      height: 16.1rem;
-      margin: 8rem 2rem 0rem 2rem;
+      margin: 8rem 2rem 1.8rem 2rem;
       width: calc(100% - 4rem);
     `)}
 `;
 
 export const ProfileContainer = styled.div`
   display: flex;
-  align-items: center;
   gap: 2.8rem;
+  width: 100%;
 
   ${(props) =>
     props.theme.media.ph(css`
@@ -49,7 +47,6 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ProfilePic = styled.img`
-  // Clear.
   width: 14.4rem;
   height: 14.4rem;
   border-radius: 1.2rem;
@@ -58,6 +55,9 @@ export const ProfilePic = styled.img`
     props.theme.media.ph(css`
       width: 9.2rem;
       height: 9.2rem;
+      min-width: 9.2rem;
+      min-height: 9.2rem;
+      margin-left: 1.6rem;
     `)}
 
   ${(props) =>
@@ -71,39 +71,34 @@ export const ProfileInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  width: 100%;
 `;
 
 export const NameAndBadgesContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 1.2rem;
-  width: 27.7rem;
   height: 4.2rem;
 
   ${(props) =>
     props.theme.media.tab(css`
-      width: 21.2rem;
       height: 2.4rem;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
-      width: 30rem;
       height: 3.1rem;
     `)}
 `;
 
 export const NameContainerMobile = styled.div`
-  // Clear.
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 21.2rem;
   height: 3.1rem;
 `;
 
 export const Name = styled.div`
-  // Clear.
   color: #000;
   ${(props) => props.theme.fonts.subhead1}
 
@@ -115,7 +110,7 @@ export const Name = styled.div`
       font-style: normal;
       font-weight: 700;
       line-height: 130%; /* 3.12rem */
-      letter-spacing: 0.012rem;
+      letter-spacing: 0.012remF;
   `
     )}
 
@@ -133,7 +128,6 @@ export const Name = styled.div`
 `;
 
 export const BadgesContainer = styled.div`
-  // Clear.
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -156,17 +150,15 @@ export const BadgesContainer = styled.div`
     `)}
 `;
 
-export const OfferBtnContainer = styled.button`
-  //Clear.
+export const OfferBtnContainer = styled.button<{ $isAvailable: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  // padding: 0.4rem 1.6rem;
+  padding: 0.4rem 1.6rem;
   gap: 0.6rem;
   border-radius: 3.2rem;
-  background: var(--blue-50, #598df6);
-
-  width: 11.2rem;
+  background: ${(props) =>
+    props.$isAvailable ? props.theme.colors.blue50 : props.theme.colors.gray20};
   height: 3.2rem;
   border: none;
   cursor: pointer;
@@ -178,31 +170,25 @@ export const OfferBtnContainer = styled.button`
   &:active {
     opacity: 0.8;
   }
-  /*
-  &:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-  */
+
   ${(props) =>
     props.theme.media.ph(css`
       gap: 0.45rem;
       border-radius: 2.4rem;
-      width: 8.4rem;
       height: 2.4rem;
+      padding: 0.3rem 1.2rem;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
       gap: 0.45rem;
       border-radius: 2.4rem;
-      width: 8.4rem;
       height: 2.4rem;
+      padding: 0.3rem 1.2rem;
     `)}
 `;
 
 export const OfferBtnIcon = styled.img`
-  // Clear.
   width: 1.4rem;
   height: 1.4rem;
 
@@ -219,9 +205,8 @@ export const OfferBtnIcon = styled.img`
     `)}
 `;
 
-export const OfferBtnLetter = styled.div`
-  // Clear.
-  color: #fff;
+export const OfferBtnLetter = styled.div<{ $isAvailable: boolean }>`
+  color: ${(props) => (props.$isAvailable ? props.theme.colors.white : props.theme.colors.gray60)};
   ${(props) => props.theme.fonts.caption2}
 
   height: 2.4rem;
@@ -252,16 +237,15 @@ export const OfferBtnLetter = styled.div`
 `;
 
 export const EmailBadgeContainer = styled.div`
-  // Clear.
   width: 3.2rem;
   height: 3.2rem;
   background-color: rgba(255, 113, 91, 0.9);
 
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   border-radius: 1.6rem;
-  //padding: 1.1rem 0.9rem;
   cursor: pointer;
 
   ${(props) =>
@@ -300,16 +284,15 @@ export const EmailBadgeIcon = styled.img`
 `;
 
 export const PhoneBadgeContainer = styled.div`
-  // Clear.
   width: 3.2rem;
   height: 3.2rem;
   background-color: rgba(30, 190, 30, 0.9);
 
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 1.6rem;
-  //padding: 1rem;
   cursor: pointer;
 
   ${(props) =>
@@ -378,7 +361,7 @@ export const EditProfileIconMobile = styled.img`
 export const EmailContactContainer = styled.div`
   position: absolute;
   top: -4.4rem; /* 주황색 버튼 위에 배치 */
-  left: 39.3rem; /* X축 중앙 정렬 (위치 조정 필요) */
+  left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
@@ -386,49 +369,49 @@ export const EmailContactContainer = styled.div`
 
   ${(props) =>
     props.theme.media.ph(css`
-      top: 6rem;
-      left: 0.9rem;
-      transform: rotateX(180deg);
+      top: 2.6rem;
+      left: 50%;
+      transform: translateX(-50%) rotateX(180deg);
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
       top: 2.6rem;
-      left: 19.8rem;
-      transform: rotateX(180deg);
+      left: 50%;
+      transform: translateX(-50%) rotateX(180deg);
     `)}
 `;
 
 export const PhoneContactContainer = styled.div`
   position: absolute;
-  top: -4.4rem; /* 초록색 버튼 위에 배치 */
-  left: 43.25rem; /* 중앙 정렬 */
-  transform: translateX(-50%); /* X축 중앙 정렬 */
+  top: -4.4rem; /* 주황색 버튼 위에 배치 */
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
 
   ${(props) =>
     props.theme.media.ph(css`
-      top: 6rem;
-      left: 5.9rem;
-      transform: rotateX(180deg);
+      top: 2.6rem;
+      left: 50%;
+      transform: translateX(-50%) rotateX(180deg);
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
       top: 2.6rem;
-      left: 25.1rem;
-      transform: rotateX(180deg);
+      left: 50%;
+      transform: translateX(-50%) rotateX(180deg);
     `)}
 `;
 
 export const ContactLetterContainer = styled.div`
-  border-radius: 0.8rem 0.8rem 0.8rem 0.8rem;
+  border-radius: 0.8rem;
   background-color: ${(props) => props.theme.colors.gray60};
   backdrop-filter: blur(3rem);
 
-  padding: 0.5rem 1.2rem 0.7rem 1.2rem;
+  padding: 0.5rem 1.2rem 0.5rem 1.2rem;
   height: 3.6rem;
 
   ${(props) =>
@@ -445,7 +428,7 @@ export const ContactLetterContainer = styled.div`
 export const ContactLetter = styled.div`
   color: ${(props) => props.theme.colors.gray5};
   ${(props) => props.theme.fonts.subhead3};
-  height: 2.4rem;
+  white-space: nowrap;
 `;
 
 export const ContactTriangle = styled.div`
@@ -484,11 +467,8 @@ export const Organization = styled.div`
 `;
 
 export const Introduction = styled.div`
-  // Clear.
   color: rgba(0, 0, 0, 0.5);
   ${(props) => props.theme.fonts.caption2}
-
-  height: 2.2rem;
   overflow: hidden;
   display: flex;
   justify-content: flex-start;
@@ -498,7 +478,6 @@ export const Introduction = styled.div`
     props.theme.media.ph(
       () => `
 	  ${props.theme.fonts.caption4};
-    height: 1.7rem;
   `
     )}
 
@@ -506,29 +485,21 @@ export const Introduction = styled.div`
     props.theme.media.tab(
       () => `
 	  ${props.theme.fonts.caption4};
-    height: 1.7rem;
   `
     )}
 `;
 
-export const LinkBtnsContainer = styled.div`
+export const LinkBtnsContainer = styled(ScrollContainer)`
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-
-  justify-content: flex-start;
-  height: 3.5rem;
+  padding: 0.4rem 0rem;
+  gap: 0.8rem 1.2rem;
+  width: 100%;
+  flex-wrap: wrap;
 
   ${(props) =>
     props.theme.media.ph(css`
-      width: 21.2rem;
-      height: 3.3rem;
-    `)}
-
-  ${(props) =>
-    props.theme.media.tab(css`
-      width: 21.2rem;
-      height: 3.3rem;
+      margin-top: 0.6rem;
     `)}
 `;
 
@@ -541,20 +512,20 @@ export const LinkBtnContainer = styled.div`
   border-radius: 0.8rem;
   border: 1px solid ${(props) => props.theme.colors.gray20};
   background: ${(props) => props.theme.colors.gray5};
-
-  width: 15.8rem;
+  min-width: 0rem;
+  max-width: 15.8rem;
   height: 3.5rem;
   cursor: pointer;
 
   ${(props) =>
     props.theme.media.ph(css`
-      width: 10.8rem;
+      max-width: 10.8rem;
       height: 2.5rem;
     `)}
 
   ${(props) =>
     props.theme.media.tab(css`
-      width: 15.8rem;
+      max-width: 15.8rem;
       height: 2.5rem;
     `)}
 `;
@@ -579,12 +550,8 @@ export const LinkBtnIcon = styled.img`
 export const LinkBtnLetter = styled.a`
   color: ${(props) => props.theme.colors.gray80};
   ${(props) => props.theme.fonts.caption1}
-
-  display: flex; // Don't forget to set words in the center even in a letter component (div).
-  justify-content: flex-start;
-  align-items: center;
-  width: 11rem;
-  height: 2.7rem;
+  width: 100%;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
@@ -592,7 +559,6 @@ export const LinkBtnLetter = styled.a`
     props.theme.media.ph(
       () => `
 	  ${props.theme.fonts.caption4};
-    height: 1.7rem;
   `
     )}
 
@@ -600,7 +566,6 @@ export const LinkBtnLetter = styled.a`
     props.theme.media.tab(
       () => `
 	  ${props.theme.fonts.caption4};
-    height: 1.7rem;
   `
     )}
 `;
@@ -614,10 +579,32 @@ export const EditProfileBtn = styled.div`
   border-radius: 4rem;
   background: ${(props) => props.theme.colors.blue10};
   cursor: pointer;
+  min-width: 11.5rem;
+  margin-left: auto;
+
+  ${(props) =>
+    props.theme.media.tab(css`
+      height: 3.2rem;
+      padding: 0.4rem 1.2rem;
+      border-radius: 0.8rem;
+      min-width: 9.8rem;
+    `)}
 `;
 
 export const EditProfileBtnLetter = styled.div`
   color: ${(props) => props.theme.colors.blue60};
   ${(props) => props.theme.fonts.caption1};
-  height: 2.7rem;
+
+  ${(props) =>
+    props.theme.media.tab(
+      () => `
+	  ${props.theme.fonts.caption2};
+  `
+    )}
+`;
+
+export const ProfileAndLink = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
