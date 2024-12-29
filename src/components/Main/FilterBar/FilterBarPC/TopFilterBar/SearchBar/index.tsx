@@ -7,7 +7,7 @@ import activeIconSrc from '@/assets/webps/Main/activeIcon.webp';
 
 interface Props {
   cards: any[]; // 렌더링 중인 카드 데이터
-  onSearch: (filteredCards: any[]) => void; // 필터링된 데이터를 상위 컴포넌트로 전달
+  onSearch: (term: string) => void; // 검색어를 상위 컴포넌트로 전달
 }
 
 const SearchBar: React.FC<Props> = ({ cards, onSearch }) => {

@@ -23,6 +23,7 @@ const CardList: React.FC<Props> = ({ cards }) => {
         {cards.map((card) => (
           <Card
             key={card.id}
+            cardID={card.id}
             imageUrl={card.thumbnail || defaultProjectImgSrc}
             memberName={card.writer_name}
             projectName={card.title}
