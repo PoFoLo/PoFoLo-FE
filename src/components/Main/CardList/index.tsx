@@ -1,35 +1,34 @@
 import React from 'react';
 import Card from './Card';
 import * as S from './styles';
+import defaultProjectImgSrc from '@/assets/webps/Main/defaultProjectImg.webp';
 
 interface CardData {
-  imageUrl: string;
-  memberName: string;
-  projectName: string;
-  likes: number;
-  comments: number;
+  id: number;
+  thumbnail: string | null; // 이미지 URL 또는 null
+  writer_name: string; // 작성자 이름
+  title: string; // 프로젝트 제목
+  liked_count: number; // 좋아요 수
+  comment_count: number; // 댓글 수
 }
 
-const CardList: React.FC = () => {
-  const dummyCards: CardData[] = Array.from({ length: 12 }, (_, index) => ({
-    imageUrl: `/path/to/image${index + 1}.webp`,
-    memberName: `Member ${index + 1}`,
-    projectName: `Project ${index + 1}`,
-    likes: Math.floor(Math.random() * 100),
-    comments: Math.floor(Math.random() * 50),
-  }));
+interface Props {
+  cards: CardData[];
+}
 
+const CardList: React.FC<Props> = ({ cards }) => {
   return (
     <S.CardListContainer>
       <S.CardList>
-        {dummyCards.map((card, index) => (
+        {cards.map((card) => (
           <Card
-            key={index}
-            imageUrl={card.imageUrl}
-            memberName={card.memberName}
-            projectName={card.projectName}
-            likes={card.likes}
-            comments={card.comments}
+            key={card.id}
+            cardID={card.id}
+            imageUrl={card.thumbnail || defaultProjectImgSrc}
+            memberName={card.writer_name}
+            projectName={card.title}
+            likes={card.liked_count}
+            comments={card.comment_count}
           />
         ))}
       </S.CardList>
