@@ -116,7 +116,7 @@ export const JoinPage = () => {
           main_field:
             mainCategory === '기획' ? 'plan' : mainCategory === '디자인' ? 'design' : 'develop',
         };
-
+        console.log('보내는 데이터:', requestData);
         const response = await instance.post('/pofolo/users/register/', requestData);
 
         if (response.status === 201) {

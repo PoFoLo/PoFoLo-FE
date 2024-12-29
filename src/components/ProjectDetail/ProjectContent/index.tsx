@@ -27,11 +27,13 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
     id: number;
     nickname: string;
     education: string;
+    education_is_public: boolean;
     profileImg: string;
   }>({
     id: 0,
     nickname: '',
     education: '',
+    education_is_public: true,
     profileImg: profileIcon, // 기본 이미지 초기화
   });
   const [isFixed, setIsFixed] = useState(true);
@@ -98,12 +100,13 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
   const fetchWriterProfile = async (user_id: number) => {
     try {
       const response = await instance.get(`/pofolo/users/profile/${user_id}/`);
-      const { id, nickname, education, profile_img } = response.data.profile;
+      const { id, nickname, education, education_is_public, profile_img } = response.data.profile;
 
       setWriterProfile({
         id,
         nickname,
         education,
+        education_is_public,
         profileImg: profile_img || profileIcon, // 기본 이미지 대체
       });
     } catch (error) {
@@ -112,6 +115,7 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
         id: 0,
         nickname: '',
         education: '',
+        education_is_public: true,
         profileImg: profileIcon, // 기본 이미지
       });
     }
@@ -209,7 +213,9 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
               <p onClick={() => nav(`/mypage/${writerProfile.id}`)} className="nickname">
                 {writerProfile.nickname}
               </p>
-              <p className="school">{writerProfile.education}</p>
+              {writerProfile.education_is_public === true && (
+                <p className="school">{writerProfile.education}</p>
+              )}
             </C.ProfileContent>
           </C.ProfileInfo>
 
