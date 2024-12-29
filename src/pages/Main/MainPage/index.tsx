@@ -23,10 +23,6 @@ const MainPage: React.FC = () => {
   // 프로필 데이터를 가져오는 함수
   const fetchUserProfile = async () => {
     const userId = localStorage.getItem('user_id');
-    if (!userId) {
-      console.error('로컬 스토리지에서 user_id를 찾을 수 없습니다.');
-      return;
-    }
 
     try {
       const response = await instance.get(`/pofolo/users/profile/${userId}/`);
@@ -35,7 +31,6 @@ const MainPage: React.FC = () => {
       if (profile && profile.main_field) {
         setSelectedCategory(profile.main_field); // main_field를 selectedCategory로 설정
       }
-
     } catch (error) {
       console.error('프로필 API 호출 실패:', error);
     }
