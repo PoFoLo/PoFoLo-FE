@@ -25,7 +25,7 @@ export const PofoloLogo = styled.video`
   ${(props) =>
     props.theme.media.ph(css`
       width: 18rem;
-      height: 17.9rem;
+      height: 17.8rem;
     `)}
 
   ${(props) =>
