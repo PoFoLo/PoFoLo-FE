@@ -31,6 +31,13 @@ const FilterBarTabletMobile: React.FC<Props> = ({
   const [showDetails, setShowDetails] = React.useState(false);
   const [isSortOpen, setIsSortOpen] = React.useState(false);
 
+  // 카테고리별로 선택된 세부 필터를 저장
+  const [detailState, setDetailState] = React.useState<Record<string, string>>({
+    기획: '전체',
+    개발: '전체',
+    디자인: '전체',
+  });
+
   const categories = Object.keys(filterOptions); // 카테고리 목록 추출
   const options = filterOptions[selectedCategory || '기획']; // 현재 선택된 카테고리의 세부 옵션 추출
 
@@ -42,12 +49,16 @@ const FilterBarTabletMobile: React.FC<Props> = ({
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category); // 상위 상태 변경
-    setSelectedDetail('전체'); // 기본값 초기화
+    setSelectedDetail(detailState[category] || '전체'); // 복구된 상태 설정
     setIsFilterOpen(false); // 필터 메뉴 닫기
     setShowDetails(true); // 세부 필터 메뉴 열기
   };
 
   const handleLine2Click = (label: string) => {
+    setDetailState((prev) => ({
+      ...prev,
+      [selectedCategory]: label,
+    }));
     setSelectedDetail(label); // 세부 필터 업데이트
     setShowDetails(false); // 메뉴 닫기
   };

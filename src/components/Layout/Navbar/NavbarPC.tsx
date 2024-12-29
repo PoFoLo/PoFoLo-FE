@@ -57,8 +57,23 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: N
     if (onMyPageClick) {
       onMyPageClick();
     } else {
-      handleNavigate('mypage');
+      handleNavigate('');
     }
+  };
+
+  const handleKakaoLogin = () => {
+    const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
+    const redirectUri = encodeURIComponent(import.meta.env.VITE_KAKAO_REDIRECT_URI);
+    const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+    window.location.href = kakaoLoginUrl;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+
+    handleNavigate('home');
   };
 
   return (
@@ -86,15 +101,13 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick, onMyPageClick }: N
             모든 프로젝트
           </S.NavbarPageButton>
 
-          {location.pathname === '/mypage' ? (
-            <S.NavbarLogoutButtonContainer onClick={() => handleNavigate('home')}>
+          {isLoggedIn ? (
+            <S.NavbarLogoutButtonContainer onClick={handleLogout}>
               <S.NavbarLogoutButtonLetter>로그아웃</S.NavbarLogoutButtonLetter>
               <S.NavbarLogoutButtonIcon src={logoutIconSrc} alt="navbarLogoutImage" />
             </S.NavbarLogoutButtonContainer>
           ) : (
-            <S.NavbarLoginButton onClick={() => handleNavigate('login')}>
-              로그인
-            </S.NavbarLoginButton>
+            <S.NavbarLoginButton onClick={handleKakaoLogin}>로그인</S.NavbarLoginButton>
           )}
           <S.NavbarMyPageButton onClick={handleMyPageClick}>
             <S.NavbarMyPageImg src={navbarMyPageSrc} alt="myPageButton" />
