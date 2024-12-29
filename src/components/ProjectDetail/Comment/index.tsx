@@ -8,10 +8,11 @@ import { useParams } from 'react-router-dom';
 import { instance } from '@/apis/instance';
 
 interface CommentProps {
+  commentCount: number;
   updateCommentCount: (count: number) => void; // 댓글 개수 업데이트 콜백
 }
 
-export const Comment = ({ updateCommentCount }: CommentProps) => {
+export const Comment = ({ commentCount, updateCommentCount }: CommentProps) => {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<CommentItemDto[]>([]);
   const [replyClicked, setReplyClicked] = useState<number | null>(null);
@@ -121,7 +122,7 @@ export const Comment = ({ updateCommentCount }: CommentProps) => {
       <S.CommentContainer>
         <S.CommentTitle>
           <h2>프로젝트 댓글 </h2>
-          <span>{comments.length}</span>
+          <span>{commentCount}</span>
         </S.CommentTitle>
         <CommentInput
           scrollToNewComment={scrollToNewComment}

@@ -16,10 +16,19 @@ import Button from '@/components/Common/Button';
 
 interface ProjectContentProps {
   onCommentClick: () => void;
-  commentCount: number; // 댓글 개수 prop 추가
+  commentCount: number;
+  likeCount: number;
+  isLiked: boolean;
+  onLikeToggle: () => Promise<void>;
 }
 
-export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, commentCount }) => {
+export const ProjectContent: React.FC<ProjectContentProps> = ({
+  onCommentClick,
+  commentCount,
+  likeCount,
+  isLiked,
+  onLikeToggle,
+}) => {
   const [projectData, setProjectData] = useState<ProjectData | null>(null);
   const [writerProfile, setWriterProfile] = useState<{
     id: number;
@@ -33,8 +42,6 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
     profileImg: profileIcon, // 기본 이미지 초기화
   });
   const [isFixed, setIsFixed] = useState(true);
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(10);
   const { isPC } = useResponsive();
   const { project_id } = useParams<{ project_id: string }>(); // URL 파라미터에서 project_id 가져오기
   const nav = useNavigate();
@@ -56,59 +63,9 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
         ...data,
         links: formattedLinks,
       });
-      setLikeCount(data.liked_count);
     } catch (error) {
       console.error('프로젝트 데이터를 가져오는 중 오류 발생:', error);
       nav('/'); // 오류 발생 시 홈으로 이동
-    }
-  };
-
-  const fetchLikeStatus = async () => {
-    try {
-      const response = await instance.get('/pofolo/projects/liked/');
-      const likedProjects = response.data; // 내가 좋아요 누른 프로젝트 ID 리스트
-
-      if (
-        project_id &&
-        likedProjects.some((project: { id: number }) => project.id === Number(project_id))
-      ) {
-        setIsLiked(true); // 현재 프로젝트에 좋아요 누른 상태로 설정
-      } else {
-        setIsLiked(false); // 좋아요를 누르지 않은 상태로 설정
-      }
-    } catch (error) {
-      console.error('좋아요 상태를 가져오는 중 오류 발생:', error);
-      setIsLiked(false); // 오류 발생 시 기본 상태로 초기화
-    }
-  };
-
-  const handleLikeClick = async () => {
-    try {
-      // 서버에 요청 보내기 전에 좋아요 상태 및 좋아요 수 즉시 반영
-      setIsLiked((prevIsLiked) => {
-        setLikeCount((prevCount) => (prevIsLiked ? prevCount - 1 : prevCount + 1));
-        return !prevIsLiked;
-      });
-
-      const response = await instance.post(`/pofolo/projects/${project_id}/like/`);
-
-      if (response.data.message === 'Like added') {
-        setIsLiked(true);
-      } else if (response.data.message === 'Like removed') {
-        setIsLiked(false);
-      }
-
-      // 서버에서 최신 데이터를 가져와 동기화
-      const updatedData = await instance.get(`/pofolo/projects/${project_id}/`);
-      setLikeCount(updatedData.data.liked_count);
-    } catch (error) {
-      console.error('좋아요 처리 중 오류 발생:', error);
-
-      // 서버 요청 실패 시 상태 복구
-      setIsLiked((prevIsLiked) => {
-        setLikeCount((prevCount) => (prevIsLiked ? prevCount + 1 : prevCount - 1));
-        return !prevIsLiked;
-      });
     }
   };
 
@@ -151,7 +108,6 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
     const fetchData = async () => {
       try {
         await fetchProjectData(); // 프로젝트 데이터 가져오기
-        await fetchLikeStatus();
       } catch (error) {
         console.error('프로젝트 데이터 가져오기 실패:', error);
       }
@@ -321,17 +277,17 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
         {/* 플로팅 버튼 */}
         <S.FloatingButtonWrapper ref={floatingButtonRef} className={isFixed ? 'fixed' : 'absolute'}>
           <S.LikeButton
-            onClick={handleLikeClick}
+            onClick={onLikeToggle}
             $isPC={isPC}
             $isLiked={isLiked}
             $likeCount={likeCount}
           >
             <img src={isLiked ? likeRed : like} alt="like" className={isLiked ? 'liked' : ''} />
-            <span>{projectData.liked_count}</span>
+            <span>{likeCount}</span>
           </S.LikeButton>
           <S.CommentButton onClick={onCommentClick} $isPC={isPC} $commentCount={commentCount}>
             <img src={comment} alt="comment" />
-            <span>{projectData.comment_count}</span>
+            <span>{commentCount}</span>
           </S.CommentButton>
         </S.FloatingButtonWrapper>
       </C.Container>
