@@ -85,14 +85,15 @@ export const PortfolioContent = () => {
 
       try {
         const response = await instance.get(`/pofolo/users/profile/${portfolioData.writer}/`);
-        const { id, nickname, education, education_is_public, profile_img } = response.data.profile;
+        const { id, nickname, education, education_is_public, profile_img_url } =
+          response.data.profile;
         console.log('작성자 정보:', response.data.profile);
         setWriterInfo({
           id,
           nickname,
           education,
           education_is_public,
-          profileImg: profile_img || profileIcon, // 프로필 이미지가 없으면 기본 이미지
+          profileImg: profile_img_url || profileIcon, // 프로필 이미지가 없으면 기본 이미지
         });
       } catch (error) {
         console.error('작성자 정보 가져오기 실패:', error);

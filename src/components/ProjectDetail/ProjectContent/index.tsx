@@ -100,14 +100,15 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
   const fetchWriterProfile = async (user_id: number) => {
     try {
       const response = await instance.get(`/pofolo/users/profile/${user_id}/`);
-      const { id, nickname, education, education_is_public, profile_img } = response.data.profile;
+      const { id, nickname, education, education_is_public, profile_img_url } =
+        response.data.profile;
 
       setWriterProfile({
         id,
         nickname,
         education,
         education_is_public,
-        profileImg: profile_img || profileIcon, // 기본 이미지 대체
+        profileImg: profile_img_url || profileIcon, // 기본 이미지 대체
       });
     } catch (error) {
       console.error('작성자 프로필 조회 중 오류 발생:', error);
