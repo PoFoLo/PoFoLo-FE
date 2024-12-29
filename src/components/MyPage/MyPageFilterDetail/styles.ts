@@ -28,8 +28,6 @@ export const FilterAllProjectContainer = styled.div`
     margin: 0 6.4rem;
     width: calc(100% - 11.2rem);
   }
-
-  height: 8.2rem;
   display: flex;
   align-items: center;
   padding: 1.2rem 0 3.4rem 0;
@@ -39,7 +37,7 @@ export const FilterAllProjectContainer = styled.div`
   ${(props) =>
     props.theme.media.ph(css`
       height: 7.9rem;
-      padding: 2rem 0rem 3.2rem 0rem;
+      padding: 1.8rem 0rem 3.2rem 0rem;
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
@@ -49,7 +47,7 @@ export const FilterAllProjectContainer = styled.div`
   ${(props) =>
     props.theme.media.tab(css`
       height: 7.9rem;
-      padding: 2rem 0rem 3.2rem 0rem;
+      padding: 1.8rem 0rem 3.2rem 0rem;
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
@@ -60,7 +58,6 @@ export const FilterAllProjectContainer = styled.div`
 export const FilterBtnsContainer = styled.div`
   display: flex;
   width: 43.9rem;
-  height: 3.6rem;
   gap: 1.2rem;
   flex: 1 0 0;
   overflow: hidden;
@@ -79,7 +76,7 @@ export const FilterButton = styled.button<{ selected: boolean }>`
   justify-content: center;
   align-items: center;
   height: 3.6rem;
-  padding: 0.35rem 1.3rem;
+  padding: 0.8rem 1.2rem;
   border-radius: 5.6rem;
   flex-shrink: 0; // It was the key point.. to maintain the button's letter to cut off the remaining right part of the button itself.
 
@@ -142,8 +139,6 @@ export const FilterLetter = styled.span<{ selected: boolean }>`
           color: ${props.theme.colors.gray70};
         `}
 
-  height: 2.7rem;
-
   ${(props) =>
     props.theme.media.ph(css`
       font-family: 'Pretendard';
@@ -152,8 +147,6 @@ export const FilterLetter = styled.span<{ selected: boolean }>`
       font-weight: 600;
       line-height: 150%; /* 20.25px */
       letter-spacing: 0.034px;
-
-      height: 1.5rem;
     `)}
 
   ${(props) =>
@@ -164,8 +157,6 @@ export const FilterLetter = styled.span<{ selected: boolean }>`
       font-weight: 600;
       line-height: 150%; /* 20.25px */
       letter-spacing: 0.034px;
-
-      height: 1.5rem;
     `)}
 `;
 
@@ -217,7 +208,7 @@ export const FilterPortfolioContainer = styled.div`
   ${(props) =>
     props.theme.media.ph(css`
       height: 7.9rem;
-      padding: 2rem 0rem 3.2rem 0rem;
+      padding: 1.8rem 0rem 3.2rem 0rem;
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
@@ -226,7 +217,7 @@ export const FilterPortfolioContainer = styled.div`
   ${(props) =>
     props.theme.media.tab(css`
       height: 7.9rem;
-      padding: 2rem 0rem 3.2rem 0rem;
+      padding: 1.8rem 0rem 3.2rem 0rem;
       margin: 0rem 2rem;
       width: calc(100% - 4rem);
       background-color: #fff;
