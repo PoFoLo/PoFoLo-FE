@@ -2,7 +2,7 @@ import Navbar from '@/components/Layout/Navbar/NavbarPC';
 import { PortfolioContent } from '@/components/PortfolioDetail/PortfolioContent';
 import * as S from '@/pages/Portfolio/PortfolioDetailPage/styles';
 
-export const PortfolioDetailPage = () => {
+const PortfolioDetailPage = () => {
   return (
     <>
       <S.Layout>
@@ -12,3 +12,5 @@ export const PortfolioDetailPage = () => {
     </>
   );
 };
+
+export default PortfolioDetailPage;

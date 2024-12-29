@@ -12,7 +12,7 @@ const FILTER_OPTIONS = {
   디자인: ['전체', 'UX/UI', '제품', '패션', '인테리어', '기타'],
 };
 
-export const MainPage: React.FC = () => {
+const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>('기획');
   const [selectedLine2, setSelectedLine2] = useState<string>('전체');
   const [sortOption, setSortOption] = useState<string>('최신순');

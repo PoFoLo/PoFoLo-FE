@@ -5,7 +5,7 @@ import pofoloLogo from '@/assets/webps/Login/pofoloLogo.webp';
 import pofoloLogoOpacity from '@/assets/webps/Login/pofoloLogoOpacity.webp';
 import * as S from '@/pages/Login/OAuthLoading/styles';
 
-export const OAuthLoading = () => {
+const OAuthLoading = () => {
   const [showFirstLogo, setShowFirstLogo] = useState(true);
   const nav = useNavigate();
 
@@ -62,3 +62,5 @@ export const OAuthLoading = () => {
     </S.Layout>
   );
 };
+
+export default OAuthLoading;

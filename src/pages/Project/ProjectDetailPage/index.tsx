@@ -6,7 +6,7 @@ import Navbar from '@/components/Layout/Navbar/NavbarPC';
 import { instance } from '@/apis/instance';
 import { useParams } from 'react-router-dom';
 
-export const ProjectDetailPage = () => {
+const ProjectDetailPage = () => {
   const [commentCount, setCommentCount] = useState(0);
   const commentRef = useRef<HTMLDivElement | null>(null);
   const { project_id } = useParams<{ project_id: string }>();
@@ -40,3 +40,5 @@ export const ProjectDetailPage = () => {
     </>
   );
 };
+
+export default ProjectDetailPage;
