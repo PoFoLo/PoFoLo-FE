@@ -20,6 +20,7 @@ export const PortfolioContent = () => {
     id: 0,
     nickname: '',
     education: '',
+    education_is_public: true,
     profileImg: profileIcon,
   });
   const [isCopied, setIsCopied] = useState(false);
@@ -84,12 +85,13 @@ export const PortfolioContent = () => {
 
       try {
         const response = await instance.get(`/pofolo/users/profile/${portfolioData.writer}/`);
-        const { id, nickname, education, profile_img } = response.data.profile;
+        const { id, nickname, education, education_is_public, profile_img } = response.data.profile;
         console.log('작성자 정보:', response.data.profile);
         setWriterInfo({
           id,
           nickname,
           education,
+          education_is_public,
           profileImg: profile_img || profileIcon, // 프로필 이미지가 없으면 기본 이미지
         });
       } catch (error) {
@@ -164,7 +166,9 @@ export const PortfolioContent = () => {
               <p onClick={() => nav(`/mypage/${writerInfo.id}`)} className="nickname">
                 {portfolioData.username}
               </p>
-              <p className="school">{writerInfo.education}</p>
+              {writerInfo.education_is_public === true && (
+                <p className="school">{writerInfo.education}</p>
+              )}
             </C.ProfileContent>
           </C.ProfileInfo>
           <S.RightWrapper>

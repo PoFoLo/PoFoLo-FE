@@ -14,7 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useResponsive } from '@/hooks/useResponsive';
 import { instance } from '@/apis/instance';
 
-export const WritePortfolioPage = () => {
+const WritePortfolioPage = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [name, setName] = useState<string>('');
@@ -318,3 +318,5 @@ export const WritePortfolioPage = () => {
     </>
   );
 };
+
+export default WritePortfolioPage;

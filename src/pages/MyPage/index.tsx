@@ -6,7 +6,7 @@ import MyPageFilterDetail from '@/components/MyPage/MyPageFilterDetail';
 import MyPageCardList from '@/components/MyPage/MyPageCardList';
 import * as S from '@/pages/MyPage/styles';
 
-export const MyPage = () => {
+const MyPage = () => {
   const [activeTab, setActiveTab] = useState<'allProjects' | 'portfolio'>('allProjects');
 
   return (
@@ -19,3 +19,5 @@ export const MyPage = () => {
     </S.Layout>
   );
 };
+
+export default MyPage;

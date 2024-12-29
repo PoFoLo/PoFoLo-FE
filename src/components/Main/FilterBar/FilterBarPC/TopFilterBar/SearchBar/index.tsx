@@ -10,11 +10,10 @@ interface Props {
   onSearch: (term: string) => void; // 검색어를 상위 컴포넌트로 전달
 }
 
-const SearchBar: React.FC<Props> = ({ cards, onSearch }) => {
+const SearchBar: React.FC<Props> = ({ onSearch }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [filteredData, setFilteredData] = useState(cards);
   const activeContainerRef = useRef<HTMLDivElement>(null);
   const [isError, setIsError] = useState(false);
 
