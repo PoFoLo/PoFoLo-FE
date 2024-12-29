@@ -52,6 +52,7 @@ export const WriteProjectPage = () => {
         try {
           const response = await instance.get(`/pofolo/projects/${project_id}/`);
           const data = response.data;
+          setIsPrivate(!data.is_public);
           setTitle(data.title);
           setDescription(data.description);
           setMainCategory(data.major_field);
