@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/project/:${cardID}`); // 이동할 경로
+    navigate(`/project/${cardID}`); // 이동할 경로
   };
 
   return (
