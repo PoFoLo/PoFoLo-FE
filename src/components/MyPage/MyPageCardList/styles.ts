@@ -5,6 +5,7 @@ export const CardListColorContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${(props) => props.theme.colors.gray5};
+  min-height: 45rem;
 
   ${(props) =>
     props.theme.media.ph(css`

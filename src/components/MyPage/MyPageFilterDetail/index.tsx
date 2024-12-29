@@ -3,15 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { useResponsive } from '@/hooks/useResponsive';
 import * as S from '@/components/MyPage/MyPageFilterDetail/styles';
 import uploadMyPageSrc from '@/assets/webps/MyPage/uploadMyPage.webp';
+import Button from '@/components/Common/Button';
 
 interface MyPageFilterDetailProps {
   activeTab: 'allProjects' | 'portfolio';
+  selectedFilter: string;
+  setSelectedFilter: (filter: string) => void; // 상위 상태 업데이트 함수
 }
 
-const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) => {
-  const [selectedFilter, setSelectedFilter] = useState<string>('내 프로젝트');
+const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({
+  activeTab,
+  selectedFilter,
+  setSelectedFilter,
+}) => {
   const filters = ['내 프로젝트', '좋아요한 프로젝트', '댓글 단 프로젝트'];
-  const { isPhone } = useResponsive();
+  const { isPhone, isPC, isTab } = useResponsive();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -49,7 +55,19 @@ const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) =>
     return (
       <S.FilterPortfolioColorContainer>
         <S.FilterPortfolioContainer>
-          <S.uploadButton src={uploadMyPageSrc} alt="uploadButton" onClick={handleCreate} />
+          {isPhone && (
+            <S.uploadButton src={uploadMyPageSrc} alt="uploadButton" onClick={handleCreate} />
+          )}
+          {isPC && (
+            <Button size="medium" type="main" onClick={handleCreate}>
+              만들기
+            </Button>
+          )}
+          {isTab && (
+            <Button size="verySmall" type="main" onClick={handleCreate}>
+              만들기
+            </Button>
+          )}
         </S.FilterPortfolioContainer>
       </S.FilterPortfolioColorContainer>
     );
@@ -73,6 +91,16 @@ const MyPageFilterDetail: React.FC<MyPageFilterDetailProps> = ({ activeTab }) =>
         </S.FilterBtnsContainer>
         {isPhone && (
           <S.uploadButton src={uploadMyPageSrc} alt="uploadButton" onClick={handleUpload} />
+        )}
+        {isPC && (
+          <Button size="medium" type="main" onClick={handleUpload}>
+            새 프로젝트
+          </Button>
+        )}
+        {isTab && (
+          <Button size="verySmall" type="main" onClick={handleUpload}>
+            새 프로젝트
+          </Button>
         )}
       </S.FilterAllProjectContainer>
     </S.FilterAllProjectColorContainer>
