@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchBar from '@/components/Main/FilterBar/FilterBarPC/TopFilterBar/SearchBar';
 import filterIconTabletMobileSrc from '@/assets/webps/Main/filterIconTabletMobile.webp';
 import sortIconTabletMobileSrc from '@/assets/webps/Main/sortIconTabletMobile.webp';
@@ -27,12 +27,12 @@ const FilterBarTabletMobile: React.FC<Props> = ({
   cards,
   onSearch,
 }) => {
-  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
-  const [showDetails, setShowDetails] = React.useState(false);
-  const [isSortOpen, setIsSortOpen] = React.useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
 
   // 카테고리별로 선택된 세부 필터를 저장
-  const [detailState, setDetailState] = React.useState<Record<string, string>>({
+  const [detailState, setDetailState] = useState<Record<string, string>>({
     기획: '전체',
     개발: '전체',
     디자인: '전체',
