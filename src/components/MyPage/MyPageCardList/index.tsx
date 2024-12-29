@@ -132,7 +132,7 @@ const MyPageCardList: React.FC<MyPageCardListProps> = ({ activeTab, selectedFilt
 
   return (
     <S.CardListColorContainer>
-      <S.CardListContainer isPortfolioTab={activeTab === 'portfolio'}>
+      <S.CardListContainer $isPortfolioTab={activeTab === 'portfolio'}>
         {activeTab === 'allProjects'
           ? displayedProjects.map((project) => (
               <div key={project.id} onClick={() => handleProjectClick(project.id)}>

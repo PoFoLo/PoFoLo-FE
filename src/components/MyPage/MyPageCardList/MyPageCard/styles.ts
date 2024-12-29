@@ -70,6 +70,7 @@ export const ReactionContainer = styled.div`
   padding-top: 0.2rem;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   gap: 0.375rem;
 
   ${(props) =>
