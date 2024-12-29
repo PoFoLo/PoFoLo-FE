@@ -1,6 +1,6 @@
 import * as S from '@/components/WriteProject/ImageSection/styles';
-import imageUploadBtn from '@/assets/svgs/WriteProject/imageUploadBtn.svg';
-import imageUploadPCBtn from '@/assets/svgs/WriteProject/imageUploadPCBtn.svg';
+import imageUploadBtn from '@/assets/webps/WriteProject/imgUploadBtn.webp';
+import imageUploadPCBtn from '@/assets/webps/WriteProject/imgUploadPCBtn.webp';
 import imageChange from '@/assets/webps/Common/imageChange.webp';
 import imageDelete from '@/assets/webps/Common/imageDelete.webp';
 import { useState, useRef, useEffect } from 'react';

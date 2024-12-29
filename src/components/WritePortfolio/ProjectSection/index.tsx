@@ -1,8 +1,8 @@
 import * as S from '@/components/WritePortfolio/ProjectSection/styles';
 import ProjectCard from '@/components/WritePortfolio/ProjectSection/ProjectCard';
 import ProjectModal from '@/components/WritePortfolio/ProjectSection/ProjectModal';
-import projectAddBtn from '@/assets/svgs/WritePortfolio/projectAddBtn.svg';
-import projectAddPCBtn from '@/assets/svgs/WritePortfolio/projectAddPCBtn.svg';
+import projectAddBtn from '@/assets/webps/WritePortfolio/projectAddBtn.webp';
+import projectAddPCBtn from '@/assets/webps/WritePortfolio/projectAddPCBtn.webp';
 import { useState, useEffect, useRef } from 'react';
 import { useResponsive } from '@/hooks/useResponsive';
 import { instance } from '@/apis/instance';

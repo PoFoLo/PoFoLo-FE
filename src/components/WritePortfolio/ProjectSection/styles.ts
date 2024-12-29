@@ -20,13 +20,14 @@ export const AddBtn = styled.div<{ $backgroundImage: string }>`
   background-image: url(${(props) => props.$backgroundImage});
   cursor: pointer;
   background-repeat: no-repeat;
+  background-size: contain;
 
   ${(props) =>
     props.theme.media.pc(css`
       min-width: 24rem;
       min-height: 17.4rem;
       height: 17.4rem;
-    `)}
+    `)};
 `;
 
 export const ErrorMessage = styled.p`

@@ -38,13 +38,13 @@ export const HoverBtn = styled.button<{ $backgroundImage: string }>`
   width: 4.8rem;
   height: 7.2rem;
   background-image: url(${(props) => props.$backgroundImage});
-  background-size: cover;
+  background-size: contain;
 
   ${(props) =>
     props.theme.media.pc(css`
       width: 6.4rem;
       height: 9.6rem;
-    `)}
+    `)};
 `;
 
 export const ImageContainer = styled.div`
