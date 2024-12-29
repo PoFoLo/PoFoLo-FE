@@ -2,12 +2,10 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
 import LoginModal from '@/components/Common/LoginModal';
-
 import navbarLogoTabletMobileSrc from '@/assets/webps/Common/navbarLogoTabletMobile.webp';
 import navbarGoBackSrc from '@/assets/webps/Common/navbarGoBack.webp';
 import navbarHamburgerSrc from '@/assets/webps/Common/navbarHamburger.webp';
 import logoutIconSrc from '@/assets/webps/Common/logoutIcon.webp';
-import { truncate } from 'node:fs';
 
 interface NavbarMobileProps {
   onGoBackClick?: () => void;

@@ -106,7 +106,7 @@ export const PortfolioContent = () => {
   const handleLinkCopy = () => {
     if (portfolioData?.invite_url) {
       navigator.clipboard.writeText(
-        `http://localhost:3000/portfolio/invite/${portfolioData.invite_url}` // to do : 배포 이후 수정
+        `https://pofolo.site/portfolio/invite/${portfolioData.invite_url}`
       );
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 3000);
