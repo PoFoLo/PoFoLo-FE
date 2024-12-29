@@ -124,7 +124,7 @@ const NavbarPC = ({ onGoBackClick }: NavbarProps) => {
             {isLoggedIn ? (
               <S.NavbarMyPageButton onClick={handleMyPageClick}>
                 <S.NavbarMyPageImg
-                  src={profilePic !== null ? profilePic : navbarMyPageSrc} // 조건부 렌더링
+                  src={profilePic ? profilePic : navbarMyPageSrc}
                   alt="myPageButton"
                 />
               </S.NavbarMyPageButton>
