@@ -1,4 +1,4 @@
-import Navbar from '@/components/Layout/Navbar/NavbarPC';
+import Navbar from '@/components/Layout/Navbar';
 import { PortfolioContent } from '@/components/PortfolioDetail/PortfolioContent';
 import * as S from '@/pages/Portfolio/PortfolioDetailPage/styles';
 

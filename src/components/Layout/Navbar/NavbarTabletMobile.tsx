@@ -41,6 +41,33 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
   // 마이페이지 버튼이 보이는 경우를 계산하는 isExtended 상태
   const isExtended = isLoggedIn && isMenuOpen;
 
+  const handleKakaoLogin = () => {
+    const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
+    const redirectUri = encodeURIComponent(import.meta.env.VITE_KAKAO_REDIRECT_URI);
+    const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+    window.location.href = kakaoLoginUrl;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+
+    handleNavigate('');
+  };
+
+  const handleHomeClick = () => {
+    if (isLoggedIn) {
+      handleNavigate('home');
+    } else {
+      handleNavigate('');
+    }
+  };
+
+  const handleMyPageClick = () => {
+    navigate(`/mypage/${localStorage.getItem('user_id')}`);
+  };
+
   return (
     <>
       <S.NavbarContainer>
@@ -64,7 +91,7 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
                 <S.NavbarLeftLogoTabletMobile
                   src={navbarLogoTabletMobileSrc}
                   alt="Logo"
-                  onClick={() => handleNavigate('home')}
+                  onClick={handleHomeClick}
                 />
                 <S.NavbarHamburgerButtonTabletMobile
                   src={navbarHamburgerSrc}
@@ -75,11 +102,13 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
             )
           ) : (
             <>
-              <S.NavbarLeftLogoTabletMobile src={navbarLogoTabletMobileSrc} alt="Logo" />
+              <S.NavbarLeftLogoTabletMobile
+                src={navbarLogoTabletMobileSrc}
+                alt="Logo"
+                onClick={handleHomeClick}
+              />
               <S.NavbarRightContainerTabletMobile>
-                <S.NavbarLoginButton onClick={() => handleNavigate('login')}>
-                  로그인
-                </S.NavbarLoginButton>
+                <S.NavbarLoginButton onClick={handleKakaoLogin}>로그인</S.NavbarLoginButton>
                 <S.NavbarHamburgerButtonTabletMobile
                   src={navbarHamburgerSrc}
                   alt="hamburgerButton"
@@ -100,17 +129,17 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
               </S.NavbarDetailPageButtonTabletMobile>
             </S.NavbarDetailPageButtonContainerTabletMobile>
             <S.NavbarDetailPageButtonContainerTabletMobile>
-              <S.NavbarDetailPageButtonTabletMobile onClick={() => handleNavigate('home')}>
+              <S.NavbarDetailPageButtonTabletMobile onClick={handleHomeClick}>
                 모든 프로젝트
               </S.NavbarDetailPageButtonTabletMobile>
             </S.NavbarDetailPageButtonContainerTabletMobile>
             {isLoggedIn && (
               <>
                 <S.NavbarDetailPageButtonContainerTabletMobile>
-                  <S.NavbarDetailPageButtonTabletMobile onClick={() => handleNavigate('mypage')}>
+                  <S.NavbarDetailPageButtonTabletMobile onClick={handleMyPageClick}>
                     마이페이지
                   </S.NavbarDetailPageButtonTabletMobile>
-                  <S.NavbarLogoutButtonContainer onClick={() => handleNavigate('home')}>
+                  <S.NavbarLogoutButtonContainer onClick={handleLogout}>
                     <S.NavbarLogoutButtonLetter>로그아웃</S.NavbarLogoutButtonLetter>
                     <S.NavbarLogoutButtonIcon src={logoutIconSrc} alt="logout" />
                   </S.NavbarLogoutButtonContainer>
