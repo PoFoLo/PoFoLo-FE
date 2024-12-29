@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
+import LoginModal from '@/components/Common/LoginModal';
 
 import navbarLogoTabletMobileSrc from '@/assets/webps/Common/navbarLogoTabletMobile.webp';
 import navbarGoBackSrc from '@/assets/webps/Common/navbarGoBack.webp';
 import navbarHamburgerSrc from '@/assets/webps/Common/navbarHamburger.webp';
 import logoutIconSrc from '@/assets/webps/Common/logoutIcon.webp';
+import { truncate } from 'node:fs';
 
 interface NavbarMobileProps {
   onGoBackClick?: () => void;
@@ -15,7 +17,7 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = !!localStorage.getItem('access_token');
-
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 햄버거 메뉴 상태 관리
 
   const handleNavigate = (page: string) => {
@@ -40,13 +42,6 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
 
   // 마이페이지 버튼이 보이는 경우를 계산하는 isExtended 상태
   const isExtended = isLoggedIn && isMenuOpen;
-
-  const handleKakaoLogin = () => {
-    const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
-    const redirectUri = encodeURIComponent(import.meta.env.VITE_KAKAO_REDIRECT_URI);
-    const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
-    window.location.href = kakaoLoginUrl;
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('user_id');
@@ -108,7 +103,9 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
                 onClick={handleHomeClick}
               />
               <S.NavbarRightContainerTabletMobile>
-                <S.NavbarLoginButton onClick={handleKakaoLogin}>로그인</S.NavbarLoginButton>
+                <S.NavbarLoginButton onClick={() => setIsModalOpen(true)}>
+                  로그인
+                </S.NavbarLoginButton>
                 <S.NavbarHamburgerButtonTabletMobile
                   src={navbarHamburgerSrc}
                   alt="hamburgerButton"
@@ -149,6 +146,7 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
           </S.NavbarDetailBodyTabletMobile>
         </S.NavbarDetailContainerTabletMobile>
       )}
+      <LoginModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </>
   );
 };

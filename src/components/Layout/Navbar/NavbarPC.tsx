@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './styles';
+import LoginModal from '@/components/Common/LoginModal';
 import { instance } from '@/apis/instance';
 
 import navbarLogoFullSrc from '@/assets/webps/Common/navbarLogoFull.webp';
@@ -16,6 +17,7 @@ interface NavbarProps {
 
 const NavbarPC = ({ onGoBackClick }: NavbarProps) => {
   const [profilePic, setProfilePic] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const fetchUserProfile = async () => {
     const userId = localStorage.getItem('user_id');
@@ -77,13 +79,6 @@ const NavbarPC = ({ onGoBackClick }: NavbarProps) => {
     navigate(`/mypage/${localStorage.getItem('user_id')}`);
   };
 
-  const handleKakaoLogin = () => {
-    const clientId = import.meta.env.VITE_KAKAO_REST_API_KEY;
-    const redirectUri = encodeURIComponent(import.meta.env.VITE_KAKAO_REDIRECT_URI);
-    const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
-    window.location.href = kakaoLoginUrl;
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('user_id');
     localStorage.removeItem('access_token');
@@ -93,51 +88,54 @@ const NavbarPC = ({ onGoBackClick }: NavbarProps) => {
   };
 
   return (
-    <S.NavbarContainer>
-      <S.NavbarBody>
-        {isLoggedIn ? (
-          isGoBackVisible ? (
-            <S.NavbarLeftGoBackButton
-              src={navbarGoBackSrc}
-              alt="GoBack"
-              onClick={handleGoBackClick}
-            />
-          ) : (
-            <S.NavbarLeftLogo src={navbarLogoFullSrc} alt="Logo" onClick={handleHomeClick} />
-          )
-        ) : (
-          <div></div>
-        )}
-
-        <S.NavbarRightContainer>
-          <S.NavbarPageButton width={9.2} onClick={handleAboutClick}>
-            서비스 소개
-          </S.NavbarPageButton>
-          <S.NavbarPageButton width={10.9} onClick={handleHomeClick}>
-            모든 프로젝트
-          </S.NavbarPageButton>
-
+    <>
+      <S.NavbarContainer>
+        <S.NavbarBody>
           {isLoggedIn ? (
-            <S.NavbarLogoutButtonContainer onClick={handleLogout}>
-              <S.NavbarLogoutButtonLetter>로그아웃</S.NavbarLogoutButtonLetter>
-              <S.NavbarLogoutButtonIcon src={logoutIconSrc} alt="navbarLogoutImage" />
-            </S.NavbarLogoutButtonContainer>
-          ) : (
-            <S.NavbarLoginButton onClick={handleKakaoLogin}>로그인</S.NavbarLoginButton>
-          )}
-          {isLoggedIn ? (
-            <S.NavbarMyPageButton onClick={handleMyPageClick}>
-              <S.NavbarMyPageImg
-                src={profilePic !== null ? profilePic : navbarMyPageSrc} // 조건부 렌더링
-                alt="myPageButton"
+            isGoBackVisible ? (
+              <S.NavbarLeftGoBackButton
+                src={navbarGoBackSrc}
+                alt="GoBack"
+                onClick={handleGoBackClick}
               />
-            </S.NavbarMyPageButton>
+            ) : (
+              <S.NavbarLeftLogo src={navbarLogoFullSrc} alt="Logo" onClick={handleHomeClick} />
+            )
           ) : (
-            <></>
+            <div></div>
           )}
-        </S.NavbarRightContainer>
-      </S.NavbarBody>
-    </S.NavbarContainer>
+
+          <S.NavbarRightContainer>
+            <S.NavbarPageButton width={9.2} onClick={handleAboutClick}>
+              서비스 소개
+            </S.NavbarPageButton>
+            <S.NavbarPageButton width={10.9} onClick={handleHomeClick}>
+              모든 프로젝트
+            </S.NavbarPageButton>
+
+            {isLoggedIn ? (
+              <S.NavbarLogoutButtonContainer onClick={handleLogout}>
+                <S.NavbarLogoutButtonLetter>로그아웃</S.NavbarLogoutButtonLetter>
+                <S.NavbarLogoutButtonIcon src={logoutIconSrc} alt="navbarLogoutImage" />
+              </S.NavbarLogoutButtonContainer>
+            ) : (
+              <S.NavbarLoginButton onClick={() => setIsModalOpen(true)}>로그인</S.NavbarLoginButton>
+            )}
+            {isLoggedIn ? (
+              <S.NavbarMyPageButton onClick={handleMyPageClick}>
+                <S.NavbarMyPageImg
+                  src={profilePic !== null ? profilePic : navbarMyPageSrc} // 조건부 렌더링
+                  alt="myPageButton"
+                />
+              </S.NavbarMyPageButton>
+            ) : (
+              <></>
+            )}
+          </S.NavbarRightContainer>
+        </S.NavbarBody>
+      </S.NavbarContainer>
+      <LoginModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+    </>
   );
 };
 
