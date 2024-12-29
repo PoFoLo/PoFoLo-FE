@@ -50,6 +50,7 @@ export const ProfilePic = styled.img`
   width: 14.4rem;
   height: 14.4rem;
   border-radius: 1.2rem;
+  object-fit: cover;
 
   ${(props) =>
     props.theme.media.ph(css`

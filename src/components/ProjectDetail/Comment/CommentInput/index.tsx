@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '@/components/Common/Button';
 import * as S from '@/components/ProjectDetail/Comment/styles';
 import profileIcon from '@/assets/webps/Common/profileIcon.webp';
 import { useResponsive } from '@/hooks/useResponsive';
+import { instance } from '@/apis/instance';
 
 interface CommentInputProps {
   comment: string;
@@ -19,6 +20,23 @@ export const CommentInput: React.FC<CommentInputProps> = ({
 }) => {
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
   const { isPC } = useResponsive();
+  const userId = localStorage.getItem('user_id');
+  const [profileImg, setProfileImg] = useState<string>(profileIcon); // 기본 프로필 이미지로 초기화
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await instance.get(`/pofolo/users/profile/${userId}/`);
+        const { profile_img_url } = response.data.profile;
+        setProfileImg(profile_img_url || profileIcon); // 이미지가 없으면 기본 이미지로 설정
+      } catch (error) {
+        console.error('프로필 이미지 가져오기 실패:', error);
+        setProfileImg(profileIcon); // 에러 발생 시 기본 이미지로 설정
+      }
+    };
+
+    fetchProfile();
+  }, [userId]);
 
   const handlePost = () => {
     onPost(); // 댓글 게시
@@ -39,7 +57,7 @@ export const CommentInput: React.FC<CommentInputProps> = ({
 
   return (
     <S.AddComment>
-      <img src={profileIcon} alt="profile icon" />
+      <img src={profileImg} alt="profile icon" />
       <S.CommentBox>
         <S.CommentTextArea
           ref={commentInputRef}

@@ -63,7 +63,7 @@ export const CommentItem = forwardRef<HTMLLIElement, CommentItemProps>(
         return {
           id: writerId,
           nickname: response.data.profile.nickname || '알 수 없음',
-          profileImg: response.data.profile.profile_img || profileIcon,
+          profileImg: response.data.profile.profile_img_url || profileIcon,
         };
       } catch (error) {
         console.error(`작성자 정보 가져오기 실패 (ID: ${writerId}):`, error);

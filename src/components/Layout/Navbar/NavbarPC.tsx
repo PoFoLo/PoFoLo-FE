@@ -106,12 +106,20 @@ const NavbarPC = ({ onGoBackClick }: NavbarProps) => {
           )}
 
           <S.NavbarRightContainer>
-            <S.NavbarPageButton width={9.2} onClick={handleAboutClick}>
-              서비스 소개
-            </S.NavbarPageButton>
-            <S.NavbarPageButton width={10.9} onClick={handleHomeClick}>
-              모든 프로젝트
-            </S.NavbarPageButton>
+            {isLoggedIn ? (
+              <S.NavbarPageButton width={9.2} onClick={handleAboutClick}>
+                서비스 소개
+              </S.NavbarPageButton>
+            ) : (
+              <></>
+            )}
+            {isLoggedIn ? (
+              <S.NavbarPageButton width={10.9} onClick={handleHomeClick}>
+                모든 프로젝트
+              </S.NavbarPageButton>
+            ) : (
+              <></>
+            )}
 
             {isLoggedIn ? (
               <S.NavbarLogoutButtonContainer onClick={handleLogout}>
