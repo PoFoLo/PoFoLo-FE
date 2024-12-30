@@ -44,6 +44,9 @@ export const MemberName = styled.div`
   color: ${(props) => props.theme.colors.gray70};
   ${(props) => props.theme.fonts.caption3};
 
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%; /* 부모 요소(Card)의 크기를 따름 */
   height: 2rem;
   margin-top: 1.2rem;
@@ -64,9 +67,11 @@ export const ProjectName = styled.div`
   color: #000;
   ${(props) => props.theme.fonts.caption1};
 
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%; /* 부모 요소(Card)의 크기를 따름 */
   height: 2.7rem;
-  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
 
