@@ -47,7 +47,8 @@ const NavbarPC = ({ onGoBackClick, onAboutClick, onHomeClick }: NavbarProps) => 
   };
 
   const handleMyPageClick = () => {
-    navigate(`/mypage/${localStorage.getItem('user_id')}`);
+    //마이페이지는 새로고침하면서 이동
+    window.location.href = `/mypage/${localStorage.getItem('user_id')}`;
   };
 
   const handleKakaoLogin = () => {

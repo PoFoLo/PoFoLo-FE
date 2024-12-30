@@ -135,17 +135,20 @@ const MyPageCardList: React.FC<MyPageCardListProps> = ({ activeTab, selectedFilt
       <S.CardListContainer $isPortfolioTab={activeTab === 'portfolio'}>
         {activeTab === 'allProjects'
           ? displayedProjects.map((project) => (
-              <div key={project.id} onClick={() => handleProjectClick(project.id)}>
+              <S.CardContainer key={project.id} onClick={() => handleProjectClick(project.id)}>
                 <Card
                   imageUrl={project.thumbnail || defaultProjectThumbnailSrc}
                   projectName={project.title}
                   likes={project.liked_count}
                   comments={project.comment_count}
                 />
-              </div>
+              </S.CardContainer>
             ))
           : portfolios.map((portfolio) => (
-              <div key={portfolio.id} onClick={() => handlePortfolioClick(portfolio.id)}>
+              <S.CardContainer
+                key={portfolio.id}
+                onClick={() => handlePortfolioClick(portfolio.id)}
+              >
                 <P.PortfolioCard>
                   <P.PortfolioCardImg
                     src={portfolio.thumbnail || defaultPortfolioThumbnailSrc}
@@ -153,7 +156,7 @@ const MyPageCardList: React.FC<MyPageCardListProps> = ({ activeTab, selectedFilt
                   />
                   <P.ProjectName>{portfolio.title}</P.ProjectName>
                 </P.PortfolioCard>
-              </div>
+              </S.CardContainer>
             ))}
       </S.CardListContainer>
     </S.CardListColorContainer>

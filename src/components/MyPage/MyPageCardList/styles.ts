@@ -42,3 +42,7 @@ export const CardListContainer = styled.div<{ $isPortfolioTab: boolean }>`
       grid-template-columns: repeat(2, 1fr);
     `)}
 `;
+
+export const CardContainer = styled.div`
+  height: fit-content;
+`;
