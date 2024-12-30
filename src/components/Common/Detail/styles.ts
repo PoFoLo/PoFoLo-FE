@@ -107,6 +107,7 @@ export const ProfileInfo = styled.div`
     border: 0.15rem solid ${(props) => props.theme.colors.gray20};
     border-radius: 50%;
     cursor: pointer;
+    object-fit: cover;
 
     ${(props) =>
       props.theme.media.pc(css`
