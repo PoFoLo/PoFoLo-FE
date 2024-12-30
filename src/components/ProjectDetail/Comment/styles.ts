@@ -76,6 +76,7 @@ export const AddComment = styled.div`
     height: 3rem;
     border: 0.15rem solid ${(props) => props.theme.colors.gray20};
     border-radius: 50%;
+    object-fit: cover;
     ${(props) =>
       props.theme.media.pc(css`
         width: 4rem;
@@ -161,6 +162,7 @@ export const CommentItemWrapper = styled.div`
     border-radius: 50%;
     border: 0.15rem solid ${(props) => props.theme.colors.gray20};
     cursor: pointer;
+    object-fit: cover;
 
     ${(props) =>
       props.theme.media.pc(css`
