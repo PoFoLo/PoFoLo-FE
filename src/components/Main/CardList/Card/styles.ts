@@ -67,6 +67,8 @@ export const ProjectName = styled.div`
   width: 100%; /* 부모 요소(Card)의 크기를 따름 */
   height: 2.7rem;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${(props) =>
     props.theme.media.ph(css`
