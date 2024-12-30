@@ -46,10 +46,11 @@ export const MemberName = styled.div`
 
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   width: 100%; /* 부모 요소(Card)의 크기를 따름 */
   height: 2rem;
-  margin-top: 1.2rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.4rem;
   text-align: left;
 
   ${(props) =>
