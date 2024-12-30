@@ -58,7 +58,7 @@ const NavbarTabletMobile = ({ onGoBackClick }: NavbarMobileProps) => {
   };
 
   const handleMyPageClick = () => {
-    navigate(`/mypage/${localStorage.getItem('user_id')}`);
+    window.location.href = `/mypage/${localStorage.getItem('user_id')}`;
   };
 
   return (
