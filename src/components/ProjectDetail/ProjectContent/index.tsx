@@ -51,10 +51,6 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
 
       // 현재 프로젝트의 좋아요 상태 확인
       setIsLiked(likedProjects.includes(Number(project_id)));
-
-      // 현재 프로젝트의 좋아요 수 가져오기
-      const projectResponse = await instance.get(`/pofolo/projects/${project_id}/`);
-      setLikeCount(projectResponse.data.liked_count);
     } catch (error) {
       console.error('좋아요 상태 또는 카운트 가져오기 실패:', error);
     }
@@ -67,7 +63,6 @@ export const ProjectContent: React.FC<ProjectContentProps> = ({ onCommentClick, 
 
       setProjectData(data);
       setLikeCount(data.liked_count);
-      setIsLiked(data.is_liked);
 
       const formattedLinks = Object.entries(data.links).map(([title, url]) => ({
         title,
