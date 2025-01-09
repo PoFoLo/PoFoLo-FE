@@ -1,50 +1,8 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+![KakaoTalk_Photo_2025-01-09-18-19-15 001](https://github.com/user-attachments/assets/55fc14fb-ad74-4044-911e-1a2b0bb5eeee)
+![KakaoTalk_Photo_2025-01-09-18-19-15 002](https://github.com/user-attachments/assets/142b3e53-008a-4629-a134-3e5b3c8c0960)
+![KakaoTalk_Photo_2025-01-09-18-19-15 003](https://github.com/user-attachments/assets/e334d4b7-a19f-4178-9093-b9aca9ae333f)
+![KakaoTalk_Photo_2025-01-09-18-19-15 004](https://github.com/user-attachments/assets/02617c1a-0b1b-4fa8-ac79-d7019b0a66c8)
+![KakaoTalk_Photo_2025-01-09-18-19-15 005](https://github.com/user-attachments/assets/17084c84-1e48-4d37-b4de-bd9eb0497491)
+![KakaoTalk_Photo_2025-01-09-18-19-15 006](https://github.com/user-attachments/assets/150aa61a-620b-4168-a19c-5ace44cc26ac)
+![KakaoTalk_Photo_2025-01-09-18-19-15 007](https://github.com/user-attachments/assets/61fff66d-9b18-4110-882e-f199a8832fe2)
+![KakaoTalk_Photo_2025-01-09-18-19-16 008](https://github.com/user-attachments/assets/9bf731da-86af-4e31-a657-f17fc9c19bfd)
