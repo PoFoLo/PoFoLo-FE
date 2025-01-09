@@ -30,7 +30,7 @@ const theme = {
   },
   fonts: {
     headline1: `
-      font-family: 'Pretendard', sans-serif;;
+      font-family: 'Pretendard', sans-serif;
       font-size: 4rem;
       font-weight: 700;
       font-style: normal;
@@ -38,15 +38,31 @@ const theme = {
       letter-spacing: 0.02rem;
     `,
     headline2: `
-      font-family: 'Pretendard', sans-serif;;
+      font-family: 'Pretendard', sans-serif;
       font-size: 3.2rem;
       font-weight: 700;
       font-style: normal;
       line-height: 130%;
       letter-spacing: 0.016rem;
     `,
+    headline3: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      font-style: normal;
+      line-height: 130%;
+      letter-spacing: 0.014rem;
+    `,
+    headline4: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      font-style: normal;
+      line-height: 130%;
+      letter-spacing: 0.012rem;
+    `,
     subhead1: `
-      font-family: 'Pretendard', sans-serif;;
+      font-family: 'Pretendard', sans-serif;
       font-size: 2.8rem;
       font-weight: 600;
       font-style: normal;
@@ -54,7 +70,7 @@ const theme = {
       letter-spacing: 0.007rem;
     `,
     subhead2: `
-      font-family: 'Pretendard', sans-serif;;
+      font-family: 'Pretendard', sans-serif;
       font-size: 2rem;
       font-weight: 600;
       font-style: normal;
@@ -68,6 +84,14 @@ const theme = {
       font-style: normal;
       line-height: 150%;
       letter-spacing: 0.004rem;
+    `,
+    subhead4: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 1.4rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%;
+      letter-spacing: 0.0035rem;
     `,
     body1: `
       font-family: 'Pretendard', sans-serif;
@@ -92,6 +116,14 @@ const theme = {
       font-style: normal;
       line-height: 150%;
       letter-spacing: 0.008rem;
+      `,
+    body4: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      font-style: normal;
+      line-height: 150%;
+      letter-spacing: 0.007rem;
       `,
     caption1: `
       font-family: 'Pretendard', sans-serif;
@@ -125,6 +157,90 @@ const theme = {
       line-height: 140%;
       letter-spacing: 0.003rem;
       `,
+    caption5: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      font-style: normal;
+      line-height: 140%;
+      letter-spacing: 0.003rem;
+      `,
+    headingAbout1: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 5.6rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 130%;
+      letter-spacing: 0.028rem;
+      `,
+    headingAbout2: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 3.6rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 130%;
+      letter-spacing: 0.018rem;
+      `,
+    headingAbout3: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 2.8rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 130%;
+      letter-spacing: 0.014rem;
+      `,
+    bodyAbout1: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 2.4rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0.012rem;
+      `,
+    bodyAbout2: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0.008rem;
+      `,
+    bodyAbout3: `
+      font-family: 'Pretendard', sans-serif;
+      font-size: 1.4rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 160%;
+      letter-spacing: 0.007rem;
+      `,
+  },
+  breakpoints: {
+    ph: 360,
+    tab: 768,
+    pc: 1200,
+    base: 1200,
+  },
+  media: {
+    ph: (styles: string | (() => string)) => `
+      @media (max-width: 767px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      }
+    `,
+    tab: (styles: string | (() => string)) => `
+      @media (min-width: 768px) and (max-width: 1199px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      }
+    `,
+    pc: (styles: string | (() => string)) => `
+      @media (min-width: 1200px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      }
+    `,
+    base: (styles: string | (() => string)) => `
+      @media (min-width: 1200px) and (max-width: 1439px) {
+        ${typeof styles === 'function' ? styles() : styles}
+      },
+    `,
   },
 };
 
